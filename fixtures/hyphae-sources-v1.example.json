@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "project": null,
+  "total_sources": 2,
+  "total_chunks": 11,
+  "sources": [
+    {
+      "id": "doc_1",
+      "source_path": "/repo/docs/new.md",
+      "source_type": "markdown",
+      "chunk_count": 8,
+      "updated_at": "2026-03-30T18:00:00Z"
+    }
+  ]
+}

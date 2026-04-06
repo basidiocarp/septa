@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-topics-v1.schema.json",
+  "title": "hyphae-topics-v1",
+  "description": "Hyphae emits versioned topic summaries for Cap via `hyphae topics --json`.",
+  "type": "object",
+  "required": ["schema_version", "topics"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "project": { "type": ["string", "null"] },
+    "total_topics": { "type": "integer", "minimum": 0 },
+    "total_memories": { "type": "integer", "minimum": 0 },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "count", "avg_weight"],
+        "properties": {
+          "topic": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 },
+          "avg_weight": { "type": "number" },
+          "oldest": { "type": ["string", "null"] },
+          "newest": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

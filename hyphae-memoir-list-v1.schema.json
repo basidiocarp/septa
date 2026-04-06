@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memoir-list-v1.schema.json",
+  "title": "hyphae-memoir-list-v1",
+  "description": "Hyphae emits versioned memoir lists for Cap via `hyphae memoir list --json`.",
+  "type": "object",
+  "required": ["schema_version", "memoirs"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "memoirs": { "type": "array" }
+  },
+  "additionalProperties": true
+}

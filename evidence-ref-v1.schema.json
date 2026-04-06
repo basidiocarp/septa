@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/evidence-ref-v1.schema.json",
+  "title": "Evidence Reference v1",
+  "description": "Canopy stores typed references to data in external ecosystem tools. These are pointer-only — Canopy never copies payloads. Producer: canopy/src/models.rs (EvidenceRef). Consumer: read-only references resolved by operators or dashboards.",
+  "type": "object",
+  "required": ["schema_version", "evidence_id", "task_id", "source_kind", "source_ref", "label"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "ULID identifying this evidence record."
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "ULID of the task this evidence is attached to."
+    },
+    "source_kind": {
+      "type": "string",
+      "enum": [
+        "hyphae_session",
+        "hyphae_recall",
+        "hyphae_outcome",
+        "cortina_event",
+        "mycelium_command",
+        "mycelium_explain",
+        "rhizome_impact",
+        "rhizome_export",
+        "manual_note",
+        "script_verification"
+      ],
+      "description": "Which ecosystem tool owns the referenced data."
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque identifier interpretable by the source tool (e.g., hyphae memory ID, session ID)."
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable label for display."
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "Optional summary of the referenced data."
+    },
+    "related_handoff_id": {
+      "type": ["string", "null"],
+      "description": "Optional handoff this evidence relates to."
+    },
+    "related_session_id": {
+      "type": ["string", "null"],
+      "description": "Optional hyphae session ID for navigation."
+    },
+    "related_memory_query": {
+      "type": ["string", "null"],
+      "description": "Optional hyphae memory recall query."
+    },
+    "related_symbol": {
+      "type": ["string", "null"],
+      "description": "Optional code symbol name (for rhizome references)."
+    },
+    "related_file": {
+      "type": ["string", "null"],
+      "description": "Optional file path (for code references)."
+    }
+  },
+  "additionalProperties": false
+}

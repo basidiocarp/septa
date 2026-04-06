@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/session-event-v1.schema.json",
+  "title": "Session Event v1",
+  "description": "Cortina captures session lifecycle events and sends them to Hyphae. Two sub-schemas: session identity (cached state) and session end (CLI arguments). Producer: cortina/src/utils/hyphae_client.rs + hooks/stop.rs. Consumer: hyphae CLI (session end, store).",
+  "oneOf": [
+    { "$ref": "#/$defs/session_state" },
+    { "$ref": "#/$defs/session_end" },
+    { "$ref": "#/$defs/memory_store" }
+  ],
+  "$defs": {
+    "session_state": {
+      "title": "Session State",
+      "description": "Identity state cached by Cortina per worktree scope. Used to attribute outcomes to sessions.",
+      "type": "object",
+      "required": ["schema_version", "type", "session_id", "project"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "type": { "const": "session_state" },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Session ID from hyphae_session_start."
+        },
+        "project": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Project name."
+        },
+        "project_root": {
+          "type": ["string", "null"],
+          "description": "Canonical path to repository root."
+        },
+        "worktree_id": {
+          "type": ["string", "null"],
+          "description": "Git worktree identifier."
+        },
+        "started_at": {
+          "type": "integer",
+          "description": "Session start timestamp in milliseconds since epoch."
+        }
+      },
+      "additionalProperties": false
+    },
+    "session_end": {
+      "title": "Session End",
+      "description": "Arguments passed to 'hyphae session end' CLI by cortina's Stop hook.",
+      "type": "object",
+      "required": ["schema_version", "type", "session_id"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "type": { "const": "session_end" },
+        "session_id": {
+          "type": "string",
+          "description": "Session ID to close."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Rich session summary: task, files modified, tool counts, errors."
+        },
+        "files_modified": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of files modified during the session."
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Errors encountered during the session."
+        }
+      },
+      "additionalProperties": false
+    },
+    "memory_store": {
+      "title": "Memory Store",
+      "description": "Arguments passed to 'hyphae store' CLI by cortina for outcome storage.",
+      "type": "object",
+      "required": ["schema_version", "type", "topic", "content", "importance"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "type": { "const": "memory_store" },
+        "topic": {
+          "type": "string",
+          "description": "Memory topic (e.g., 'errors/active', 'corrections')."
+        },
+        "content": {
+          "type": "string",
+          "description": "Memory content."
+        },
+        "importance": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low", "ephemeral"],
+          "description": "Importance level controlling decay rate."
+        },
+        "keywords": {
+          "type": "string",
+          "description": "Comma-separated keywords (e.g., 'cortina,hook,error')."
+        },
+        "project": {
+          "type": "string",
+          "description": "Project name for scoping."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

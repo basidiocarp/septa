@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "sessions": [
+    {
+      "id": "ses_123",
+      "project": "cap",
+      "project_root": "/repo/cap",
+      "runtime_session_id": "claude-session-42",
+      "worktree_id": "wt-alpha",
+      "scope": "worker-a",
+      "task": "build session list",
+      "started_at": "2026-03-27T12:00:00Z",
+      "ended_at": "2026-03-27T12:10:00Z",
+      "summary": "Wired session list endpoint",
+      "files_modified": "[\"src/page.tsx\"]",
+      "errors": "0",
+      "status": "completed"
+    }
+  ]
+}

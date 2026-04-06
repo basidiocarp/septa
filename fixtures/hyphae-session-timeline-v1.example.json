@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "timeline": [
+    {
+      "id": "ses_123",
+      "project": "cap",
+      "project_root": "/repo/cap",
+      "runtime_session_id": "claude-session-42",
+      "worktree_id": "wt-alpha",
+      "scope": "worker-a",
+      "task": "build session timeline",
+      "started_at": "2026-03-27T12:00:00Z",
+      "ended_at": "2026-03-27T12:10:00Z",
+      "summary": "Connected session recall and outcome signals.",
+      "files_modified": "[\"src/pages/Sessions.tsx\"]",
+      "errors": "2",
+      "status": "completed",
+      "last_activity_at": "2026-03-27T12:10:00Z",
+      "recall_count": 1,
+      "outcome_count": 0,
+      "events": [
+        {
+          "id": "rec_1",
+          "kind": "recall",
+          "title": "Recalled 3 memories",
+          "detail": "session attribution bridge",
+          "occurred_at": "2026-03-27T12:02:00Z",
+          "recall_event_id": "rec_1",
+          "memory_count": 3,
+          "signal_type": null,
+          "signal_value": null,
+          "source": null
+        }
+      ]
+    }
+  ]
+}

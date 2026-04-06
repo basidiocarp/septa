@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-session-timeline-v1.schema.json",
+  "title": "Hyphae Session Timeline v1",
+  "description": "Hyphae emits versioned session-timeline results for Cap via `hyphae session timeline`. Producer: hyphae/crates/hyphae-cli/src/commands/session.rs. Consumer: cap/server/hyphae/session-timeline-cli.ts. This is a dashboard-oriented read model, not the raw `session-event-v1` write contract used by Cortina when starting or ending sessions.",
+  "type": "object",
+  "required": ["schema_version", "timeline"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "project", "started_at", "status", "last_activity_at", "recall_count", "outcome_count", "events"],
+        "properties": {
+          "id": { "type": "string" },
+          "project": { "type": "string" },
+          "project_root": { "type": ["string", "null"] },
+          "runtime_session_id": { "type": ["string", "null"] },
+          "worktree_id": { "type": ["string", "null"] },
+          "scope": { "type": ["string", "null"] },
+          "task": { "type": ["string", "null"] },
+          "started_at": { "type": "string" },
+          "ended_at": { "type": ["string", "null"] },
+          "summary": { "type": ["string", "null"] },
+          "files_modified": {
+            "type": ["string", "null"],
+            "description": "JSON-serialized array of file paths (e.g. '[\"src/foo.rs\"]'). This read model preserves the existing SQLite storage shape for Cap compatibility; it does not mirror the `files_modified` array used in `session-event-v1` writes."
+          },
+          "errors": {
+            "type": ["string", "null"],
+            "description": "Error count as a string (e.g. '2'), or null if no error count was recorded. This read model preserves the existing SQLite storage shape for Cap compatibility; it does not mirror the `errors` string-array semantics used in `session-event-v1` writes."
+          },
+          "status": { "type": "string" },
+          "last_activity_at": { "type": "string" },
+          "recall_count": { "type": "integer", "minimum": 0 },
+          "outcome_count": { "type": "integer", "minimum": 0 },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "kind", "title", "occurred_at"],
+              "properties": {
+                "id": { "type": "string" },
+                "kind": { "enum": ["outcome", "recall"] },
+                "title": { "type": "string" },
+                "detail": { "type": ["string", "null"] },
+                "occurred_at": { "type": "string" },
+                "recall_event_id": { "type": ["string", "null"] },
+                "memory_count": { "type": ["integer", "null"], "minimum": 0 },
+                "signal_type": { "type": ["string", "null"] },
+                "signal_value": { "type": ["number", "null"] },
+                "source": { "type": ["string", "null"] }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

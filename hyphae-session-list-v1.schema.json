@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-session-list-v1.schema.json",
+  "title": "Hyphae Session List v1",
+  "description": "Hyphae emits versioned session-list results for Cap via `hyphae session list`. Producer: hyphae/crates/hyphae-cli/src/commands/session.rs. Consumer: cap/server/hyphae/session-list-cli.ts.",
+  "type": "object",
+  "required": ["schema_version", "sessions"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "project", "started_at", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "project": { "type": "string" },
+          "project_root": { "type": ["string", "null"] },
+          "runtime_session_id": { "type": ["string", "null"] },
+          "worktree_id": { "type": ["string", "null"] },
+          "scope": { "type": ["string", "null"] },
+          "task": { "type": ["string", "null"] },
+          "started_at": { "type": "string" },
+          "ended_at": { "type": ["string", "null"] },
+          "summary": { "type": ["string", "null"] },
+          "files_modified": { "type": ["string", "null"] },
+          "errors": { "type": ["string", "null"] },
+          "status": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

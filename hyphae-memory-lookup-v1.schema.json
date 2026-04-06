@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memory-lookup-v1.schema.json",
+  "title": "hyphae-memory-lookup-v1",
+  "description": "Hyphae emits versioned memory lookup results for Cap via `hyphae memory get <id> --json`.",
+  "type": "object",
+  "required": ["schema_version", "memory"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "project": { "type": ["string", "null"] },
+    "memory": {
+      "type": "object",
+      "required": ["id", "topic", "summary"],
+      "properties": {
+        "id": { "type": "string" },
+        "topic": { "type": "string" },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "summary": {
+    "avg_savings_pct": 78.4,
+    "avg_time_ms": 112,
+    "total_commands": 14,
+    "total_input": 15420,
+    "total_output": 3330,
+    "total_saved": 12090,
+    "total_time_ms": 1568
+  },
+  "by_command": [
+    {
+      "avg_savings_pct": 81.2,
+      "command": "mycelium cargo test",
+      "count": 5,
+      "exec_time_ms": 140,
+      "input_tokens": 6200,
+      "tokens_saved": 5034
+    },
+    {
+      "avg_savings_pct": 72.6,
+      "command": "mycelium git diff",
+      "count": 4,
+      "exec_time_ms": 74,
+      "input_tokens": 4020,
+      "tokens_saved": 2919
+    }
+  ],
+  "history": [
+    {
+      "command": "mycelium cargo test",
+      "input_tokens": 1200,
+      "output_tokens": 220,
+      "project_path": "/Users/dev/projects/cap",
+      "saved_tokens": 980,
+      "savings_pct": 81.7,
+      "timestamp": "2026-03-30T12:34:56Z"
+    }
+  ],
+  "daily": [
+    {
+      "avg_time_ms": 112,
+      "commands": 14,
+      "date": "2026-03-30",
+      "input_tokens": 15420,
+      "output_tokens": 3330,
+      "saved_tokens": 12090,
+      "savings_pct": 78.4,
+      "total_time_ms": 1568
+    }
+  ]
+}

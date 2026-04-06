@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "project": null,
+  "topic": "decisions/api",
+  "total": 2,
+  "memories": [
+    { "id": "mem_new", "topic": "decisions/api", "summary": "newer memory" },
+    { "id": "mem_old", "topic": "decisions/api", "summary": "older memory" }
+  ]
+}

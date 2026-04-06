@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-topic-memories-v1.schema.json",
+  "title": "hyphae-topic-memories-v1",
+  "description": "Hyphae emits versioned topic memory lists for Cap via `hyphae memory topic <topic> --json`.",
+  "type": "object",
+  "required": ["schema_version", "topic", "total", "memories"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "project": { "type": ["string", "null"] },
+    "topic": { "type": "string" },
+    "total": { "type": "integer", "minimum": 0 },
+    "memories": { "type": "array" }
+  },
+  "additionalProperties": true
+}

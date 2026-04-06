@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-activity-v1.schema.json",
+  "title": "Hyphae Activity v1",
+  "description": "Hyphae emits versioned activity snapshots for Cap status via `hyphae activity`. Producer: hyphae/crates/hyphae-cli/src/commands/activity.rs. Consumer: cap/server/routes/status/hyphae-cli.ts.",
+  "type": "object",
+  "required": ["schema_version", "snapshot"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "snapshot": {
+      "type": "object",
+      "required": ["activity", "memories", "memoirs"],
+      "properties": {
+        "activity": {
+          "type": "object",
+          "required": [
+            "codex_memory_count",
+            "last_codex_memory_at",
+            "last_session_memory_at",
+            "last_session_topic",
+            "recent_session_memory_count"
+          ],
+          "properties": {
+            "codex_memory_count": { "type": "integer", "minimum": 0 },
+            "last_codex_memory_at": { "type": ["string", "null"] },
+            "last_session_memory_at": { "type": ["string", "null"] },
+            "last_session_topic": { "type": ["string", "null"] },
+            "recent_session_memory_count": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "memories": { "type": "integer", "minimum": 0 },
+        "memoirs": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

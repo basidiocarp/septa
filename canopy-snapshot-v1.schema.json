@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-snapshot-v1.schema.json",
+  "title": "canopy-snapshot-v1",
+  "description": "Canopy emits a versioned attention snapshot for Cap via `canopy snapshot --format json`. Producer: canopy/src/api.rs (snapshot endpoint). Consumer: cap (dashboard status).",
+  "type": "object",
+  "required": ["schema_version", "attention", "sla_summary", "tasks", "evidence"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "attention": {
+      "type": "object",
+      "required": [
+        "actionable_handoffs", "actionable_tasks", "agents_needing_attention",
+        "critical_tasks", "handoffs_needing_attention", "stale_agents",
+        "stale_handoffs", "tasks_needing_attention"
+      ],
+      "properties": {
+        "actionable_handoffs":        { "type": "integer", "minimum": 0 },
+        "actionable_tasks":           { "type": "integer", "minimum": 0 },
+        "agents_needing_attention":   { "type": "integer", "minimum": 0 },
+        "critical_tasks":             { "type": "integer", "minimum": 0 },
+        "handoffs_needing_attention": { "type": "integer", "minimum": 0 },
+        "stale_agents":               { "type": "integer", "minimum": 0 },
+        "stale_handoffs":             { "type": "integer", "minimum": 0 },
+        "tasks_needing_attention":    { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "sla_summary": {
+      "type": "object",
+      "required": ["breach_severity", "due_soon_count", "overdue_count"],
+      "properties": {
+        "breach_severity":       { "type": "string", "enum": ["none", "warning", "critical"] },
+        "due_soon_count":        { "type": "integer", "minimum": 0 },
+        "oldest_overdue_seconds": { "type": ["integer", "null"], "minimum": 0 },
+        "overdue_count":         { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["task_id", "title", "status"],
+        "properties": {
+          "task_id": { "type": "string" },
+          "title":   { "type": "string" },
+          "status":  { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "evidence_id", "task_id", "source_kind", "source_ref", "label"],
+        "properties": {
+          "schema_version":       { "const": "1.0" },
+          "evidence_id":          { "type": "string" },
+          "task_id":              { "type": "string" },
+          "source_kind":          { "type": "string" },
+          "source_ref":           { "type": "string" },
+          "label":                { "type": "string" },
+          "summary":              { "type": ["string", "null"] },
+          "related_handoff_id":   { "type": ["string", "null"] },
+          "related_session_id":   { "type": ["string", "null"] },
+          "related_memory_query": { "type": ["string", "null"] },
+          "related_symbol":       { "type": ["string", "null"] },
+          "related_file":         { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "agents":           { "type": "array" },
+    "handoffs":         { "type": "array" },
+    "operator_actions": { "type": "array" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "project": null,
+  "requested_topic": null,
+  "total_topics": 1,
+  "topics_needing_consolidation": 0,
+  "total_stale_entries": 2,
+  "topics": [
+    {
+      "topic": "decisions/api",
+      "entry_count": 6,
+      "avg_weight": 0.61
+    }
+  ]
+}

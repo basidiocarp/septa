@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-analytics-v1.schema.json",
+  "title": "Hyphae Analytics v1",
+  "description": "Hyphae emits versioned analytics snapshots for Cap via `hyphae analytics`. Producer: hyphae/crates/hyphae-cli/src/commands/analytics.rs. Consumer: cap/server/hyphae/analytics.ts.",
+  "type": "object",
+  "required": ["schema_version", "analytics"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "analytics": {
+      "type": "object",
+      "required": ["importance_distribution", "lifecycle", "memoir_stats", "memory_utilization", "top_topics"],
+      "properties": {
+        "importance_distribution": {
+          "type": "object",
+          "required": ["critical", "ephemeral", "high", "low", "medium"],
+          "properties": {
+            "critical": { "type": "number" },
+            "ephemeral": { "type": "number" },
+            "high": { "type": "number" },
+            "low": { "type": "number" },
+            "medium": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "lifecycle": {
+          "type": "object",
+          "required": ["avg_weight", "created_last_7d", "created_last_30d", "decayed", "min_weight", "pruned"],
+          "properties": {
+            "avg_weight": { "type": "number" },
+            "created_last_7d": { "type": "number" },
+            "created_last_30d": { "type": "number" },
+            "decayed": { "type": "number" },
+            "min_weight": { "type": "number" },
+            "pruned": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "memoir_stats": {
+          "type": "object",
+          "required": ["code_memoirs", "total", "total_concepts", "total_links"],
+          "properties": {
+            "code_memoirs": { "type": "number" },
+            "total": { "type": "number" },
+            "total_concepts": { "type": "number" },
+            "total_links": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "memory_utilization": {
+          "type": "object",
+          "required": ["rate", "recalled", "total"],
+          "properties": {
+            "rate": { "type": "number" },
+            "recalled": { "type": "number" },
+            "total": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "search_stats": {
+          "type": ["object", "null"],
+          "required": ["empty_results", "hit_rate", "total_searches"],
+          "properties": {
+            "empty_results": { "type": "number" },
+            "hit_rate": { "type": "number" },
+            "total_searches": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "top_topics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["avg_weight", "count", "latest_created_at", "name"],
+            "properties": {
+              "avg_weight": { "type": "number" },
+              "count": { "type": "number" },
+              "latest_created_at": { "type": "string" },
+              "name": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

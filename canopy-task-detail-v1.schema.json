@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-task-detail-v1.schema.json",
+  "title": "canopy-task-detail-v1",
+  "description": "Canopy emits a versioned task detail payload for Cap via `canopy task get <id> --format json`. Producer: canopy/src/api.rs (task detail endpoint). Consumer: cap (task detail view).",
+  "type": "object",
+  "required": ["schema_version", "task", "attention", "sla_summary", "allowed_actions", "evidence"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "task": {
+      "type": "object",
+      "required": ["task_id", "title", "status"],
+      "properties": {
+        "task_id":     { "type": "string" },
+        "title":       { "type": "string" },
+        "status":      { "type": "string" },
+        "description": { "type": ["string", "null"] },
+        "agent_id":    { "type": ["string", "null"] },
+        "created_at":  { "type": ["string", "null"] },
+        "updated_at":  { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "attention": {
+      "type": "object",
+      "required": ["task_id", "level", "reasons"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "level":   { "type": "string", "enum": ["normal", "warning", "critical"] },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "sla_summary": {
+      "type": "object",
+      "required": ["task_id", "breach_severity", "due_soon_count", "overdue_count"],
+      "properties": {
+        "task_id":               { "type": "string" },
+        "breach_severity":       { "type": "string", "enum": ["none", "warning", "critical"] },
+        "due_soon_count":        { "type": "integer", "minimum": 0 },
+        "overdue_count":         { "type": "integer", "minimum": 0 },
+        "oldest_overdue_seconds": { "type": ["integer", "null"], "minimum": 0 },
+        "highest_risk_queue":    { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "allowed_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "evidence_id", "task_id", "source_kind", "source_ref", "label"],
+        "properties": {
+          "schema_version":       { "const": "1.0" },
+          "evidence_id":          { "type": "string" },
+          "task_id":              { "type": "string" },
+          "source_kind":          { "type": "string" },
+          "source_ref":           { "type": "string" },
+          "label":                { "type": "string" },
+          "summary":              { "type": ["string", "null"] },
+          "related_handoff_id":   { "type": ["string", "null"] },
+          "related_session_id":   { "type": ["string", "null"] },
+          "related_memory_query": { "type": ["string", "null"] },
+          "related_symbol":       { "type": ["string", "null"] },
+          "related_file":         { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "related_tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["task_id", "title", "status"],
+        "properties": {
+          "task_id": { "type": "string" },
+          "title":   { "type": "string" },
+          "status":  { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

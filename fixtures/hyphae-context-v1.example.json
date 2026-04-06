@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "context": [
+    {
+      "content": "Worker A login implementation",
+      "relevance": 0.95,
+      "source": "session",
+      "topic": "session/demo"
+    }
+  ],
+  "sources_queried": ["sessions"],
+  "tokens_budget": 1500,
+  "tokens_used": 42
+}

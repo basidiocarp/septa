@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/code-graph-v1.schema.json",
+  "title": "Code Graph v1",
+  "description": "Rhizome exports code symbols to Hyphae as a knowledge graph via the hyphae_import_code_graph MCP tool. Producer: rhizome-core/src/graph.rs + hyphae.rs. Consumer: hyphae-mcp/src/tools/memoir.rs.",
+  "type": "object",
+  "required": ["schema_version", "project", "nodes", "edges"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version. Receivers should reject unknown versions."
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project name. Used to create/update memoir named 'code:{project}'."
+    },
+    "project_root": {
+      "type": "string",
+      "description": "Canonical filesystem path to the repository root. Part of identity pair — send both project_root and worktree_id, or neither."
+    },
+    "worktree_id": {
+      "type": "string",
+      "description": "Git worktree identifier. 'main' for primary, worktree name for linked."
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Symbol name. Must be unique within the project."
+          },
+          "labels": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Classification labels (e.g., 'type:function', 'domain:auth')."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the symbol."
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "file_path": { "type": "string" },
+              "line_start": { "type": "string" },
+              "line_end": { "type": "string" },
+              "language": { "type": "string" }
+            },
+            "additionalProperties": true,
+            "description": "Source location and language metadata."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "relation"],
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source node name. Must reference a node in the nodes array."
+          },
+          "target": {
+            "type": "string",
+            "description": "Target node name. Must reference a node in the nodes array."
+          },
+          "relation": {
+            "type": "string",
+            "enum": ["contains", "imports", "implements", "calls", "uses", "extends", "references", "depends_on", "tests"],
+            "description": "Typed relationship between symbols."
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Edge weight (0.0-1.0). Default weights: contains=1.0, imports=0.5, implements=0.8, calls=0.3."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "prune": {
+      "type": "boolean",
+      "default": true,
+      "description": "If true, concepts in the memoir not present in this export are pruned."
+    }
+  },
+  "additionalProperties": false
+}

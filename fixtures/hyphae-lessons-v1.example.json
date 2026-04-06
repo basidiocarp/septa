@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "lessons": [
+    {
+      "id": "correction-0",
+      "category": "corrections",
+      "description": "Prefer CLI-backed reads",
+      "frequency": 3,
+      "source_topics": ["corrections"],
+      "keywords": ["cli", "contract"]
+    },
+    {
+      "id": "error-1",
+      "category": "errors",
+      "description": "Validate the exported shape",
+      "frequency": 1,
+      "source_topics": ["errors/resolved"],
+      "keywords": ["validation"]
+    }
+  ]
+}

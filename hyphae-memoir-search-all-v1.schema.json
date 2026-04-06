@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memoir-search-all-v1.schema.json",
+  "title": "hyphae-memoir-search-all-v1",
+  "description": "Hyphae emits versioned cross-memoir search payloads for Cap via `hyphae memoir search-all <query> --json`.",
+  "type": "object",
+  "required": ["schema_version", "query", "total", "results"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "query": { "type": "string" },
+    "limit": { "type": "integer", "minimum": 0 },
+    "offset": { "type": "integer", "minimum": 0 },
+    "total": { "type": "integer", "minimum": 0 },
+    "results": { "type": "array" }
+  },
+  "additionalProperties": true
+}

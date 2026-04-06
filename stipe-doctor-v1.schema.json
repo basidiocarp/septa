@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/stipe-doctor-v1.schema.json",
+  "title": "stipe-doctor-v1",
+  "description": "Stipe emits a versioned doctor report for Cap via `stipe doctor --json`. Producer: stipe doctor command. Consumer: cap (health status panel).",
+  "type": "object",
+  "required": ["schema_version", "healthy", "summary", "checks", "repair_actions"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "healthy":        { "type": "boolean" },
+    "summary":        { "type": "string" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "passed"],
+        "properties": {
+          "name":    { "type": "string" },
+          "passed":  { "type": "boolean" },
+          "message": { "type": ["string", "null"] },
+          "repair_actions": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/repair_action" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "repair_actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/repair_action" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "repair_action": {
+      "type": "object",
+      "required": ["action_key", "command", "label"],
+      "properties": {
+        "action_key":  { "type": "string" },
+        "args":        { "type": "array", "items": { "type": "string" } },
+        "command":     { "type": "string" },
+        "description": { "type": ["string", "null"] },
+        "label":       { "type": "string" },
+        "tier":        { "type": "string", "enum": ["primary", "secondary", "destructive"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

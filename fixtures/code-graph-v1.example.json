@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "project": "mycelium",
+  "project_root": "/Users/dev/projects/mycelium",
+  "worktree_id": "main",
+  "nodes": [
+    {
+      "name": "FilterConfig",
+      "labels": ["type:struct", "domain:filtering"],
+      "description": "Configuration for output filtering behavior",
+      "metadata": {
+        "file_path": "src/config.rs",
+        "line_start": "15",
+        "line_end": "28",
+        "language": "rust"
+      }
+    },
+    {
+      "name": "classify",
+      "labels": ["type:function", "domain:filtering"],
+      "description": "Classifies output into adaptive compression levels",
+      "metadata": {
+        "file_path": "src/config.rs",
+        "line_start": "30",
+        "line_end": "55",
+        "language": "rust"
+      }
+    },
+    {
+      "name": "filter_git_log",
+      "labels": ["type:function", "domain:git"],
+      "description": "Filters git log output to compact format",
+      "metadata": {
+        "file_path": "src/filters/git.rs",
+        "line_start": "10",
+        "line_end": "45",
+        "language": "rust"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "FilterConfig",
+      "target": "classify",
+      "relation": "uses",
+      "weight": 0.8
+    },
+    {
+      "source": "filter_git_log",
+      "target": "classify",
+      "relation": "calls",
+      "weight": 0.3
+    }
+  ],
+  "prune": true
+}

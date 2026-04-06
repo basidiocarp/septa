@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "work_state": {
+    "branch": "feat/auth-refactor",
+    "commit": "a1b2c3d4e5f6",
+    "modified_files": [
+      {
+        "path": "src/auth/middleware.rs",
+        "status": "modified",
+        "symbols_changed": ["AuthMiddleware::handle", "AuthMiddleware::validate_token"]
+      },
+      {
+        "path": "src/auth/token.rs",
+        "status": "modified",
+        "symbols_changed": ["TokenValidator::verify"]
+      },
+      {
+        "path": "tests/auth_test.rs",
+        "status": "added"
+      }
+    ],
+    "test_status": {
+      "passed": 42,
+      "failed": 2,
+      "skipped": 0,
+      "not_run": false
+    },
+    "build_status": {
+      "success": true,
+      "error_count": 0,
+      "last_error": null
+    }
+  },
+  "intent": {
+    "goal": "Refactor AuthMiddleware to use JWT validation instead of session cookies",
+    "approach": "Replacing session lookup in handle() with TokenValidator::verify(). Keeping backward compat by accepting both formats during migration window.",
+    "decisions_made": ["01JNQCOUNCIL00000000001"]
+  },
+  "boundary": {
+    "stop_reason": "blocked",
+    "blocked_on": "TokenValidator::verify needs access to the JWKS endpoint, but the HTTP client isn't available in the middleware layer. Need to either inject it or restructure the dependency.",
+    "next_steps": [
+      "Decide whether to inject HttpClient into AuthMiddleware or create a JwksCache that pre-fetches keys at startup",
+      "Fix the 2 failing tests in tests/auth_test.rs (they expect session cookie format)",
+      "Update the OpenAPI spec to document the new Authorization: Bearer header"
+    ],
+    "warnings": [
+      "Don't remove the session cookie path yet — existing clients depend on it until v2 migration completes",
+      "The TokenValidator::verify function is called from 3 other modules (check find_references before changing its signature)"
+    ]
+  },
+  "evidence": [
+    {
+      "schema_version": "1.0",
+      "evidence_id": "01JNQXYZ1234567890ABCDEF",
+      "task_id": "01JNQABC9876543210FEDCBA",
+      "source_kind": "hyphae_session",
+      "source_ref": "01JNQSESS000000000000000",
+      "label": "Session where auth refactor was started",
+      "summary": null,
+      "related_handoff_id": null,
+      "related_session_id": "01JNQSESS000000000000000",
+      "related_memory_query": null,
+      "related_symbol": "AuthMiddleware",
+      "related_file": "src/auth/middleware.rs"
+    }
+  ]
+}

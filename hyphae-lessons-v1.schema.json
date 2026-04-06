@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-lessons-v1.schema.json",
+  "title": "Hyphae Lessons v1",
+  "description": "Hyphae emits versioned lesson lists for Cap via `hyphae lessons`. Producer: hyphae/crates/hyphae-cli/src/commands/lessons.rs. Consumer: cap/server/hyphae/lessons.ts.",
+  "type": "object",
+  "required": ["schema_version", "lessons"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "lessons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "description", "frequency", "source_topics", "keywords"],
+        "properties": {
+          "id": { "type": "string" },
+          "category": { "enum": ["corrections", "errors", "tests"] },
+          "description": { "type": "string" },
+          "frequency": { "type": "integer", "minimum": 0 },
+          "source_topics": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "keywords": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

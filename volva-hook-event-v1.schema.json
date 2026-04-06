@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/volva-hook-event-v1.schema.json",
+  "title": "Volva Hook Event v1",
+  "description": "Hook-event payload emitted by Volva hook adapters and consumed by cortina adapter volva hook-event. Producer: volva/crates/volva-runtime/src/hooks.rs. Consumer: cortina/src/adapters/volva.rs.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "phase",
+    "backend_kind",
+    "cwd",
+    "prompt_text",
+    "prompt_summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "session_start",
+        "before_prompt_send",
+        "response_complete",
+        "backend_failed",
+        "session_end"
+      ],
+      "description": "Volva hook phase that emitted this payload."
+    },
+    "backend_kind": {
+      "type": "string",
+      "enum": [
+        "official-cli",
+        "anthropic-api"
+      ],
+      "description": "Backend that produced the hook event."
+    },
+    "cwd": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Working directory for the run."
+    },
+    "prompt_text": {
+      "type": "string",
+      "description": "Assembled prompt text sent to the backend."
+    },
+    "prompt_summary": {
+      "type": "string",
+      "description": "Short prompt summary for compact display and indexing."
+    },
+    "stdout": {
+      "type": ["string", "null"],
+      "description": "Optional backend stdout snapshot."
+    },
+    "stderr": {
+      "type": ["string", "null"],
+      "description": "Optional backend stderr snapshot."
+    },
+    "exit_code": {
+      "type": ["integer", "null"],
+      "description": "Optional backend exit code."
+    },
+    "error": {
+      "type": ["string", "null"],
+      "description": "Optional runtime error summary."
+    }
+  },
+  "additionalProperties": false
+}

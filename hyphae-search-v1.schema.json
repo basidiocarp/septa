@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-search-v1.schema.json",
+  "title": "hyphae-search-v1",
+  "description": "Hyphae emits versioned memory search results for Cap via `hyphae search --json`.",
+  "type": "object",
+  "required": ["schema_version", "query", "limit", "total", "results"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "project": { "type": ["string", "null"] },
+    "query": { "type": "string" },
+    "topic": { "type": ["string", "null"] },
+    "limit": { "type": "integer", "minimum": 0 },
+    "total": { "type": "integer", "minimum": 0 },
+    "results": { "type": "array" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "dry_run": true,
+  "target_client": "codex",
+  "selected_hosts": ["Codex CLI"],
+  "detected_hosts": ["Codex CLI"],
+  "detected_clients": ["Codex CLI"],
+  "steps": [
+    {
+      "status": "planned",
+      "title": "Register the hyphae MCP server",
+      "detail": "Hyphae is installed and can be wired into supported clients."
+    }
+  ],
+  "repair_actions": [
+    {
+      "action_key": "init",
+      "args": ["init"],
+      "command": "stipe init",
+      "description": "Repair shared MCP state",
+      "label": "Run stipe init",
+      "tier": "primary"
+    }
+  ]
+}

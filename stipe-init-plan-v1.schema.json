@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/stipe-init-plan-v1.schema.json",
+  "title": "stipe-init-plan-v1",
+  "description": "Stipe emits a versioned init plan for Cap via `stipe init --dry-run --json`. Producer: stipe init command. Consumer: cap (setup wizard).",
+  "type": "object",
+  "required": [
+    "schema_version", "dry_run", "selected_hosts",
+    "detected_hosts", "detected_clients", "steps", "repair_actions"
+  ],
+  "properties": {
+    "schema_version":   { "const": "1.0" },
+    "dry_run":          { "type": "boolean" },
+    "target_client":    { "type": ["string", "null"] },
+    "selected_hosts":   { "type": "array", "items": { "type": "string" } },
+    "detected_hosts":   { "type": "array", "items": { "type": "string" } },
+    "detected_clients": { "type": "array", "items": { "type": "string" } },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["status", "title"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["planned", "skipped", "done", "failed"]
+          },
+          "title":  { "type": "string" },
+          "detail": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "repair_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action_key", "command", "label"],
+        "properties": {
+          "action_key":  { "type": "string" },
+          "args":        { "type": "array", "items": { "type": "string" } },
+          "command":     { "type": "string" },
+          "description": { "type": ["string", "null"] },
+          "label":       { "type": "string" },
+          "tier":        { "type": "string", "enum": ["primary", "secondary", "destructive"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

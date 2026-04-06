@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "memoir": {
+    "id": "memoir-1",
+    "name": "code:williamnewton",
+    "description": "Memoir description",
+    "created_at": "2026-03-24T00:00:00Z",
+    "updated_at": "2026-03-24T00:00:00Z",
+    "consolidation_threshold": 50
+  },
+  "query": "context",
+  "limit": 500,
+  "offset": 0,
+  "total": 2,
+  "results": [
+    {
+      "id": "concept-1",
+      "memoir_id": "memoir-1",
+      "name": "alpha",
+      "definition": "First result"
+    }
+  ]
+}

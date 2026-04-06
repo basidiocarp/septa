@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-context-v1.schema.json",
+  "title": "Hyphae Gather Context v1",
+  "description": "Hyphae emits versioned gather-context results for Cap via `hyphae gather-context`. Producer: hyphae/crates/hyphae-cli/src/commands/context.rs. Consumer: cap/server/hyphae/context.ts.",
+  "type": "object",
+  "required": ["schema_version", "context", "sources_queried", "tokens_budget", "tokens_used"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "context": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["content", "relevance", "source"],
+        "properties": {
+          "content": { "type": "string" },
+          "relevance": { "type": "number" },
+          "source": { "type": "string" },
+          "symbol": { "type": "string" },
+          "topic": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "sources_queried": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tokens_budget": { "type": "integer", "minimum": 0 },
+    "tokens_used": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": true
+}

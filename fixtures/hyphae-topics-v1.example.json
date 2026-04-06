@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "project": null,
+  "total_topics": 1,
+  "total_memories": 6,
+  "topics": [
+    {
+      "topic": "decisions/api",
+      "count": 6,
+      "avg_weight": 0.61,
+      "oldest": "2026-03-20T00:00:00Z",
+      "newest": "2026-03-30T00:00:00Z"
+    }
+  ]
+}

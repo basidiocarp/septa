@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/handoff-context-v1.schema.json",
+  "title": "Handoff Context v1",
+  "description": "Structured context for cross-agent task handoffs in Canopy. Separates derived state (from ecosystem tools) from agent-authored intent and boundary. Producer: handing-off agent + ecosystem auto-population. Consumer: receiving agent + canopy + cap.",
+  "type": "object",
+  "required": ["schema_version", "work_state", "intent", "boundary"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "work_state": {
+      "type": "object",
+      "description": "Derived from ecosystem tools (rhizome, cortina), not written by the agent. Represents what exists right now.",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "description": "Current git branch name."
+        },
+        "commit": {
+          "type": "string",
+          "description": "Current HEAD commit hash."
+        },
+        "modified_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "status"],
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "File path relative to project root."
+              },
+              "status": {
+                "type": "string",
+                "enum": ["added", "modified", "deleted", "renamed"],
+                "description": "Git status of the file."
+              },
+              "symbols_changed": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Symbol names changed in this file (from rhizome, optional)."
+              }
+            }
+          },
+          "description": "Files modified during this work unit. Derived from git diff or rhizome get_changed_files."
+        },
+        "test_status": {
+          "type": ["object", "null"],
+          "properties": {
+            "passed": { "type": "integer" },
+            "failed": { "type": "integer" },
+            "skipped": { "type": "integer" },
+            "not_run": { "type": "boolean", "description": "True if tests were never executed." }
+          },
+          "description": "Test results from cortina outcome signals. Null if no test signal captured."
+        },
+        "build_status": {
+          "type": ["object", "null"],
+          "properties": {
+            "success": { "type": "boolean" },
+            "error_count": { "type": "integer" },
+            "last_error": { "type": "string", "description": "Most recent build error message, truncated." }
+          },
+          "description": "Build status from cortina outcome signals. Null if no build signal captured."
+        }
+      },
+      "additionalProperties": false
+    },
+    "intent": {
+      "type": "object",
+      "description": "Agent-authored. What was being attempted and why.",
+      "required": ["goal"],
+      "properties": {
+        "goal": {
+          "type": "string",
+          "description": "What the task is trying to achieve. Should match the canopy task description."
+        },
+        "approach": {
+          "type": "string",
+          "description": "How the agent was approaching the goal. Implementation strategy, patterns chosen, trade-offs made."
+        },
+        "decisions_made": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Council message ID referencing a Decision."
+          },
+          "description": "Pointers to council decisions that shaped the approach."
+        }
+      },
+      "additionalProperties": false
+    },
+    "boundary": {
+      "type": "object",
+      "description": "Agent-authored. Where work stopped and what the receiving agent should know.",
+      "required": ["stop_reason"],
+      "properties": {
+        "stop_reason": {
+          "type": "string",
+          "enum": ["completed", "blocked", "out_of_scope", "host_limit", "context_exhausted", "needs_review", "needs_human"],
+          "description": "Why the handing-off agent stopped."
+        },
+        "blocked_on": {
+          "type": "string",
+          "description": "What is preventing progress. Required when stop_reason is 'blocked'."
+        },
+        "next_steps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ordered list of what the receiving agent should do next."
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Things the receiving agent should avoid. 'Don't touch X, it'll break Y.'"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "$ref": "evidence-ref-v1.schema.json" },
+      "description": "Existing canopy evidence references attached to this handoff."
+    }
+  },
+  "additionalProperties": false
+}
