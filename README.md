@@ -1,8 +1,8 @@
 # Septa
 
-Versioned cross-tool schemas. Defines the payload boundaries that let Basidiocarp repos change without breaking each other silently.
+Versioned cross-tool schemas for the Basidiocarp ecosystem. It owns the payload boundaries that let repos change without silent breakage.
 
-Named after fungal septa, the partitions that separate compartments while still allowing controlled exchange between them.
+Named after fungal septa, the partitions that separate compartments while still allowing controlled exchange.
 
 Part of the [Basidiocarp ecosystem](https://github.com/basidiocarp).
 
@@ -10,11 +10,11 @@ Part of the [Basidiocarp ecosystem](https://github.com/basidiocarp).
 
 ## The Problem
 
-Each ecosystem project ships on its own schedule. Without a shared schema layer, one repo can change a payload name, field, or enum value and another repo will only discover the break later, often after release.
+Each ecosystem project ships on its own schedule. Without a shared schema layer, one repo can change a payload name, field, or enum value and another repo only discovers the break later.
 
 ## The Solution
 
-`septa/` is the shared contract layer for the workspace.
+Septa is the shared contract layer for the workspace.
 
 - It stores versioned JSON Schemas for cross-tool payloads.
 - It keeps valid example fixtures next to those schemas.
@@ -32,7 +32,8 @@ Each ecosystem project ships on its own schedule. Without a shared schema layer,
 | **[hyphae](https://github.com/basidiocarp/hyphae)** | Persistent agent memory |
 | **[rhizome](https://github.com/basidiocarp/rhizome)** | Code intelligence via tree-sitter and LSP |
 | **[canopy](https://github.com/basidiocarp/canopy)** | Multi-agent coordination runtime |
-| **[cap](https://github.com/basidiocarp/cap)** | Web dashboard for the ecosystem |
+| **[cortina](https://github.com/basidiocarp/cortina)** | Lifecycle signal capture and session attribution |
+| **[volva](https://github.com/basidiocarp/volva)** | Execution-host runtime layer |
 | **[lamella](https://github.com/basidiocarp/lamella)** | Skills, hooks, and plugins for Claude Code |
 | **[stipe](https://github.com/basidiocarp/stipe)** | Ecosystem installer and manager |
 
@@ -44,14 +45,11 @@ Each ecosystem project ships on its own schedule. Without a shared schema layer,
 
 ```bash
 # Inspect a fixture
-jq '.project, .nodes, .edges' septa/fixtures/code-graph-v1.example.json
+jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 
 # Validate a fixture against its schema
-check-jsonschema --schemafile septa/code-graph-v1.schema.json \
-  septa/fixtures/code-graph-v1.example.json
-
-# Run the workspace integration smoke checks
-./test-integration.sh
+check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
+check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
 ```
 
 ---
@@ -65,10 +63,10 @@ emit payload   ─►    schema + fixture  ─►  parse + validate
 change shape   ─►    update version     ─►  update dependents
 ```
 
-1. **Define the boundary** — store the payload shape in a versioned `*.schema.json`.
-2. **Pin an example** — keep a valid fixture in `fixtures/*.example.json`.
-3. **Coordinate changes** — update schema, fixture, producer, and consumer together.
-4. **Validate the boundary** — run schema checks and cross-project smoke tests before shipping.
+1. Define the boundary in a versioned `*.schema.json`.
+2. Pin a valid example in `fixtures/*.example.json`.
+3. Coordinate the schema, fixture, producer, and consumer together.
+4. Validate the boundary before shipping.
 
 ---
 
@@ -93,19 +91,19 @@ change shape   ─►    update version     ─►  update dependents
 
 ## What Septa Does Not Own
 
-- Runtime transport rules — handled by [`spore`](/Users/williamnewton/projects/claude-mycelium/spore/PROTOCOL.md)
-- Producer implementation details — handled by the repo emitting the payload
-- Consumer parsing and storage logic — handled by the repo receiving the payload
-- Release orchestration across repos — handled by the owning repos and workspace process
+- Runtime transport rules, handled by [`spore`](https://github.com/basidiocarp/spore)
+- Producer implementation details, handled by the repo emitting the payload
+- Consumer parsing and storage logic, handled by the repo receiving the payload
+- Release orchestration across repos, handled by the owning repos and workspace process
 
 ---
 
 ## Key Features
 
-- **Versioned schemas** — payload changes are explicit instead of implicit drift.
-- **Concrete fixtures** — producers and consumers share the same example payloads.
-- **Boundary documentation** — inventory and integration notes stay next to the schemas.
-- **Cross-repo discipline** — boundary changes move through one visible place instead of scattered ad hoc docs.
+- Versioned schemas keep payload changes explicit instead of drifting silently.
+- Concrete fixtures let producers and consumers share the same example payloads.
+- Boundary documentation stays next to the schemas.
+- Cross-repo discipline keeps contract changes in one visible place.
 
 ---
 
@@ -125,18 +123,17 @@ septa/
 ## Documentation
 
 - [README.md](README.md) — purpose, workflow, and contract inventory
-- [integration-patterns.md](integration-patterns.md) — producer/consumer boundary notes
-- [mcp-conventions.md](mcp-conventions.md) — pointer to transport conventions and MCP protocol guidance
+- [integration-patterns.md](integration-patterns.md) — producer and consumer boundary notes
+- [mcp-conventions.md](mcp-conventions.md) — transport conventions and MCP protocol guidance
 
 ---
 
 ## Development
 
 ```bash
-jq '.project, .nodes, .edges' septa/fixtures/code-graph-v1.example.json
-check-jsonschema --schemafile septa/code-graph-v1.schema.json \
-  septa/fixtures/code-graph-v1.example.json
-./test-integration.sh
+jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
+check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
+check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
 ```
 
 ## License
