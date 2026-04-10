@@ -9,6 +9,15 @@
     "schema_version": { "const": "1.0" },
     "healthy":        { "type": "boolean" },
     "summary":        { "type": "string" },
+    "install_profile": {
+      "type": "object",
+      "required": ["profile", "config_path"],
+      "properties": {
+        "profile": { "type": "string" },
+        "config_path": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "checks": {
       "type": "array",
       "items": {
@@ -29,20 +38,113 @@
     "repair_actions": {
       "type": "array",
       "items": { "$ref": "#/$defs/repair_action" }
+    },
+    "hook_paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event", "path", "passed"],
+        "properties": {
+          "event": { "type": "string" },
+          "path": { "type": "string" },
+          "passed": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "drift": {
+      "type": "object",
+      "properties": {
+        "baseline_path": { "type": "string" },
+        "generated_at_unix_nanos": { "type": "integer" },
+        "findings": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "developer_tools": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "provider_health": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["host", "provider", "available", "healthy", "status", "auth_freshness"],
+        "properties": {
+          "host": { "type": "string" },
+          "provider": { "type": "string" },
+          "available": { "type": "boolean" },
+          "healthy": { "type": "boolean" },
+          "status": { "type": "string" },
+          "auth_freshness": { "type": "string", "enum": ["fresh", "stale", "missing", "unknown"] },
+          "auth_detail": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "mcp_health": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["host", "required_servers", "healthy", "status", "auth_freshness"],
+        "properties": {
+          "host": { "type": "string" },
+          "config_paths": { "type": "array", "items": { "type": "string" } },
+          "required_servers": { "type": "array", "items": { "type": "string" } },
+          "registered_servers": { "type": "array", "items": { "type": "string" } },
+          "missing_servers": { "type": "array", "items": { "type": "string" } },
+          "healthy": { "type": "boolean" },
+          "status": { "type": "string" },
+          "auth_freshness": { "type": "string", "enum": ["fresh", "stale", "missing", "unknown"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "package_inventory": {
+      "type": "object",
+      "required": ["package_metadata_available"],
+      "properties": {
+        "package_metadata_available": { "type": "boolean" },
+        "metadata_sources": { "type": "array", "items": { "type": "string" } },
+        "discovered_packages": { "type": "array", "items": { "type": "string" } },
+        "discovered_plugins": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "worktree_config": {
+      "type": "object",
+      "required": ["detected"],
+      "properties": {
+        "detected": { "type": "boolean" },
+        "project_root": { "type": ["string", "null"] },
+        "discovered_configs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "package_drift": {
+      "type": "object",
+      "required": ["metadata_available"],
+      "properties": {
+        "metadata_available": { "type": "boolean" },
+        "expected_packages": { "type": "array", "items": { "type": "string" } },
+        "installed_packages": { "type": "array", "items": { "type": "string" } },
+        "missing_packages": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
   "$defs": {
     "repair_action": {
       "type": "object",
-      "required": ["action_key", "command", "label"],
+      "required": ["command", "label", "description", "args", "tier"],
       "properties": {
-        "action_key":  { "type": "string" },
+        "action_key":  { "type": ["string", "null"] },
         "args":        { "type": "array", "items": { "type": "string" } },
         "command":     { "type": "string" },
         "description": { "type": ["string", "null"] },
         "label":       { "type": "string" },
-        "tier":        { "type": "string", "enum": ["primary", "secondary", "destructive"] }
+        "tier":        { "type": "string", "enum": ["primary", "secondary", "manual"] }
       },
       "additionalProperties": false
     }
