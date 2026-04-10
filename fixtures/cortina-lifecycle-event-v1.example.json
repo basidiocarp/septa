@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "category": "council",
+  "status": "captured",
+  "host": "claude_code",
+  "event_name": "user_prompt_submit",
+  "summary": "council lifecycle captured from prompt",
+  "fail_open": true,
+  "session_id": "ses_example",
+  "cwd": "/tmp/demo",
+  "project_root": null,
+  "worktree_id": null,
+  "tool_name": null,
+  "trigger": null,
+  "metadata": {
+    "prompt_excerpt": "/council review unresolved failures",
+    "transcript_path": "/tmp/demo/transcript.jsonl"
+  }
+}

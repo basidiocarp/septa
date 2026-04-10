@@ -81,6 +81,20 @@ Note: Cortina uses CLI invocation, not MCP JSON-RPC, to avoid circular dependenc
 
 **Schema References:**
 - `volva-hook-event-v1.schema.json` — volva hook event payload
+- `cortina-lifecycle-event-v1.schema.json` — transferable normalized lifecycle vocabulary derived from captured host events
+
+---
+
+## cortina → ecosystem (Normalized Lifecycle Vocabulary)
+
+**Producer:** cortina (adapter-first lifecycle capture)
+**Consumer:** downstream orchestrators and dashboards that need host-agnostic lifecycle semantics
+**Purpose:** Share a narrower lifecycle vocabulary for host, tool, compaction, and council capture without forcing consumers to parse host-specific envelopes.
+
+**Wire Format:** Structured JSON emitted by Cortina normalization helpers and hook capture payloads.
+
+**Schema References:**
+- `cortina-lifecycle-event-v1.schema.json` — normalized lifecycle event contract
 
 ---
 

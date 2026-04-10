@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cortina-lifecycle-event-v1.schema.json",
+  "title": "Cortina Lifecycle Event v1",
+  "description": "Normalized lifecycle event vocabulary emitted by Cortina for transferable host, tool, compaction, and council lifecycle semantics. Producer: cortina/src/events/normalized_lifecycle.rs. Consumers: downstream orchestrators and dashboards that need a host-agnostic lifecycle shape.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "category",
+    "status",
+    "host",
+    "event_name",
+    "summary",
+    "fail_open"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "category": {
+      "type": "string",
+      "enum": ["host", "tool", "session", "compaction", "council"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["requested", "captured", "started", "completed", "failed"]
+    },
+    "host": {
+      "type": "string",
+      "enum": ["claude_code", "volva"]
+    },
+    "event_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fail_open": {
+      "type": "boolean"
+    },
+    "session_id": {
+      "type": ["string", "null"]
+    },
+    "cwd": {
+      "type": ["string", "null"]
+    },
+    "project_root": {
+      "type": ["string", "null"]
+    },
+    "worktree_id": {
+      "type": ["string", "null"]
+    },
+    "tool_name": {
+      "type": ["string", "null"]
+    },
+    "trigger": {
+      "type": ["string", "null"]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
