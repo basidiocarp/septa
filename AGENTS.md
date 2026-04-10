@@ -100,10 +100,10 @@ If the validator finds real structural issues, fix those before polishing output
 
 Default:
 
-- `claude-mycelium-workspace-router` - keep the boundary call explicit
+- `basidiocarp-workspace-router` - keep the boundary call explicit
 - `writing-voice` - keep schema and boundary prose concise
 
 Situational:
 
 - `test-writing` - when adding fixture coverage or validation checks
-- `claude-mycelium-rust-repos` - when coordinating with Rust consumers or producers
+- `basidiocarp-rust-repos` - when coordinating with Rust consumers or producers

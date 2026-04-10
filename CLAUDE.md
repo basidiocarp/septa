@@ -8,13 +8,13 @@ Septa is the shared contract layer for cross-tool payloads in the Basidiocarp ec
 
 ---
 
-## What Septa Does NOT Do
+## Operating Model
 
-- Does not implement runtime transport rules; that belongs to the transport repo and the consuming tools.
-- Does not own producer serialization logic or consumer parsing logic.
-- Does not store application state or secrets.
-- Does not resolve downstream drift on its own; consumers still need matching updates.
-- Does not treat fixtures as optional examples; they are part of the contract.
+- Do not implement runtime transport rules. Those belong to the transport repo and the consuming tools.
+- Do not own producer serialization or consumer parsing logic.
+- Do not store application state or secrets.
+- Do not assume downstream drift resolves itself. Producers and consumers still need matching changes.
+- Do not treat fixtures as optional examples. They are part of the contract.
 
 ---
 
@@ -52,4 +52,3 @@ septa/
 - **fixtures/**: valid examples for each contract. Keep them aligned with the matching schema.
 - **README.md**: contract inventory, ownership, and workflow notes.
 - **integration-patterns.md** and **mcp-conventions.md**: boundary guidance for consumers and transport-related conventions.
-

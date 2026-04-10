@@ -1,7 +1,7 @@
 # MCP Protocol Conventions
 
 The canonical ecosystem transport specification now lives in
-[spore/PROTOCOL.md](/Users/williamnewton/projects/claude-mycelium/spore/PROTOCOL.md).
+[spore/PROTOCOL.md](../spore/PROTOCOL.md).
 
 Use that file for:
 
