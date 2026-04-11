@@ -115,6 +115,26 @@ This contract is intentionally small in v1. It standardizes the identity core wi
 
 ---
 
+## cortina → mycelium → cap (Usage Events and Summaries)
+
+**Producer:** cortina (normalized edge capture for transcript and lifecycle-derived usage)
+**Deterministic summary consumer:** mycelium (economics and summary surfaces)
+**Operator-facing consumer:** cap (usage and cost views)
+**Purpose:** Keep usage and cost reporting on a shared portable event shape instead of forcing each tool to reverse-engineer host-specific transcripts or adapters.
+
+**Wire Format:** Shared structured JSON usage event plus deterministic summary surfaces:
+- `cortina` normalizes host usage edges into `usage-event-v1`
+- `mycelium` summarizes those normalized counters instead of inventing a UI-local usage contract
+- `cap` reads summary and history surfaces from downstream tools rather than acting as the source of truth
+
+This boundary is intentionally narrow in v1. It standardizes timestamps, tool and runtime identity, scoped workflow metadata, and resource counters before aggregation and display layers diverge.
+
+**Schema References:**
+- `usage-event-v1.schema.json` — normalized usage and cost event contract
+- `workflow-participant-runtime-identity-v1.schema.json` — optional shared workflow identity nested under usage-event scope
+
+---
+
 ## rhizome → hyphae (Code Graph Export)
 
 **Producer:** rhizome (code intelligence MCP)  

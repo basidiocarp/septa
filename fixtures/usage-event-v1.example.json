@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_kind": "session_usage",
+  "captured_at_unix": 1773446400,
+  "tool_name": "claude_code",
+  "runtime": "anthropic",
+  "scope": {
+    "project_scope": "worktree",
+    "project_root": "/workspace/basidiocarp",
+    "worktree_id": "main",
+    "workflow_identity": {
+      "schema_version": "1.0",
+      "workflow_id": "task-usage-rollup",
+      "participant_id": "operator:claude-code",
+      "runtime_session_id": "session-abc123",
+      "project_root": "/workspace/basidiocarp",
+      "worktree_id": "main",
+      "host_ref": "claude_code",
+      "backend_ref": "anthropic-api"
+    }
+  },
+  "usage": {
+    "requests": 3,
+    "input_tokens": 1200,
+    "output_tokens": 400,
+    "cache_creation_input_tokens": 200,
+    "cache_read_input_tokens": 100,
+    "total_tokens": 1900,
+    "cost_usd": 0.0184
+  },
+  "origin": {
+    "producer": "cortina",
+    "source_kind": "transcript",
+    "source_ref": "transcripts/session-abc123.jsonl"
+  }
+}
