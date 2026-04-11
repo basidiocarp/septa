@@ -1,0 +1,27 @@
+{
+  "schema_version": "resolved-status-customization-v1",
+  "resolved_status": {
+    "state": "ok",
+    "summary": "Claude Code statusline is installed and using the portable default bundle.",
+    "detail": "The current host can render multiline output, color, links, and session cost details."
+  },
+  "capabilities": {
+    "supports_color": true,
+    "supports_multiline": true,
+    "supports_links": true,
+    "supports_cost_display": true
+  },
+  "customization": {
+    "source_kind": "preset",
+    "preset_id": "portable-status-default",
+    "bundle_id": "lamella:portable-status-default",
+    "editable": true,
+    "notes": "Bundle metadata stays portable even when Stipe resolves host-specific config paths."
+  },
+  "origin": {
+    "resolver": "stipe",
+    "host": "claude-code",
+    "resolved_at": "2026-04-10T12:00:00Z",
+    "config_path": "/workspace/.claude/settings.json"
+  }
+}

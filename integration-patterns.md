@@ -207,6 +207,25 @@ Note: `hyphae-session-timeline-v1` is a Cap-facing read model. It intentionally 
 
 ---
 
+## stipe → lamella → cap (Resolved Status and Customization)
+
+**Producer:** stipe (host-aware resolution and repair flows)
+**Customization bundle consumer:** lamella (preset and bundle packaging)
+**Preview consumer:** cap (status preview and edit surfaces)
+**Purpose:** Keep statusline state, host render capabilities, and customization metadata portable instead of binding UI or packaging work to raw host config blobs.
+
+**Wire Format:** Shared structured JSON resolved-state object:
+- `stipe` resolves host-specific status and repair context into `resolved-status-customization-v1`
+- `lamella` packages preset or bundle metadata against the same portable shape
+- `cap` previews and edits the portable state instead of owning host-local config formats
+
+This contract is intentionally small in v1. It carries resolved status, render capabilities, customization metadata, and origin information without replacing host-specific repair logic.
+
+**Schema References:**
+- `resolved-status-customization-v1.schema.json` — portable resolved status and customization contract
+
+---
+
 ## mycelium → cap (Token Analytics)
 
 **Producer:** mycelium (CLI proxy)

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/resolved-status-customization-v1.schema.json",
+  "title": "Resolved Status Customization v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "resolved_status",
+    "capabilities",
+    "customization",
+    "origin"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "resolved-status-customization-v1"
+    },
+    "resolved_status": {
+      "type": "object",
+      "required": [
+        "state",
+        "summary"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["ok", "warn", "error", "partial", "unknown"]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "detail": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "supports_color",
+        "supports_multiline",
+        "supports_links",
+        "supports_cost_display"
+      ],
+      "properties": {
+        "supports_color": {
+          "type": "boolean"
+        },
+        "supports_multiline": {
+          "type": "boolean"
+        },
+        "supports_links": {
+          "type": "boolean"
+        },
+        "supports_cost_display": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "customization": {
+      "type": "object",
+      "required": [
+        "source_kind",
+        "editable"
+      ],
+      "properties": {
+        "source_kind": {
+          "type": "string",
+          "enum": ["default", "preset", "bundle", "manual"]
+        },
+        "preset_id": {
+          "type": ["string", "null"]
+        },
+        "bundle_id": {
+          "type": ["string", "null"]
+        },
+        "editable": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "origin": {
+      "type": "object",
+      "required": [
+        "resolver",
+        "host",
+        "resolved_at"
+      ],
+      "properties": {
+        "resolver": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string",
+          "enum": ["claude-code", "codex", "cursor", "unknown"]
+        },
+        "resolved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "config_path": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

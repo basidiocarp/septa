@@ -49,6 +49,7 @@ jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 
 # Validate a fixture against its schema
 check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
+check-jsonschema --schemafile resolved-status-customization-v1.schema.json fixtures/resolved-status-customization-v1.example.json
 check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
 check-jsonschema --schemafile usage-event-v1.schema.json fixtures/usage-event-v1.example.json
 ```
@@ -75,7 +76,7 @@ change shape   ─►    update version     ─►  update dependents
 
 | Family | Contracts |
 |--------|-----------|
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `session-event-v1`, `usage-event-v1`, `volva-hook-event-v1`, `workflow-participant-runtime-identity-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `resolved-status-customization-v1`, `session-event-v1`, `usage-event-v1`, `volva-hook-event-v1`, `workflow-participant-runtime-identity-v1` |
 | Canopy → Cap | `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Hyphae → Cap | `hyphae-activity-v1`, `hyphae-analytics-v1`, `hyphae-context-v1`, `hyphae-health-v1`, `hyphae-lessons-v1`, `hyphae-memory-lookup-v1`, `hyphae-memoir-inspect-v1`, `hyphae-memoir-list-v1`, `hyphae-memoir-search-v1`, `hyphae-memoir-search-all-v1`, `hyphae-memoir-show-v1`, `hyphae-search-v1`, `hyphae-session-list-v1`, `hyphae-session-timeline-v1`, `hyphae-sources-v1`, `hyphae-stats-v1`, `hyphae-topic-memories-v1`, `hyphae-topics-v1` |
 | Mycelium → Cap | `mycelium-gain-v1` |
@@ -90,6 +91,7 @@ change shape   ─►    update version     ─►  update dependents
 - Cross-boundary documentation such as inventory and integration notes
 - The rule that boundary changes are explicit and coordinated
 - Normalized usage and cost event boundaries before summary and UI layers
+- Portable resolved status and customization boundaries before host-specific rendering
 - Workflow, participant, and runtime-session identity boundaries shared across tools
 
 ## What Septa Does Not Own
@@ -136,6 +138,7 @@ septa/
 ```bash
 jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
+check-jsonschema --schemafile resolved-status-customization-v1.schema.json fixtures/resolved-status-customization-v1.example.json
 check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
 check-jsonschema --schemafile usage-event-v1.schema.json fixtures/usage-event-v1.example.json
 check-jsonschema --schemafile workflow-participant-runtime-identity-v1.schema.json fixtures/workflow-participant-runtime-identity-v1.example.json
