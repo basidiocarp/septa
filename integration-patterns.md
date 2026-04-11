@@ -85,6 +85,23 @@ Note: Cortina uses CLI invocation, not MCP JSON-RPC, to avoid circular dependenc
 
 ---
 
+## volva → canopy (Workflow Participant Runtime Identity)
+
+**Producer:** volva (execution-host runtime and persisted session surface)  
+**Consumer:** canopy (workflow linkage, queue/worktree/review read models)  
+**Purpose:** Keep workflow identity, participant identity, and runtime-session identity consistent when a host session is linked to task orchestration.
+
+**Wire Format:** Shared structured JSON identity object reused at tool boundaries:
+- `volva` emits execution-session state with workflow, participant, and runtime-session identity
+- `canopy` links the same identity fields into task workflow context and operator-facing read models
+
+This contract is intentionally small in v1. It standardizes the identity core without forcing every repo to adopt the same transport envelope at once.
+
+**Schema References:**
+- `workflow-participant-runtime-identity-v1.schema.json` — shared workflow, participant, and runtime-session identity contract
+
+---
+
 ## cortina → ecosystem (Normalized Lifecycle Vocabulary)
 
 **Producer:** cortina (adapter-first lifecycle capture)

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/workflow-participant-runtime-identity-v1.schema.json",
+  "title": "workflow-participant-runtime-identity-v1",
+  "description": "Shared workflow, participant, and runtime-session identity contract for Basidiocarp tools. First producer: Volva execution-session surfaces. First consumer: Canopy workflow linkage and operator read models.",
+  "type": "object",
+  "required": ["schema_version", "workflow_id", "participant_id"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable workflow or task-scoped identity shared across tools."
+    },
+    "participant_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable participant identity for the actor attached to the workflow edge."
+    },
+    "runtime_session_id": {
+      "type": ["string", "null"],
+      "description": "Execution-host runtime session identity when the producer can expose one."
+    },
+    "project_root": {
+      "type": ["string", "null"],
+      "description": "Canonical repository or workspace root for the workflow scope."
+    },
+    "worktree_id": {
+      "type": ["string", "null"],
+      "description": "Git worktree identifier when the workflow is scoped to one worktree."
+    },
+    "host_ref": {
+      "type": ["string", "null"],
+      "description": "Execution host or adapter identity, for example 'volva:anthropic'."
+    },
+    "backend_ref": {
+      "type": ["string", "null"],
+      "description": "Concrete backend identity when the host exposes one, for example 'anthropic-api'."
+    }
+  },
+  "additionalProperties": false
+}

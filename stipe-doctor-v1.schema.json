@@ -100,6 +100,30 @@
         "additionalProperties": false
       }
     },
+    "runtime_policy": {
+      "type": "object",
+      "required": ["configured", "precedence"],
+      "properties": {
+        "configured": { "type": "boolean" },
+        "config_paths": { "type": "array", "items": { "type": "string" } },
+        "precedence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/policy_scope" }
+        },
+        "load_error": { "type": ["string", "null"] },
+        "remembered_decisions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/remembered_decision" }
+        },
+        "active_install_profile": {
+          "anyOf": [
+            { "$ref": "#/$defs/remembered_decision" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "package_inventory": {
       "type": "object",
       "required": ["package_metadata_available"],
@@ -145,6 +169,31 @@
         "description": { "type": ["string", "null"] },
         "label":       { "type": "string" },
         "tier":        { "type": "string", "enum": ["primary", "secondary", "manual"] }
+      },
+      "additionalProperties": false
+    },
+    "policy_scope": {
+      "type": "string",
+      "enum": ["project", "user"]
+    },
+    "policy_decision": {
+      "type": "string",
+      "enum": ["allow", "deny"]
+    },
+    "decision_source": {
+      "type": "string",
+      "enum": ["operator-profile", "operator-policy-file", "imported-config"]
+    },
+    "remembered_decision": {
+      "type": "object",
+      "required": ["subject", "scope", "decision", "source", "updated_at_unix"],
+      "properties": {
+        "subject": { "type": "string" },
+        "scope": { "$ref": "#/$defs/policy_scope" },
+        "decision": { "$ref": "#/$defs/policy_decision" },
+        "source": { "$ref": "#/$defs/decision_source" },
+        "updated_at_unix": { "type": "integer" },
+        "note": { "type": ["string", "null"] }
       },
       "additionalProperties": false
     }
