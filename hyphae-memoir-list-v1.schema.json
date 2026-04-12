@@ -7,7 +7,31 @@
   "required": ["schema_version", "memoirs"],
   "properties": {
     "schema_version": { "const": "1.0" },
-    "memoirs": { "type": "array" }
+    "memoirs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["concept_count", "link_count", "memoir"],
+        "properties": {
+          "concept_count": { "type": "integer", "minimum": 0 },
+          "link_count": { "type": "integer", "minimum": 0 },
+          "memoir": {
+            "type": "object",
+            "required": ["id", "name", "description", "created_at", "updated_at"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "created_at": { "type": "string", "format": "date-time" },
+              "updated_at": { "type": "string", "format": "date-time" },
+              "consolidation_threshold": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

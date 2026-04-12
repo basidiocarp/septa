@@ -30,10 +30,17 @@ Septa is the shared contract layer for cross-tool payloads in the Basidiocarp ec
 ## Build & Test Commands
 
 ```bash
-jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
+# Validate all schemas against their fixtures (handles cross-file $ref locally)
+bash validate-all.sh
+
+# Validate a single schema manually
 check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
-check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
+
+# Inspect fixture structure
+jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 ```
+
+**Required**: Run `bash validate-all.sh` before closing any schema or fixture change. All 34 schemas must pass.
 
 ---
 
@@ -43,6 +50,7 @@ check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hoo
 septa/
 ├── *.schema.json     versioned JSON Schema files
 ├── fixtures/         example payloads that validate
+├── validate-all.sh   validates all schema-fixture pairs
 ├── README.md         ownership, workflow, and inventory
 ├── integration-patterns.md
 └── mcp-conventions.md

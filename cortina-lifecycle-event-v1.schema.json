@@ -24,8 +24,8 @@
       "enum": ["requested", "captured", "started", "completed", "failed"]
     },
     "host": {
-      "type": "string",
-      "enum": ["claude_code", "volva"]
+      "$ref": "host-identifier-v1.schema.json",
+      "description": "AI coding agent host that produced this event."
     },
     "event_name": {
       "type": "string",

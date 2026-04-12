@@ -12,7 +12,19 @@
     "topic": { "type": ["string", "null"] },
     "limit": { "type": "integer", "minimum": 0 },
     "total": { "type": "integer", "minimum": 0 },
-    "results": { "type": "array" }
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "topic", "summary"],
+        "properties": {
+          "id": { "type": "string" },
+          "topic": { "type": "string" },
+          "summary": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

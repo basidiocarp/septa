@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/workflow-template-v1.schema.json",
+  "title": "Workflow Template v1",
+  "description": "Defines a reusable workflow structure with phases and transitions. Producer: workflow designers. Consumer: canopy, dispatch system.",
+  "type": "object",
+  "required": ["schema_version", "template_id", "name", "description", "phases", "transitions"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Unique identifier for this workflow template (e.g., 'impl-audit')."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the workflow (e.g., 'Implementer/Auditor')."
+    },
+    "description": {
+      "type": "string",
+      "description": "Full description of what this workflow does and when to use it."
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "role", "agent_tier", "entry_gate", "exit_gate"],
+        "properties": {
+          "phase_id": {
+            "type": "string",
+            "description": "Unique identifier for this phase within the workflow."
+          },
+          "role": {
+            "type": "string",
+            "enum": ["implementer", "auditor", "reviewer", "operator"],
+            "description": "Role responsible for this phase."
+          },
+          "agent_tier": {
+            "type": "string",
+            "enum": ["opus", "sonnet", "haiku", "any"],
+            "description": "Recommended or required agent tier for this phase."
+          },
+          "entry_gate": {
+            "type": "object",
+            "required": ["requires"],
+            "properties": {
+              "requires": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "List of conditions that must be satisfied to enter this phase."
+              }
+            },
+            "additionalProperties": false
+          },
+          "exit_gate": {
+            "type": "object",
+            "required": ["requires"],
+            "properties": {
+              "requires": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "List of conditions that must be satisfied to exit this phase."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Array of workflow phases in order."
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from_phase", "to_phase", "condition"],
+        "properties": {
+          "from_phase": {
+            "type": "string",
+            "description": "Source phase ID."
+          },
+          "to_phase": {
+            "type": "string",
+            "description": "Target phase ID."
+          },
+          "condition": {
+            "type": "string",
+            "description": "Human-readable description of the condition that triggers this transition."
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Allowed transitions between phases."
+    }
+  },
+  "additionalProperties": false
+}

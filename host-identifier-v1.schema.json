@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/host-identifier-v1.schema.json",
+  "title": "Host Identifier v1",
+  "description": "Canonical host identifier enum for AI coding agent hosts recognized by the basidiocarp ecosystem. Referenced by cortina-lifecycle-event-v1, resolved-status-customization-v1, and usage-event-v1.",
+  "type": "string",
+  "enum": ["claude_code", "codex", "cursor", "volva", "unknown"]
+}

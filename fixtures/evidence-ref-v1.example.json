@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "evidence_id": "01JNQXYZ1234567890ABCDEF",
-  "task_id": "01JNQABC9876543210FEDCBA",
+  "evidence_id": "01JNQXYZ0123456789ABCDEFGH",
+  "task_id": "01JNQABC0123456789GHFEDCBA",
   "source_kind": "hyphae_session",
-  "source_ref": "01JNQSESS000000000000000",
+  "source_ref": "01JNQSESS0000000000000000A",
   "label": "Session where auth middleware was refactored",
   "summary": "Refactored auth middleware to use JWT validation. 12 files modified, 3 errors resolved.",
   "related_handoff_id": null,
-  "related_session_id": "01JNQSESS000000000000000",
+  "related_session_id": "01JNQSESS0000000000000000A",
   "related_memory_query": null,
   "related_symbol": null,
   "related_file": "src/middleware/auth.rs"

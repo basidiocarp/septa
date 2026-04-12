@@ -61,7 +61,7 @@
           "properties": {
             "success": { "type": "boolean" },
             "error_count": { "type": "integer" },
-            "last_error": { "type": "string", "description": "Most recent build error message, truncated." }
+            "last_error": { "type": ["string", "null"], "description": "Most recent build error message, truncated." }
           },
           "description": "Build status from cortina outcome signals. Null if no build signal captured."
         }

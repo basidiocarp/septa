@@ -22,9 +22,9 @@
           "oldest": { "type": ["string", "null"] },
           "newest": { "type": ["string", "null"] }
         },
-        "additionalProperties": true
+        "additionalProperties": false
       }
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": "resolved-status-customization-v1",
+  "schema_version": "1.0",
   "resolved_status": {
     "state": "ok",
     "summary": "Claude Code statusline is installed and using the portable default bundle.",
@@ -20,7 +20,7 @@
   },
   "origin": {
     "resolver": "stipe",
-    "host": "claude-code",
+    "host": "claude_code",
     "resolved_at": "2026-04-10T12:00:00Z",
     "config_path": "/workspace/.claude/settings.json"
   }

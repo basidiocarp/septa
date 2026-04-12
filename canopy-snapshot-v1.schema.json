@@ -52,29 +52,55 @@
     },
     "evidence": {
       "type": "array",
+      "items": { "$ref": "evidence-ref-v1.schema.json" }
+    },
+    "agents": {
+      "type": "array",
       "items": {
         "type": "object",
-        "required": ["schema_version", "evidence_id", "task_id", "source_kind", "source_ref", "label"],
+        "required": ["agent_id", "status"],
         "properties": {
-          "schema_version":       { "const": "1.0" },
-          "evidence_id":          { "type": "string" },
-          "task_id":              { "type": "string" },
-          "source_kind":          { "type": "string" },
-          "source_ref":           { "type": "string" },
-          "label":                { "type": "string" },
-          "summary":              { "type": ["string", "null"] },
-          "related_handoff_id":   { "type": ["string", "null"] },
-          "related_session_id":   { "type": ["string", "null"] },
-          "related_memory_query": { "type": ["string", "null"] },
-          "related_symbol":       { "type": ["string", "null"] },
-          "related_file":         { "type": ["string", "null"] }
+          "agent_id": { "type": "string" },
+          "name": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["active", "idle", "stopped", "error"] },
+          "current_task_id": { "type": ["string", "null"] },
+          "last_heartbeat": { "type": ["string", "null"] }
         },
         "additionalProperties": false
       }
     },
-    "agents":           { "type": "array" },
-    "handoffs":         { "type": "array" },
-    "operator_actions": { "type": "array" }
+    "handoffs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["handoff_id", "from_agent", "to_agent", "status"],
+        "properties": {
+          "handoff_id": { "type": "string" },
+          "from_agent": { "type": "string" },
+          "to_agent": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["pending", "accepted", "completed", "rejected"] },
+          "task_id": { "type": ["string", "null"] },
+          "created_at": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "operator_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action_id", "action_type"],
+        "properties": {
+          "action_id": { "type": "string" },
+          "action_type": { "type": "string" },
+          "target_task_id": { "type": ["string", "null"] },
+          "target_agent_id": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["pending", "applied", "rejected"] },
+          "created_at": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "additionalProperties": false
 }

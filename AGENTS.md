@@ -33,7 +33,10 @@ Before writing code, verify:
 Use these for most work:
 
 ```bash
-jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
+# Validate all schemas
+bash validate-all.sh
+
+# Single schema check
 check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
 ```
 

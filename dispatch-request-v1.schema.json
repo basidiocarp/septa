@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/dispatch-request-v1.schema.json",
+  "title": "Dispatch Request v1",
+  "description": "Request to dispatch a workflow instance for a handoff. Includes workflow template reference, target repository, and configuration for agent tier, decomposition, and dependencies. Producer: handoff system, operator. Consumer: canopy, dispatch engine.",
+  "type": "object",
+  "required": ["schema_version", "handoff_path", "workflow_template", "project_root", "target_repo", "priority", "decompose"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "handoff_path": {
+      "type": "string",
+      "description": "Path to the handoff markdown file relative to project root (e.g., '.handoffs/hymenium/handoff-parser.md')."
+    },
+    "workflow_template": {
+      "type": "string",
+      "description": "Reference to a workflow template ID (must exist in workflow-template-v1 contracts)."
+    },
+    "project_root": {
+      "type": "string",
+      "description": "Absolute path to the workspace project root."
+    },
+    "target_repo": {
+      "type": "string",
+      "description": "Name of the target repository or subdirectory within project_root where changes should be made."
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Dispatch priority for scheduling and resource allocation."
+    },
+    "agent_tier_override": {
+      "enum": ["opus", "sonnet", "haiku", null],
+      "description": "Override the agent tier specified in the workflow template. Null means use template defaults."
+    },
+    "decompose": {
+      "type": "boolean",
+      "description": "If true, attempt to break the work into smaller independent pieces."
+    },
+    "max_effort_per_piece": {
+      "type": ["string", "null"],
+      "description": "Maximum effort budget per decomposed piece (e.g., '30m', '2h'). Null means no limit."
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
+      },
+      "description": "Array of workflow IDs (ULIDs) that must complete before this one can start."
+    }
+  },
+  "additionalProperties": false
+}

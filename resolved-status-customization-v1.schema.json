@@ -12,7 +12,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "resolved-status-customization-v1"
+      "const": "1.0"
     },
     "resolved_status": {
       "type": "object",
@@ -96,8 +96,8 @@
           "type": "string"
         },
         "host": {
-          "type": "string",
-          "enum": ["claude-code", "codex", "cursor", "unknown"]
+          "$ref": "host-identifier-v1.schema.json",
+          "description": "AI coding agent host that resolved this status."
         },
         "resolved_at": {
           "type": "string",

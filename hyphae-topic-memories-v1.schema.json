@@ -10,7 +10,19 @@
     "project": { "type": ["string", "null"] },
     "topic": { "type": "string" },
     "total": { "type": "integer", "minimum": 0 },
-    "memories": { "type": "array" }
+    "memories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "topic", "summary"],
+        "properties": {
+          "id": { "type": "string" },
+          "topic": { "type": "string" },
+          "summary": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

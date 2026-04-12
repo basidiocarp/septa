@@ -10,8 +10,8 @@
       "description": "Configuration for output filtering behavior",
       "metadata": {
         "file_path": "src/config.rs",
-        "line_start": "15",
-        "line_end": "28",
+        "line_start": 15,
+        "line_end": 28,
         "language": "rust"
       }
     },
@@ -21,8 +21,8 @@
       "description": "Classifies output into adaptive compression levels",
       "metadata": {
         "file_path": "src/config.rs",
-        "line_start": "30",
-        "line_end": "55",
+        "line_start": 30,
+        "line_end": 55,
         "language": "rust"
       }
     },
@@ -32,8 +32,8 @@
       "description": "Filters git log output to compact format",
       "metadata": {
         "file_path": "src/filters/git.rs",
-        "line_start": "10",
-        "line_end": "45",
+        "line_start": 10,
+        "line_end": 45,
         "language": "rust"
       }
     }

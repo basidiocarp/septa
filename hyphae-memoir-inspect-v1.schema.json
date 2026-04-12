@@ -7,10 +7,53 @@
   "required": ["schema_version", "memoir", "concept", "depth", "neighborhood"],
   "properties": {
     "schema_version": { "const": "1.0" },
-    "memoir": { "type": "object" },
-    "concept": { "type": "object" },
+    "memoir": {
+      "type": "object",
+      "required": ["id", "name", "description", "created_at", "updated_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "consolidation_threshold": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "concept": {
+      "type": "object",
+      "required": ["id", "memoir_id", "name", "definition"],
+      "properties": {
+        "id": { "type": "string" },
+        "memoir_id": { "type": "string" },
+        "name": { "type": "string" },
+        "definition": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "depth": { "type": "integer", "minimum": 0 },
-    "neighborhood": { "type": "object" }
+    "neighborhood": {
+      "type": "object",
+      "required": ["concepts", "links"],
+      "properties": {
+        "concepts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "memoir_id", "name", "definition"],
+            "properties": {
+              "id": { "type": "string" },
+              "memoir_id": { "type": "string" },
+              "name": { "type": "string" },
+              "definition": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "links": { "type": "array" }
+      },
+      "additionalProperties": false
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

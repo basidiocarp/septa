@@ -12,7 +12,19 @@
     "total_topics": { "type": "integer", "minimum": 0 },
     "topics_needing_consolidation": { "type": "integer", "minimum": 0 },
     "total_stale_entries": { "type": "integer", "minimum": 0 },
-    "topics": { "type": "array" }
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "entry_count", "avg_weight"],
+        "properties": {
+          "topic": { "type": "string" },
+          "entry_count": { "type": "integer", "minimum": 0 },
+          "avg_weight": { "type": "number" }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

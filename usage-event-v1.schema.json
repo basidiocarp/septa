@@ -27,9 +27,8 @@
       "minimum": 0
     },
     "tool_name": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Host-facing tool identity, for example 'claude_code' or 'codex'."
+      "$ref": "host-identifier-v1.schema.json",
+      "description": "Host-facing tool identity."
     },
     "runtime": {
       "type": "string",

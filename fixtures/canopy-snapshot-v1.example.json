@@ -18,7 +18,7 @@
   },
   "tasks": [
     {
-      "task_id": "01JNQABC9876543210FEDCBA",
+      "task_id": "01JNQABC0123456789GHFEDCBA",
       "title": "Review contract drift",
       "status": "open"
     }
@@ -26,11 +26,22 @@
   "evidence": [
     {
       "schema_version": "1.0",
-      "evidence_id": "01JNQXYZ1234567890ABCDEF",
-      "task_id": "01JNQABC9876543210FEDCBA",
+      "evidence_id": "01JNQXYZ0123456789ABCDEFGH",
+      "task_id": "01JNQABC0123456789GHFEDCBA",
       "source_kind": "manual_note",
-      "source_ref": "01JNQNOTE000000000000001",
+      "source_ref": "01JNQN0TE0000000000000001A",
       "label": "Operator note"
     }
-  ]
+  ],
+  "agents": [
+    {
+      "agent_id": "agent-001",
+      "name": "primary",
+      "status": "active",
+      "current_task_id": "01JNQABC0123456789GHFEDCBA",
+      "last_heartbeat": "2026-04-10T12:00:00Z"
+    }
+  ],
+  "handoffs": [],
+  "operator_actions": []
 }

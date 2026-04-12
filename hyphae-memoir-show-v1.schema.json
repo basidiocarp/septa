@@ -7,13 +7,53 @@
   "required": ["schema_version", "memoir", "total", "concepts"],
   "properties": {
     "schema_version": { "const": "1.0" },
-    "memoir": { "type": "object" },
-    "stats": { "type": "object" },
-    "query": { "type": ["string", "null"] },
+    "memoir": {
+      "type": "object",
+      "required": ["id", "name", "description", "created_at", "updated_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "consolidation_threshold": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "stats": {
+      "type": "object",
+      "required": ["total_concepts", "total_links", "avg_confidence", "label_counts"],
+      "properties": {
+        "total_concepts": { "type": "integer", "minimum": 0 },
+        "total_links": { "type": "integer", "minimum": 0 },
+        "avg_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "label_counts": { "type": "array" }
+      },
+      "additionalProperties": false
+    },
+    "query": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
     "limit": { "type": "integer", "minimum": 0 },
     "offset": { "type": "integer", "minimum": 0 },
     "total": { "type": "integer", "minimum": 0 },
-    "concepts": { "type": "array" }
+    "concepts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "memoir_id", "name", "definition"],
+        "properties": {
+          "id": { "type": "string" },
+          "memoir_id": { "type": "string" },
+          "name": { "type": "string" },
+          "definition": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

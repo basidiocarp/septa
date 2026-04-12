@@ -47,8 +47,8 @@
             "type": "object",
             "properties": {
               "file_path": { "type": "string" },
-              "line_start": { "type": "string" },
-              "line_end": { "type": "string" },
+              "line_start": { "type": "integer", "minimum": 1 },
+              "line_end": { "type": "integer", "minimum": 1 },
               "language": { "type": "string" }
             },
             "additionalProperties": true,

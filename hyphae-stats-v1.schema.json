@@ -14,5 +14,5 @@
     "oldest_memory": { "type": ["string", "null"] },
     "newest_memory": { "type": ["string", "null"] }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

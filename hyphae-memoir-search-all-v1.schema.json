@@ -11,7 +11,40 @@
     "limit": { "type": "integer", "minimum": 0 },
     "offset": { "type": "integer", "minimum": 0 },
     "total": { "type": "integer", "minimum": 0 },
-    "results": { "type": "array" }
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["memoir", "concept"],
+        "properties": {
+          "memoir": {
+            "type": "object",
+            "required": ["id", "name", "description", "created_at", "updated_at"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "created_at": { "type": "string", "format": "date-time" },
+              "updated_at": { "type": "string", "format": "date-time" },
+              "consolidation_threshold": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "concept": {
+            "type": "object",
+            "required": ["id", "memoir_id", "name", "definition"],
+            "properties": {
+              "id": { "type": "string" },
+              "memoir_id": { "type": "string" },
+              "name": { "type": "string" },
+              "definition": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

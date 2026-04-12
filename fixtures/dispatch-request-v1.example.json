@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "handoff_path": ".handoffs/hymenium/handoff-parser.md",
+  "workflow_template": "impl-audit",
+  "project_root": "/Users/williamnewton/projects/basidiocarp",
+  "target_repo": "hymenium",
+  "priority": "high",
+  "agent_tier_override": null,
+  "decompose": false,
+  "max_effort_per_piece": null,
+  "depends_on": []
+}
