@@ -2,113 +2,144 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/resolved-status-customization-v1.schema.json",
   "title": "Resolved Status Customization v1",
+  "description": "Host-neutral status and customization bundle. Defines segments, theme, and per-host overrides. Stipe injects this into Claude Code, Codex, and Cursor; cap previews it; lamella packages presets against it; annulus renders from it.",
   "type": "object",
   "required": [
     "schema_version",
-    "resolved_status",
-    "capabilities",
-    "customization",
-    "origin"
+    "segments",
+    "theme"
   ],
   "properties": {
     "schema_version": {
+      "type": "string",
       "const": "1.0"
     },
-    "resolved_status": {
+    "segments": {
+      "type": "array",
+      "description": "Ordered list of status segments. Consumers render segments in array order.",
+      "items": {
+        "$ref": "#/$defs/segment"
+      }
+    },
+    "theme": {
+      "$ref": "#/$defs/theme"
+    },
+    "host_overrides": {
       "type": "object",
-      "required": [
-        "state",
-        "summary"
-      ],
+      "description": "Optional per-host field overrides. Keys are canonical host names. Values may override any top-level fields for that host.",
       "properties": {
-        "state": {
-          "type": "string",
-          "enum": ["ok", "warn", "error", "partial", "unknown"]
+        "claude_code": {
+          "$ref": "#/$defs/host_override"
         },
-        "summary": {
-          "type": "string"
+        "codex": {
+          "$ref": "#/$defs/host_override"
         },
-        "detail": {
-          "type": ["string", "null"]
+        "cursor": {
+          "$ref": "#/$defs/host_override"
         }
       },
       "additionalProperties": false
     },
-    "capabilities": {
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "segment": {
       "type": "object",
+      "description": "A single status segment. The id must match a known annulus segment name.",
       "required": [
-        "supports_color",
-        "supports_multiline",
-        "supports_links",
-        "supports_cost_display"
+        "id",
+        "enabled"
       ],
       "properties": {
-        "supports_color": {
-          "type": "boolean"
+        "id": {
+          "type": "string",
+          "description": "Segment identifier. Matches annulus segment names.",
+          "enum": [
+            "context",
+            "git",
+            "mycelium",
+            "hyphae",
+            "canopy",
+            "volva"
+          ]
         },
-        "supports_multiline": {
-          "type": "boolean"
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether this segment is rendered."
         },
-        "supports_links": {
-          "type": "boolean"
-        },
-        "supports_cost_display": {
-          "type": "boolean"
+        "config": {
+          "type": "object",
+          "description": "Segment-specific optional configuration (e.g. display format, threshold values). Contents are segment-dependent.",
+          "additionalProperties": true
         }
       },
       "additionalProperties": false
     },
-    "customization": {
+    "theme": {
       "type": "object",
+      "description": "Color and formatting preferences for the statusline.",
       "required": [
-        "source_kind",
-        "editable"
+        "color_mode",
+        "separator"
       ],
       "properties": {
-        "source_kind": {
+        "color_mode": {
           "type": "string",
-          "enum": ["default", "preset", "bundle", "manual"]
+          "description": "Color rendering mode.",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ]
         },
-        "preset_id": {
-          "type": ["string", "null"]
-        },
-        "bundle_id": {
-          "type": ["string", "null"]
-        },
-        "editable": {
-          "type": "boolean"
-        },
-        "notes": {
-          "type": ["string", "null"]
+        "separator": {
+          "type": "string",
+          "description": "String placed between adjacent segments."
         }
       },
       "additionalProperties": false
     },
-    "origin": {
+    "host_override": {
       "type": "object",
-      "required": [
-        "resolver",
-        "host",
-        "resolved_at"
-      ],
+      "description": "Per-host field overrides. Only the fields that differ from the top-level bundle need to be present.",
       "properties": {
-        "resolver": {
-          "type": "string"
+        "theme": {
+          "$ref": "#/$defs/theme"
         },
-        "host": {
-          "$ref": "host-identifier-v1.schema.json",
-          "description": "AI coding agent host that resolved this status."
-        },
-        "resolved_at": {
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/segment"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata about the bundle origin and identity.",
+      "properties": {
+        "created_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when this bundle was created."
         },
-        "config_path": {
-          "type": ["string", "null"]
+        "version": {
+          "type": "string",
+          "description": "Bundle version string."
+        },
+        "preset_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Optional lamella preset name this bundle was built from."
         }
       },
       "additionalProperties": false
     }
-  },
-  "additionalProperties": false
+  }
 }

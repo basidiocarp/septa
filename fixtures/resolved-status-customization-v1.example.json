@@ -1,27 +1,57 @@
 {
   "schema_version": "1.0",
-  "resolved_status": {
-    "state": "ok",
-    "summary": "Claude Code statusline is installed and using the portable default bundle.",
-    "detail": "The current host can render multiline output, color, links, and session cost details."
+  "segments": [
+    {
+      "id": "context",
+      "enabled": true,
+      "config": {
+        "format": "percent",
+        "warn_threshold": 80,
+        "danger_threshold": 95
+      }
+    },
+    {
+      "id": "git",
+      "enabled": true,
+      "config": {
+        "show_branch": true
+      }
+    },
+    {
+      "id": "mycelium",
+      "enabled": false
+    },
+    {
+      "id": "hyphae",
+      "enabled": true,
+      "config": {
+        "show_memory_count": true
+      }
+    },
+    {
+      "id": "canopy",
+      "enabled": false
+    },
+    {
+      "id": "volva",
+      "enabled": false
+    }
+  ],
+  "theme": {
+    "color_mode": "auto",
+    "separator": " | "
   },
-  "capabilities": {
-    "supports_color": true,
-    "supports_multiline": true,
-    "supports_links": true,
-    "supports_cost_display": true
+  "host_overrides": {
+    "claude_code": {
+      "theme": {
+        "color_mode": "always",
+        "separator": "  "
+      }
+    }
   },
-  "customization": {
-    "source_kind": "preset",
-    "preset_id": "portable-status-default",
-    "bundle_id": "lamella:portable-status-default",
-    "editable": true,
-    "notes": "Bundle metadata stays portable even when Stipe resolves host-specific config paths."
-  },
-  "origin": {
-    "resolver": "stipe",
-    "host": "claude_code",
-    "resolved_at": "2026-04-10T12:00:00Z",
-    "config_path": "/workspace/.claude/settings.json"
+  "metadata": {
+    "created_at": "2026-04-13T00:00:00Z",
+    "version": "1.0.0",
+    "preset_name": "portable-status-default"
   }
 }
