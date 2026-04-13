@@ -1,0 +1,50 @@
+{
+  "schema": "annulus-statusline-v1",
+  "version": "1",
+  "segments": [
+    {
+      "name": "context",
+      "available": false,
+      "reason": "no transcript available"
+    },
+    {
+      "name": "usage",
+      "available": false,
+      "reason": "no transcript available"
+    },
+    {
+      "name": "cost",
+      "available": false,
+      "reason": "pricing not available for model"
+    },
+    {
+      "name": "model",
+      "available": true,
+      "value": {
+        "display_name": "unknown"
+      }
+    },
+    {
+      "name": "savings",
+      "available": false,
+      "reason": "mycelium database not found at /Users/williamnewton/.local/share/mycelium/history.db"
+    },
+    {
+      "name": "branch",
+      "available": false,
+      "reason": "not in a git repository"
+    },
+    {
+      "name": "workspace",
+      "available": true,
+      "value": {
+        "name": "tmp"
+      }
+    },
+    {
+      "name": "context-bar",
+      "available": false,
+      "reason": "no transcript available"
+    }
+  ]
+}

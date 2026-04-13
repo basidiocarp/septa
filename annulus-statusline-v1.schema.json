@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/annulus-statusline-v1.schema.json",
+  "title": "annulus-statusline-v1",
+  "description": "Annulus emits a versioned statusline snapshot as JSON via `annulus statusline --json`. Producer: annulus/src/statusline.rs. Consumer: cap (dashboard), scripts, and tools that need structured ecosystem state.",
+  "type": "object",
+  "required": ["schema", "version", "segments"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "annulus-statusline-v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/segment"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "segment": {
+      "type": "object",
+      "required": ["name", "available"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": [
+            "context",
+            "usage",
+            "cost",
+            "model",
+            "savings",
+            "branch",
+            "workspace",
+            "context-bar"
+          ]
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "value": {
+          "oneOf": [
+            { "$ref": "#/$defs/context-value" },
+            { "$ref": "#/$defs/usage-value" },
+            { "$ref": "#/$defs/cost-value" },
+            { "$ref": "#/$defs/model-value" },
+            { "$ref": "#/$defs/savings-value" },
+            { "$ref": "#/$defs/branch-value" },
+            { "$ref": "#/$defs/workspace-value" },
+            { "$ref": "#/$defs/context-bar-value" }
+          ]
+        },
+        "reason": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": { "const": true }
+            }
+          },
+          "then": {
+            "required": ["name", "available", "value"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "available": { "const": false }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": ["name", "available", "reason"]
+          }
+        }
+      ]
+    },
+    "context-value": {
+      "type": "object",
+      "required": ["percent", "prompt_tokens", "context_limit"],
+      "properties": {
+        "percent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "prompt_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "context_limit": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "usage-value": {
+      "type": "object",
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "cache_read_tokens",
+        "cache_creation_tokens"
+      ],
+      "properties": {
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_read_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_creation_tokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "cost-value": {
+      "type": "object",
+      "required": ["dollars", "model"],
+      "properties": {
+        "dollars": {
+          "type": "number",
+          "minimum": 0
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "model-value": {
+      "type": "object",
+      "required": ["display_name"],
+      "properties": {
+        "display_name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "savings-value": {
+      "type": "object",
+      "required": ["saved_tokens", "input_tokens"],
+      "properties": {
+        "saved_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "branch-value": {
+      "type": "object",
+      "required": ["branch"],
+      "properties": {
+        "branch": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "workspace-value": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "context-bar-value": {
+      "type": "object",
+      "required": ["percent", "fill_chars", "total_chars", "color_tier"],
+      "properties": {
+        "percent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "fill_chars": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_chars": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "color_tier": {
+          "type": "string",
+          "enum": ["ok", "warning", "danger"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

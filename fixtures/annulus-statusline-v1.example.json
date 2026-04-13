@@ -1,0 +1,72 @@
+{
+  "schema": "annulus-statusline-v1",
+  "version": "1",
+  "segments": [
+    {
+      "name": "context",
+      "available": true,
+      "value": {
+        "percent": 67,
+        "prompt_tokens": 134000,
+        "context_limit": 200000
+      }
+    },
+    {
+      "name": "usage",
+      "available": true,
+      "value": {
+        "input_tokens": 225000,
+        "output_tokens": 37000,
+        "cache_read_tokens": 130000,
+        "cache_creation_tokens": 19000
+      }
+    },
+    {
+      "name": "cost",
+      "available": true,
+      "value": {
+        "dollars": 1.23,
+        "model": "sonnet 4.6"
+      }
+    },
+    {
+      "name": "model",
+      "available": true,
+      "value": {
+        "display_name": "sonnet 4.6"
+      }
+    },
+    {
+      "name": "savings",
+      "available": true,
+      "value": {
+        "saved_tokens": 45000,
+        "input_tokens": 225000
+      }
+    },
+    {
+      "name": "branch",
+      "available": true,
+      "value": {
+        "branch": "main"
+      }
+    },
+    {
+      "name": "workspace",
+      "available": true,
+      "value": {
+        "name": "basidiocarp"
+      }
+    },
+    {
+      "name": "context-bar",
+      "available": true,
+      "value": {
+        "percent": 67,
+        "fill_chars": 8,
+        "total_chars": 12,
+        "color_tier": "warning"
+      }
+    }
+  ]
+}
