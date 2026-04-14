@@ -78,7 +78,7 @@ change shape   ─►    update version     ─►  update dependents
 
 | Family | Contracts |
 |--------|-----------|
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `resolved-status-customization-v1`, `session-event-v1`, `usage-event-v1`, `volva-hook-event-v1`, `workflow-participant-runtime-identity-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `resolved-status-customization-v1`, `session-event-v1`, `usage-event-v1`, `volva-hook-event-v1`, `workflow-participant-runtime-identity-v1` |
 | Canopy → Cap | `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Hyphae → Cap | `hyphae-activity-v1`, `hyphae-analytics-v1`, `hyphae-context-v1`, `hyphae-health-v1`, `hyphae-lessons-v1`, `hyphae-memory-lookup-v1`, `hyphae-memoir-inspect-v1`, `hyphae-memoir-list-v1`, `hyphae-memoir-search-v1`, `hyphae-memoir-search-all-v1`, `hyphae-memoir-show-v1`, `hyphae-search-v1`, `hyphae-session-list-v1`, `hyphae-session-timeline-v1`, `hyphae-sources-v1`, `hyphae-stats-v1`, `hyphae-topic-memories-v1`, `hyphae-topics-v1` |
 | Mycelium → Cap | `mycelium-gain-v1` |
@@ -145,6 +145,27 @@ check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hoo
 check-jsonschema --schemafile usage-event-v1.schema.json fixtures/usage-event-v1.example.json
 check-jsonschema --schemafile workflow-participant-runtime-identity-v1.schema.json fixtures/workflow-participant-runtime-identity-v1.example.json
 ```
+
+## Fail-Open Hook Execution Contract
+
+The `hook-execution-v1` contract codifies the fail-open invariant for all hook runners in the ecosystem. Hooks must never block host commands regardless of how they fail.
+
+| Field | Value | Meaning |
+|-------|-------|---------|
+| `timeout_ms` | 1–30000 (default 10000) | Wall-clock limit before the hook process is killed |
+| `on_timeout` | `"proceed"` (required) | Kill hook, log warning, allow host command to continue |
+| `on_error` | `"proceed"` (required) | Log warning on non-zero exit, allow host command to continue |
+| `exit_code_semantics.non_zero` | `"advisory_failure"` | Non-zero exit is informational only, never blocking |
+| `stderr_disposition` | `"log"` or `"suppress"` | stderr is never forwarded to the user as an error |
+
+**Producers:** cortina hook runner, volva hook adapters, lamella hook templates.
+**Consumers:** stipe doctor (validates timeout bounds at install time), cortina (enforces fail-open at runtime).
+
+Schema: [`hook-execution-v1.schema.json`](hook-execution-v1.schema.json)
+Fixture: [`fixtures/hook-execution-v1.example.json`](fixtures/hook-execution-v1.example.json)
+
+
+---
 
 ## License
 

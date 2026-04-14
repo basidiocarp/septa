@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "hook_id": "cortina-pre-tool-use",
+  "timeout_ms": 10000,
+  "on_timeout": "proceed",
+  "on_error": "proceed",
+  "exit_code_semantics": {
+    "zero": "ok",
+    "non_zero": "advisory_failure"
+  },
+  "stderr_disposition": "log"
+}
