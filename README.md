@@ -32,8 +32,10 @@ Septa is the shared contract layer for the workspace.
 | **[hyphae](https://github.com/basidiocarp/hyphae)** | Persistent agent memory |
 | **[rhizome](https://github.com/basidiocarp/rhizome)** | Code intelligence via tree-sitter and LSP |
 | **[spore](https://github.com/basidiocarp/spore)** | Shared transport, discovery, config, and infrastructure primitives |
+| **[annulus](https://github.com/basidiocarp/annulus)** | Cross-ecosystem operator utilities |
 | **[canopy](https://github.com/basidiocarp/canopy)** | Multi-agent coordination runtime |
 | **[cortina](https://github.com/basidiocarp/cortina)** | Lifecycle signal capture and session attribution |
+| **[hymenium](https://github.com/basidiocarp/hymenium)** | Workflow orchestration engine |
 | **[volva](https://github.com/basidiocarp/volva)** | Execution-host runtime layer |
 | **[cap](https://github.com/basidiocarp/cap)** | Dashboard and UI for ecosystem read models and operator workflows |
 | **[lamella](https://github.com/basidiocarp/lamella)** | Skills, hooks, and plugins for Claude Code |
