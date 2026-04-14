@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-archive-v1.schema.json",
+  "title": "Hyphae Archive v1",
+  "description": "Portable export/import archive format for hyphae memories, memoirs, and sessions. Producer: hyphae export command. Consumer: hyphae import command and migration tooling.",
+  "type": "object",
+  "required": ["schema_version", "exported_at", "identity", "filter", "memories", "memoirs", "sessions"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when the archive was produced."
+    },
+    "identity": {
+      "type": "object",
+      "description": "Source instance identity to preserve provenance across import.",
+      "required": ["project"],
+      "properties": {
+        "project": {
+          "type": ["string", "null"],
+          "description": "Project scope used at export time. Null means global export."
+        },
+        "project_root": {
+          "type": ["string", "null"],
+          "description": "Canonical filesystem path to the project root at export time."
+        },
+        "hyphae_version": {
+          "type": ["string", "null"],
+          "description": "Hyphae version that produced this archive."
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "description": "Filters applied when producing the archive. Documents what was included or excluded.",
+      "properties": {
+        "topic": {
+          "type": ["string", "null"],
+          "description": "Topic filter applied, if any."
+        },
+        "since": {
+          "type": ["string", "null"],
+          "description": "Only include records created after this datetime, if set."
+        },
+        "importance_minimum": {
+          "type": ["string", "null"],
+          "enum": ["critical", "high", "medium", "low", "ephemeral", null],
+          "description": "Minimum importance level included in the archive. Null means no filter applied."
+        }
+      },
+      "additionalProperties": false
+    },
+    "memories": {
+      "type": "array",
+      "description": "Exported memory records.",
+      "items": {
+        "type": "object",
+        "required": ["id", "topic", "content", "importance", "created_at"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low", "ephemeral"]
+          },
+          "keywords": {
+            "type": ["string", "null"],
+            "description": "Comma-separated keywords."
+          },
+          "project": {
+            "type": ["string", "null"]
+          },
+          "weight": {
+            "type": ["number", "null"],
+            "description": "Decay-adjusted weight at export time."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "memoirs": {
+      "type": "array",
+      "description": "Exported memoir records with their concepts and links.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description", "created_at", "updated_at", "concepts", "links"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "concepts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "definition"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "name": { "type": "string", "minLength": 1 },
+                "definition": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["from_id", "to_id", "relationship"],
+              "properties": {
+                "from_id": { "type": "string", "minLength": 1 },
+                "to_id": { "type": "string", "minLength": 1 },
+                "relationship": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "description": "Exported session records.",
+      "items": {
+        "type": "object",
+        "required": ["id", "project", "started_at", "status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "project": { "type": "string", "minLength": 1 },
+          "project_root": { "type": ["string", "null"] },
+          "worktree_id": { "type": ["string", "null"] },
+          "task": { "type": ["string", "null"] },
+          "started_at": { "type": "string", "format": "date-time" },
+          "ended_at": { "type": ["string", "null"] },
+          "summary": { "type": ["string", "null"] },
+          "files_modified": {
+            "type": ["array", "null"],
+            "items": { "type": "string" },
+            "description": "Files modified during the session."
+          },
+          "errors": {
+            "type": ["array", "null"],
+            "items": { "type": "string" },
+            "description": "Errors encountered during the session."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "completed", "abandoned"],
+            "description": "Session outcome status."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

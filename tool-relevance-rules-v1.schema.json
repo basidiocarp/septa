@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/tool-relevance-rules-v1.schema.json",
+  "title": "Tool Relevance Rules v1",
+  "description": "Configuration mapping host operations and file patterns to recommended ecosystem tools. Used to determine which tools are relevant-but-unused for a given session. Producer: lamella rule packages. Consumer: cortina session analysis.",
+  "type": "object",
+  "required": ["schema_version", "rules"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "rules": {
+      "type": "array",
+      "description": "Ordered list of relevance rules. Earlier rules take precedence on conflict.",
+      "items": {
+        "type": "object",
+        "required": ["operation", "recommended_tools", "severity", "check_window"],
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": ["Write", "Edit", "Bash", "Read", "git_commit", "git_push", "file_create", "file_delete"],
+            "description": "Host tool operation this rule applies to."
+          },
+          "file_pattern": {
+            "type": "string",
+            "description": "Optional glob pattern. Rule applies only when the operation targets a matching file path."
+          },
+          "command_pattern": {
+            "type": "string",
+            "description": "Optional shell command prefix pattern. Rule applies only when the Bash operation matches this prefix (e.g., 'cargo *')."
+          },
+          "recommended_tools": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Tools that should be used when this operation occurs.",
+            "items": {
+              "type": "object",
+              "required": ["tool_name", "source", "reason"],
+              "properties": {
+                "tool_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source": {
+                  "type": "string",
+                  "enum": ["hyphae", "rhizome", "cortina", "mycelium", "canopy", "volva", "spore", "other"]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Why this tool is recommended for this operation."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["required", "recommended", "optional"],
+            "description": "How strongly the tool usage is expected."
+          },
+          "check_window": {
+            "type": "string",
+            "enum": ["session", "recent_10", "recent_5"],
+            "description": "How far back in the session to check when determining unused status."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

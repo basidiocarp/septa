@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "exported_at": "2026-04-14T10:00:00Z",
+  "identity": {
+    "project": "basidiocarp",
+    "project_root": "/Users/dev/projects/basidiocarp",
+    "hyphae_version": "0.10.9"
+  },
+  "filter": {
+    "topic": null,
+    "since": null,
+    "importance_minimum": "low"
+  },
+  "memories": [
+    {
+      "id": "01HZQR8BT5VKPN2XDMJ9WCFG3",
+      "topic": "decisions/basidiocarp",
+      "content": "Septa owns wire formats and fixtures only. Producer and consumer repos own the code.",
+      "importance": "high",
+      "keywords": "septa,contracts,architecture",
+      "project": "basidiocarp",
+      "weight": 0.87,
+      "created_at": "2026-04-01T08:00:00Z",
+      "updated_at": "2026-04-10T09:00:00Z"
+    }
+  ],
+  "memoirs": [
+    {
+      "id": "01HZQR8BT5VKPN2XDMJ9WCFG5",
+      "name": "Basidiocarp Architecture",
+      "description": "Core architecture decisions and tool boundaries for the basidiocarp ecosystem.",
+      "created_at": "2026-04-01T08:00:00Z",
+      "updated_at": "2026-04-14T10:00:00Z",
+      "concepts": [
+        {
+          "id": "c1",
+          "name": "Septa",
+          "definition": "Shared contract layer owning versioned JSON schemas and fixtures."
+        }
+      ],
+      "links": []
+    }
+  ],
+  "sessions": [
+    {
+      "id": "01HZQR8BT5VKPN2XDMJ9WCFG7",
+      "project": "basidiocarp",
+      "project_root": "/Users/dev/projects/basidiocarp",
+      "worktree_id": "main",
+      "task": "Add tool-usage-event schema to septa",
+      "started_at": "2026-04-14T09:00:00Z",
+      "ended_at": "2026-04-14T10:00:00Z",
+      "summary": "Defined tool-usage-event-v1 and tool-relevance-rules-v1 contracts.",
+      "files_modified": ["septa/tool-usage-event-v1.schema.json", "septa/tool-relevance-rules-v1.schema.json"],
+      "errors": null,
+      "status": "completed"
+    }
+  ]
+}

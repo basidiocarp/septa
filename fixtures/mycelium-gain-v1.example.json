@@ -49,5 +49,21 @@
       "savings_pct": 78.4,
       "total_time_ms": 1568
     }
+  ],
+  "by_project": [
+    {
+      "project_path": "/Users/dev/projects/cap",
+      "commands": 9,
+      "saved_tokens": 8820,
+      "avg_savings_pct": 79.1,
+      "last_used": "2026-03-30T12:34:56Z"
+    },
+    {
+      "project_path": "/Users/dev/projects/mycelium",
+      "commands": 5,
+      "saved_tokens": 3270,
+      "avg_savings_pct": 74.3,
+      "last_used": "2026-03-29T09:12:00Z"
+    }
   ]
 }

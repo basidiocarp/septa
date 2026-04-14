@@ -241,6 +241,14 @@ This contract is intentionally small in v1. It carries resolved status, render c
 
 ---
 
+## Timestamp Convention
+
+New schemas prefer **ISO 8601 datetime strings** (`"format": "date-time"`) for all timestamp fields. Epoch-based fields like `captured_at_unix` in existing schemas (e.g., `usage-event-v1`) are stable and will not be migrated.
+
+When adding a timestamp to a new or updated schema, use `"type": "string", "format": "date-time"` and document the field as ISO 8601. Do not introduce new epoch-based timestamp fields.
+
+---
+
 ## Adding New Patterns
 
 When adding a new cross-tool integration:

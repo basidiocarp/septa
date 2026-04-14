@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/tool-usage-event-v1.schema.json",
+  "title": "Tool Usage Event v1",
+  "description": "Per-session record of which ecosystem tools were available, called, and relevant but unused. Producer: cortina hook runner. Consumer: canopy tool-adoption scoring and cap tool-coverage surfaces.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "host",
+    "timestamp",
+    "tools_available",
+    "tools_called",
+    "tools_relevant_unused"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "ULID identifying the session this event belongs to."
+    },
+    "host": {
+      "$ref": "host-identifier-v1.schema.json",
+      "description": "AI coding agent host that produced this event."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when this event was captured."
+    },
+    "tools_available": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "All ecosystem tools visible to the agent at session start.",
+      "items": {
+        "type": "object",
+        "required": ["tool_name", "source"],
+        "properties": {
+          "tool_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "enum": ["hyphae", "rhizome", "cortina", "mycelium", "canopy", "volva", "spore", "other"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tools_called": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "Tools actually invoked during the session with call counts and timing.",
+      "items": {
+        "type": "object",
+        "required": ["tool_name", "source", "call_count", "first_call_at", "last_call_at"],
+        "properties": {
+          "tool_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "enum": ["hyphae", "rhizome", "cortina", "mycelium", "canopy", "volva", "spore", "other"]
+          },
+          "call_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "first_call_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 datetime of the first call to this tool."
+          },
+          "last_call_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 datetime of the most recent call to this tool."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tools_relevant_unused": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "Tools that were applicable to the session work but never called.",
+      "items": {
+        "type": "object",
+        "required": ["tool_name", "source", "relevance_reason"],
+        "properties": {
+          "tool_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "enum": ["hyphae", "rhizome", "cortina", "mycelium", "canopy", "volva", "spore", "other"]
+          },
+          "relevance_reason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why this tool was considered relevant to the session."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Optional ULID identifying the canopy task this session was working on."
+    }
+  },
+  "additionalProperties": false
+}

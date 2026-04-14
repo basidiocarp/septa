@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "command": "cargo test",
+  "summary": "All 42 tests passed in 3 crates (mycelium, mycelium-core, mycelium-cli). No failures. Build completed in 4.2s.",
+  "input_tokens": 8400,
+  "output_tokens": 48,
+  "tokens_saved": 8352,
+  "savings_pct": 99.4,
+  "captured_at": "2026-04-14T10:05:00Z",
+  "project": "mycelium",
+  "project_root": "/Users/dev/projects/basidiocarp/mycelium",
+  "worktree_id": "main",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "exit_code": 0,
+  "exec_time_ms": 4200
+}

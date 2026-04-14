@@ -128,6 +128,21 @@
         },
         "additionalProperties": false
       }
+    },
+    "by_project": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["project_path", "commands", "saved_tokens", "avg_savings_pct", "last_used"],
+        "properties": {
+          "project_path": { "type": "string" },
+          "commands": { "type": "integer", "minimum": 0 },
+          "saved_tokens": { "type": "integer", "minimum": 0 },
+          "avg_savings_pct": { "type": "number" },
+          "last_used": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false
