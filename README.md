@@ -80,7 +80,8 @@ change shape   ─►    update version     ─►  update dependents
 
 | Family | Contracts |
 |--------|-----------|
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1`, `workflow-participant-runtime-identity-v1` |
+| Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `workflow-outcome-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap | `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Hyphae → Cap | `hyphae-activity-v1`, `hyphae-analytics-v1`, `hyphae-context-v1`, `hyphae-health-v1`, `hyphae-lessons-v1`, `hyphae-memory-lookup-v1`, `hyphae-memoir-inspect-v1`, `hyphae-memoir-list-v1`, `hyphae-memoir-search-v1`, `hyphae-memoir-search-all-v1`, `hyphae-memoir-show-v1`, `hyphae-search-v1`, `hyphae-session-list-v1`, `hyphae-session-timeline-v1`, `hyphae-sources-v1`, `hyphae-stats-v1`, `hyphae-topic-memories-v1`, `hyphae-topics-v1` |
 | Hyphae export/import | `hyphae-archive-v1` |
@@ -97,7 +98,9 @@ change shape   ─►    update version     ─►  update dependents
 - The rule that boundary changes are explicit and coordinated
 - Normalized usage and cost event boundaries before summary and UI layers
 - Portable resolved status and customization boundaries before host-specific rendering
-- Workflow, participant, and runtime-session identity boundaries shared across tools
+- Orchestration contracts: workflow intake (`dispatch-request-v1`), runtime status (`workflow-status-v1`), template definitions (`workflow-template-v1`), task packets (`task-packet-v1`), and workflow outcomes (`workflow-outcome-v1`)
+
+The orchestration authority split is: Hymenium owns workflow lifecycle decisions and emits status and outcome payloads; Canopy owns the coordination ledger and reads those payloads; Septa owns the wire shapes that connect them.
 
 ## What Septa Does Not Own
 

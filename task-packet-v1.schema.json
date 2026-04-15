@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/task-packet-v1.schema.json",
+  "title": "Task Packet v1",
+  "description": "Concrete unit of work delivered to a Worker by the Packet Compiler. Carries the complete context a Worker needs to execute a phase: goal, constraints, dependencies, acceptance criteria, capability requirements, context budget, and escalation conditions. Producer: Hymenium (via Packet Compiler role). Consumer: Worker agent.",
+  "type": "object",
+  "required": ["schema_version", "task_id", "workflow_id", "phase_id", "goal", "constraints", "dependencies", "acceptance_criteria", "capability_requirements", "escalation_conditions"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique task identifier (ULID format)."
+    },
+    "workflow_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Parent workflow identifier (ULID format)."
+    },
+    "phase_id": {
+      "type": "string",
+      "description": "Which phase within the workflow this packet belongs to (e.g., 'implement', 'audit')."
+    },
+    "goal": {
+      "type": "string",
+      "description": "Concrete description of what success looks like for this task. Should be specific enough that a Worker can determine when the goal is met."
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Hard rules the Worker must respect: allowed write scope, non-goals, and prohibited actions."
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Other task IDs or artifact references this packet depends on (must be resolved before execution)."
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Exact conditions that must be satisfied for the Output Verifier to accept this task's output."
+    },
+    "capability_requirements": {
+      "type": "object",
+      "required": ["tier", "tools"],
+      "properties": {
+        "tier": {
+          "type": "string",
+          "enum": ["opus", "sonnet", "haiku"],
+          "description": "Minimum agent tier required to execute this task."
+        },
+        "tools": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tool names the Worker must have access to (e.g., 'bash', 'read', 'write')."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Capability requirements for the Worker executing this task."
+    },
+    "context_budget": {
+      "type": "object",
+      "required": ["max_tokens", "max_turns"],
+      "properties": {
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum token budget for this task execution."
+        },
+        "max_turns": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of turns allowed for this task execution."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Optional context budget limits. Omit to apply template defaults."
+    },
+    "escalation_conditions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Conditions under which the Worker must stop and escalate rather than retry (e.g., 'spec ambiguity', 'dependency missing')."
+    }
+  },
+  "additionalProperties": false
+}

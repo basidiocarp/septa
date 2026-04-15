@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/workflow-outcome-v1.schema.json",
+  "title": "Workflow Outcome v1",
+  "description": "Terminal outcome emitted when a workflow reaches a final state (completed, failed, or cancelled). Producer: Hymenium (single orchestration authority). Consumer: Canopy (ledger), Cap (operator UI), orchestration learning loop. Feeds failure analysis, retry policy tuning, and outcome history.",
+  "type": "object",
+  "required": ["schema_version", "workflow_id", "template_id", "handoff_path", "terminal_status", "failure_type", "attempt_count", "route_taken", "started_at", "completed_at"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "workflow_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Workflow instance identifier (ULID format)."
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Workflow template that was used (e.g., 'impl-audit')."
+    },
+    "handoff_path": {
+      "type": "string",
+      "description": "Path to the handoff markdown file that initiated this workflow."
+    },
+    "terminal_status": {
+      "type": "string",
+      "enum": ["completed", "failed", "cancelled"],
+      "description": "Final state of the workflow."
+    },
+    "failure_type": {
+      "type": ["string", "null"],
+      "enum": ["gate_violation", "verification_failed", "stall_timeout", "operator_cancelled", "audit_rejected", "infrastructure_error", "unknown", null],
+      "description": "Failure category when terminal_status is 'failed' or 'cancelled'. Null when terminal_status is 'completed'. 'gate_violation': entry or exit gate condition failed. 'verification_failed': Output Verifier or Final Verifier rejected the output. 'stall_timeout': context budget exhausted or no progress within limits. 'operator_cancelled': explicit operator cancellation. 'audit_rejected': repair loop exhausted or auditor rejected output after max attempts. 'infrastructure_error': transient host or tool failure. 'unknown': failure cause could not be determined."
+    },
+    "attempt_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of phase dispatches across the entire workflow lifetime, including retries and repair attempts."
+    },
+    "route_taken": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "role", "status"],
+        "properties": {
+          "phase_id": {
+            "type": "string",
+            "description": "Phase identifier from the workflow template."
+          },
+          "role": {
+            "type": "string",
+            "enum": ["Spec Author", "Workflow Planner", "Packet Compiler", "Decomposition Checker", "Workflow Coordinator", "Worker", "Output Verifier", "Repair Worker", "Final Verifier"],
+            "description": "Runtime role that executed this phase."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["completed", "failed", "skipped"],
+            "description": "Outcome of this phase in the route."
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Ordered trace of phase-role pairs that ran during this workflow, in execution order."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Output Verifier or Final Verifier confidence score (0.0–1.0). Omit when no verifier ran or confidence was not reported."
+    },
+    "root_cause_layer": {
+      "type": ["string", "null"],
+      "enum": ["spec", "decomposition", "execution", "verification", "infrastructure", null],
+      "description": "Layer where the root cause was identified when the workflow failed or required repair. Null when terminal_status is 'completed' and no repair was needed. 'spec': ambiguity or error in the handoff spec. 'decomposition': task packet compilation or decomposition error. 'execution': Worker execution failure. 'verification': verifier false-positive or misconfigured criteria. 'infrastructure': host tool or environment failure."
+    },
+    "started_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp when this workflow was created."
+    },
+    "completed_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp when this workflow reached its terminal state."
+    },
+    "runtime_identity": {
+      "type": ["object", "null"],
+      "description": "Optional runtime or session identity fields that explain the execution context for this outcome. Useful for retrospective route analysis when host, worktree, or session context determined which path was taken.",
+      "properties": {
+        "runtime_session_id": {
+          "type": ["string", "null"],
+          "description": "Execution-host runtime session identity when the producer can expose one."
+        },
+        "project_root": {
+          "type": ["string", "null"],
+          "description": "Canonical repository or workspace root for the workflow scope."
+        },
+        "worktree_id": {
+          "type": ["string", "null"],
+          "description": "Git worktree identifier when the workflow is scoped to one worktree."
+        },
+        "host_ref": {
+          "type": ["string", "null"],
+          "description": "Execution host or adapter identity, for example 'volva:anthropic'."
+        },
+        "workspace_id": {
+          "type": ["string", "null"],
+          "description": "Workspace or multi-repo scoping identifier when the workflow spans more than one project root."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

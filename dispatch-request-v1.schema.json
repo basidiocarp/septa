@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/dispatch-request-v1.schema.json",
   "title": "Dispatch Request v1",
-  "description": "Request to dispatch a workflow instance for a handoff. Includes workflow template reference, target repository, and configuration for agent tier, decomposition, and dependencies. Producer: handoff system, operator. Consumer: canopy, dispatch engine.",
+  "description": "Workflow intake request. Producer: operator or .handoffs/ spec intake. Consumer: Hymenium (single orchestration authority). Carries the minimal fields Hymenium needs to instantiate a workflow: which handoff, which template, where to run it, scheduling priority, and any workflow dependencies.",
   "type": "object",
-  "required": ["schema_version", "handoff_path", "workflow_template", "project_root", "target_repo", "priority", "decompose"],
+  "required": ["schema_version", "handoff_path", "workflow_template", "project_root", "target_repo", "priority", "depends_on"],
   "properties": {
     "schema_version": {
       "const": "1.0",
@@ -12,11 +12,11 @@
     },
     "handoff_path": {
       "type": "string",
-      "description": "Path to the handoff markdown file relative to project root (e.g., '.handoffs/hymenium/handoff-parser.md')."
+      "description": "Path to the handoff markdown file relative to workspace root (e.g., '.handoffs/hymenium/handoff-parser.md')."
     },
     "workflow_template": {
       "type": "string",
-      "description": "Reference to a workflow template ID (must exist in workflow-template-v1 contracts)."
+      "description": "Workflow template ID to instantiate (e.g., 'impl-audit'). Must match a template known to Hymenium."
     },
     "project_root": {
       "type": "string",
@@ -31,25 +31,18 @@
       "enum": ["low", "medium", "high", "critical"],
       "description": "Dispatch priority for scheduling and resource allocation."
     },
-    "agent_tier_override": {
-      "enum": ["opus", "sonnet", "haiku", null],
-      "description": "Override the agent tier specified in the workflow template. Null means use template defaults."
-    },
-    "decompose": {
-      "type": "boolean",
-      "description": "If true, attempt to break the work into smaller independent pieces."
-    },
-    "max_effort_per_piece": {
-      "type": ["string", "null"],
-      "description": "Maximum effort budget per decomposed piece (e.g., '30m', '2h'). Null means no limit."
-    },
     "depends_on": {
       "type": "array",
       "items": {
         "type": "string",
         "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$"
       },
-      "description": "Array of workflow IDs (ULIDs) that must complete before this one can start."
+      "description": "Workflow IDs (ULIDs) that must complete before this workflow can start. Empty array means no dependencies."
+    },
+    "agent_tier_override": {
+      "type": "string",
+      "enum": ["opus", "sonnet", "haiku"],
+      "description": "Override the agent tier specified in the workflow template. Omit to use the template default."
     }
   },
   "additionalProperties": false

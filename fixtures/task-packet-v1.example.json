@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "task_id": "01JNQWF0000000000000000010",
+  "workflow_id": "01JNQWF0000000000000000001",
+  "phase_id": "implement",
+  "goal": "Implement the handoff parser in hymenium so it reads .handoffs/*.md files and emits structured HandoffSpec values.",
+  "constraints": [
+    "Write scope limited to hymenium/src/",
+    "Do not modify septa schemas",
+    "Do not implement the dispatch engine — parsing only"
+  ],
+  "dependencies": [],
+  "acceptance_criteria": [
+    "cargo test passes in hymenium/",
+    "HandoffSpec fields match the .handoffs/ markdown spec",
+    "Invalid handoff files return a typed error, not a panic"
+  ],
+  "capability_requirements": {
+    "tier": "sonnet",
+    "tools": ["bash", "read", "write", "edit"]
+  },
+  "context_budget": {
+    "max_tokens": 100000,
+    "max_turns": 40
+  },
+  "escalation_conditions": [
+    "Handoff spec is ambiguous or contradicts itself",
+    "Required dependency task is not yet complete",
+    "Three consecutive test failures after repair attempts"
+  ]
+}
