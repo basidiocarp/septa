@@ -7,7 +7,7 @@
   "required": ["schema_version", "template_id", "name", "description", "phases", "transitions"],
   "properties": {
     "schema_version": {
-      "const": "1.0",
+      "const": "1.1",
       "description": "Contract version."
     },
     "template_id": {
@@ -65,6 +65,15 @@
               }
             },
             "additionalProperties": false
+          },
+          "agent_role": {
+            "type": "string",
+            "enum": [
+              "Spec Author", "Workflow Planner", "Packet Compiler",
+              "Decomposition Checker", "Workflow Coordinator", "Worker",
+              "Output Verifier", "Repair Worker", "Final Verifier"
+            ],
+            "description": "Optional dispatch catalog agent for this phase. When set, pins the phase to a specific agent. When absent, dispatch resolves from the process role."
           }
         },
         "additionalProperties": false
