@@ -30,7 +30,7 @@
       "type": "object",
       "required": ["breach_severity", "due_soon_count", "overdue_count"],
       "properties": {
-        "breach_severity":       { "type": "string", "enum": ["none", "warning", "critical"] },
+        "breach_severity":       { "type": "string", "enum": ["none", "low", "medium", "high", "critical"] },
         "due_soon_count":        { "type": "integer", "minimum": 0 },
         "oldest_overdue_seconds": { "type": ["integer", "null"], "minimum": 0 },
         "overdue_count":         { "type": "integer", "minimum": 0 }
@@ -62,7 +62,7 @@
         "properties": {
           "agent_id": { "type": "string" },
           "name": { "type": ["string", "null"] },
-          "status": { "type": "string", "enum": ["active", "idle", "stopped", "error"] },
+          "status": { "type": "string", "enum": ["idle", "assigned", "in_progress", "blocked", "review_required"] },
           "current_task_id": { "type": ["string", "null"] },
           "last_heartbeat": { "type": ["string", "null"] }
         },

@@ -8,19 +8,25 @@
   "phases": [
     {
       "phase_id": "implement",
+      "role": "Worker",
       "status": "completed",
       "agent_id": "impl/hymenium/handoff-parser/1",
       "started_at": "2026-04-11T10:00:00Z",
       "completed_at": "2026-04-11T12:30:00Z",
-      "canopy_task_id": "01JNQTSK000000000000000001"
+      "canopy_task_id": "01JNQTSK000000000000000001",
+      "failure_reason": null,
+      "retry_count": 0
     },
     {
       "phase_id": "audit",
+      "role": "Output Verifier",
       "status": "active",
       "agent_id": "audit/hymenium/handoff-parser/1",
       "started_at": "2026-04-11T12:35:00Z",
       "completed_at": null,
-      "canopy_task_id": "01JNQTSK000000000000000002"
+      "canopy_task_id": "01JNQTSK000000000000000002",
+      "failure_reason": null,
+      "retry_count": 0
     }
   ],
   "created_at": "2026-04-11T09:55:00Z",

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/workflow-status-v1.schema.json",
   "title": "Workflow Status v1",
-  "description": "Runtime status of a dispatched workflow instance. Tracks overall workflow state, current phase, and per-phase progress including agent assignment and timestamps. Producer: canopy, dispatch engine. Consumer: cap, monitoring systems, operators.",
+  "description": "Runtime status of a dispatched workflow instance. Producer: Hymenium (single orchestration authority). Consumer: Canopy (coordination ledger), Cap (operator UI), operators. Reflects the full workflow lifecycle including gate blocking, repair, and terminal states.",
   "type": "object",
   "required": ["schema_version", "workflow_id", "handoff_path", "template_id", "status", "current_phase", "phases", "created_at", "updated_at"],
   "properties": {
@@ -25,22 +25,31 @@
     },
     "status": {
       "type": "string",
-      "enum": ["pending", "dispatched", "in_progress", "blocked", "completed", "failed", "cancelled"],
-      "description": "Overall workflow status."
+      "enum": ["pending", "dispatched", "in_progress", "blocked_on_gate", "awaiting_repair", "completed", "failed", "cancelled"],
+      "description": "Overall workflow status. 'blocked_on_gate' means an entry or exit gate condition failed; see 'blocked_on' for the failing condition. 'awaiting_repair' means a phase output failed verification and is queued for a Repair Worker."
+    },
+    "blocked_on": {
+      "type": "string",
+      "description": "When status is 'blocked_on_gate', the gate condition that failed (e.g., 'audit phase exit: no verification evidence'). Omit for other statuses."
     },
     "current_phase": {
       "type": ["string", "null"],
-      "description": "ID of the currently active phase, or null if no phase has started yet."
+      "description": "ID of the currently active phase, or null if no phase is active."
     },
     "phases": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["phase_id", "status", "agent_id", "started_at", "completed_at", "canopy_task_id"],
+        "required": ["phase_id", "role", "status", "agent_id", "started_at", "completed_at", "canopy_task_id"],
         "properties": {
           "phase_id": {
             "type": "string",
             "description": "Phase identifier from the workflow template."
+          },
+          "role": {
+            "type": "string",
+            "enum": ["Spec Author", "Workflow Planner", "Packet Compiler", "Decomposition Checker", "Workflow Coordinator", "Worker", "Output Verifier", "Repair Worker", "Final Verifier"],
+            "description": "Runtime role name for the agent executing this phase."
           },
           "status": {
             "type": "string",
@@ -63,6 +72,15 @@
             "type": ["string", "null"],
             "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
             "description": "Canopy task ID (ULID) tracking this phase, or null if not yet created."
+          },
+          "failure_reason": {
+            "type": ["string", "null"],
+            "description": "If status is 'failed', the reason for the failure. Null otherwise."
+          },
+          "retry_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of times this phase has been retried."
           }
         },
         "additionalProperties": false

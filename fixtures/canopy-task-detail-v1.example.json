@@ -7,8 +7,8 @@
   },
   "attention": {
     "task_id": "01JNQABC0123456789GHFEDCBA",
-    "level": "normal",
-    "reasons": []
+    "level": "needs_attention",
+    "reasons": ["Requires review"]
   },
   "sla_summary": {
     "task_id": "01JNQABC0123456789GHFEDCBA",
@@ -16,7 +16,7 @@
     "overdue_count": 0,
     "oldest_overdue_seconds": null,
     "highest_risk_queue": null,
-    "breach_severity": "none"
+    "breach_severity": "high"
   },
   "allowed_actions": [],
   "evidence": [

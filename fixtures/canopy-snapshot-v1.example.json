@@ -11,7 +11,7 @@
     "tasks_needing_attention": 1
   },
   "sla_summary": {
-    "breach_severity": "none",
+    "breach_severity": "medium",
     "due_soon_count": 0,
     "oldest_overdue_seconds": null,
     "overdue_count": 0
@@ -37,7 +37,7 @@
     {
       "agent_id": "agent-001",
       "name": "primary",
-      "status": "active",
+      "status": "in_progress",
       "current_task_id": "01JNQABC0123456789GHFEDCBA",
       "last_heartbeat": "2026-04-10T12:00:00Z"
     }
