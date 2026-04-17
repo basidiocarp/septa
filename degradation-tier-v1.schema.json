@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/degradation-tier-v1.schema.json",
+  "title": "Degradation Tier Report v1",
+  "description": "Runtime degradation status for an ecosystem tool. Describes whether a tool is available, which tier it belongs to, and which capabilities are affected if it becomes unavailable. Producer: any tool that monitors its own health or its dependencies' availability. Consumer: cortina, volva, canopy, agent runtimes, and operator dashboards.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "tool",
+    "tier",
+    "available",
+    "reason",
+    "degraded_capabilities"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Name of the tool being reported. Must be lowercase alphanumeric with underscores. Examples: 'hyphae', 'volva', 'canopy', 'cortina'."
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "Degradation tier: 1 (Critical, blocks agent loop), 2 (Optional, degrades quality), or 3 (Enhancement, reduces observability only)."
+    },
+    "available": {
+      "type": "boolean",
+      "description": "Whether the tool is available and operating normally. If false, the agent must follow the behavior contract for the given tier."
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable explanation of why the tool became unavailable or started degrading. Examples: 'connection refused on unix socket', 'startup timeout after 30s', 'out of disk space'."
+    },
+    "degraded_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "List of capabilities or features that are unavailable or reduced when this tool is not available. Examples for hyphae: ['memory recall', 'memoir lookup', 'session timeline']. Empty array if available=true."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional. ISO 8601 timestamp of when the degradation or availability change was detected. Helps correlate failures with logs."
+    },
+    "suggestion": {
+      "type": "string",
+      "description": "Optional. Guidance for operators or the agent on how to recover. Examples: 'restart the service', 'check connection settings', 'free up disk space'."
+    }
+  },
+  "additionalProperties": false
+}

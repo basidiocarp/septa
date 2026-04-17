@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "tool": "hyphae",
+  "tier": 2,
+  "available": false,
+  "reason": "connection refused on unix socket /var/run/hyphae.sock",
+  "degraded_capabilities": [
+    "memory recall",
+    "memoir lookup",
+    "session timeline",
+    "analytics"
+  ],
+  "timestamp": "2026-04-17T15:23:45Z",
+  "suggestion": "ensure hyphae service is running or set HYPHAE_ENDPOINT to point to a running instance"
+}

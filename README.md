@@ -80,6 +80,7 @@ change shape   ─►    update version     ─►  update dependents
 
 | Family | Contracts |
 |--------|-----------|
+| Resilience & Degradation | `degradation-tier-v1` |
 | Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `workflow-outcome-v1` |
 | Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap, Annulus | `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1` |
