@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-notification-v1.schema.json",
+  "title": "canopy-notification-v1",
+  "description": "Notification event emitted by Canopy for task lifecycle changes. Producer: canopy/src/notification.rs. Consumer: cap (dashboard notifications), annulus (operator notifications).",
+  "type": "object",
+  "required": ["id", "event_type", "payload", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ULID notification identifier"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "task_assigned",
+        "task_completed",
+        "task_blocked",
+        "handoff_ready",
+        "handoff_rejected",
+        "council_opened",
+        "council_closed"
+      ],
+      "description": "The type of lifecycle event"
+    },
+    "task_id": {
+      "type": ["string", "null"],
+      "description": "The task this notification relates to (optional)"
+    },
+    "agent_id": {
+      "type": ["string", "null"],
+      "description": "The agent this notification targets (optional)"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific supplementary data",
+      "additionalProperties": true
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["info", "warning", "error"],
+      "description": "Severity hint for display surfaces"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the notification was created"
+    },
+    "read_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the notification was marked read, or null"
+    }
+  }
+}

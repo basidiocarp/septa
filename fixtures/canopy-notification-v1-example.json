@@ -1,0 +1,13 @@
+{
+  "id": "01HZ1234567890ABCDEF012345",
+  "event_type": "task_completed",
+  "task_id": "01HZ0987654321FEDCBA987654",
+  "agent_id": "claude-code-session-abc",
+  "payload": {
+    "summary": "Completed implementation of tool adoption scoring",
+    "evidence_count": 3
+  },
+  "severity": "info",
+  "created_at": "2026-04-16T12:00:00Z",
+  "read_at": null
+}
