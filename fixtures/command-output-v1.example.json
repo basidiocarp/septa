@@ -5,5 +5,6 @@
   "project": "mycelium",
   "project_root": "/Users/dev/projects/mycelium",
   "worktree_id": "main",
-  "ttl_hours": 4
+  "ttl_hours": 4,
+  "runtime_session_id": "abc123def456"
 }

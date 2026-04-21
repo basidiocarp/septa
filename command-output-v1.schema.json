@@ -37,6 +37,10 @@
       "maximum": 168,
       "default": 4,
       "description": "Time-to-live in hours for the stored chunks. Default: 4 hours."
+    },
+    "runtime_session_id": {
+      "type": "string",
+      "description": "Claude Code session ID at time of emission. Emitted by mycelium when spore::claude_session_id() is available. Optional."
     }
   },
   "additionalProperties": false
