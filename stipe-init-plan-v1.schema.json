@@ -23,7 +23,7 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["planned", "skipped", "done", "failed"]
+            "enum": ["planned", "already-ok", "skipped"]
           },
           "title":  { "type": "string" },
           "detail": { "type": ["string", "null"] }

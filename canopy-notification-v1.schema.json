@@ -17,6 +17,8 @@
         "task_assigned",
         "task_completed",
         "task_blocked",
+        "task_cancelled",
+        "evidence_received",
         "handoff_ready",
         "handoff_rejected",
         "council_opened",

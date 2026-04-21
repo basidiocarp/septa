@@ -155,6 +155,48 @@
         "missing_packages": { "type": "array", "items": { "type": "string" } }
       },
       "additionalProperties": false
+    },
+    "mcp_server_health": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name":   { "type": "string" },
+          "status": { "type": "string", "enum": ["not-installed", "installed-not-responding", "running"] },
+          "detail": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "api_key_health": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["provider", "status", "note"],
+        "properties": {
+          "provider": { "type": "string" },
+          "status":   { "type": "string", "enum": ["configured", "missing", "unexpected-format"] },
+          "note":     { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "plugin_inventory": {
+      "type": "object",
+      "required": ["annulus_validator_used", "items", "skills_count", "hooks_count", "stale_count", "missing_count"],
+      "properties": {
+        "annulus_validator_used": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/plugin_inventory_item" }
+        },
+        "skills_count":  { "type": "integer" },
+        "hooks_count":   { "type": "integer" },
+        "stale_count":   { "type": "integer" },
+        "missing_count": { "type": "integer" }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
@@ -194,6 +236,19 @@
         "source": { "$ref": "#/$defs/decision_source" },
         "updated_at_unix": { "type": "integer" },
         "note": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "plugin_inventory_item": {
+      "type": "object",
+      "required": ["name", "category", "path_status", "version_drift"],
+      "properties": {
+        "name":              { "type": "string" },
+        "category":          { "type": "string" },
+        "path_status":       { "type": "string", "enum": ["valid", "stale", "missing"] },
+        "installed_version": { "type": ["string", "null"] },
+        "version_drift":     { "type": "string", "enum": ["up-to-date", "behind", "unknown"] },
+        "pinned_version":    { "type": ["string", "null"] }
       },
       "additionalProperties": false
     }

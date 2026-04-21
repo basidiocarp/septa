@@ -28,5 +28,40 @@
       "label": "Run stipe init",
       "tier": "primary"
     }
-  ]
+  ],
+  "mcp_server_health": [
+    {
+      "name": "hyphae",
+      "status": "running",
+      "detail": null
+    },
+    {
+      "name": "rhizome",
+      "status": "not-installed"
+    }
+  ],
+  "api_key_health": [
+    {
+      "provider": "anthropic",
+      "status": "configured",
+      "note": "ANTHROPIC_API_KEY is set"
+    }
+  ],
+  "plugin_inventory": {
+    "annulus_validator_used": false,
+    "items": [
+      {
+        "name": "commit",
+        "category": "skill",
+        "path_status": "valid",
+        "installed_version": "1.2.0",
+        "version_drift": "up-to-date",
+        "pinned_version": "1.2.0"
+      }
+    ],
+    "skills_count": 1,
+    "hooks_count": 0,
+    "stale_count": 0,
+    "missing_count": 0
+  }
 }

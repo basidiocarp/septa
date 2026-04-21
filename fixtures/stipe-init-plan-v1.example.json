@@ -10,6 +10,16 @@
       "status": "planned",
       "title": "Register the hyphae MCP server",
       "detail": "Hyphae is installed and can be wired into supported clients."
+    },
+    {
+      "status": "already-ok",
+      "title": "Register the rhizome MCP server",
+      "detail": "rhizome is already registered."
+    },
+    {
+      "status": "skipped",
+      "title": "Register the canopy MCP server",
+      "detail": null
     }
   ],
   "repair_actions": [
