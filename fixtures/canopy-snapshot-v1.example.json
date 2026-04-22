@@ -33,6 +33,11 @@
       "label": "Operator note"
     }
   ],
+  "drift_signals": {
+    "high_correction_rate": false,
+    "test_failure_streak": 0,
+    "evidence_gap_hours": null
+  },
   "agents": [
     {
       "agent_id": "agent-001",

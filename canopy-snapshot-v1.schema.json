@@ -4,7 +4,7 @@
   "title": "canopy-snapshot-v1",
   "description": "Canopy emits a versioned attention snapshot for Cap via `canopy snapshot --format json`. Producer: canopy/src/api.rs (snapshot endpoint). Consumer: cap (dashboard status).",
   "type": "object",
-  "required": ["schema_version", "attention", "sla_summary", "tasks", "evidence"],
+  "required": ["schema_version", "attention", "sla_summary", "tasks", "evidence", "drift_signals"],
   "properties": {
     "schema_version": { "const": "1.0" },
     "attention": {
@@ -100,6 +100,16 @@
         },
         "additionalProperties": false
       }
+    },
+    "drift_signals": {
+      "type": "object",
+      "required": ["high_correction_rate", "test_failure_streak", "evidence_gap_hours"],
+      "properties": {
+        "high_correction_rate": { "type": "boolean" },
+        "test_failure_streak": { "type": "integer", "minimum": 0 },
+        "evidence_gap_hours": { "type": ["number", "null"] }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
