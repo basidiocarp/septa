@@ -78,7 +78,7 @@
           "handoff_id": { "type": "string" },
           "from_agent": { "type": "string" },
           "to_agent": { "type": ["string", "null"] },
-          "status": { "type": "string", "enum": ["pending", "accepted", "completed", "rejected"] },
+          "status": { "type": "string", "enum": ["open", "accepted", "rejected", "expired", "cancelled", "completed"] },
           "task_id": { "type": ["string", "null"] },
           "created_at": { "type": ["string", "null"] }
         },
@@ -112,5 +112,5 @@
       "additionalProperties": false
     }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

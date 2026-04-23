@@ -1,0 +1,37 @@
+{
+  "status": "flag_review",
+  "reason": "handoff appears stale: 1 of 3 checklist items have explicit implementation evidence",
+  "result": {
+    "handoff_file": "/path/to/.handoffs/cortina/incomplete-feature.md",
+    "total_items": 3,
+    "likely_implemented": 1,
+    "evidence": [
+      {
+        "checklist_item": "Add new module `src/feature.rs`",
+        "file_exists": true,
+        "symbol_found": true,
+        "test_found": true,
+        "confidence": "explicit_match",
+        "matched_paths": [
+          "src/feature.rs"
+        ]
+      },
+      {
+        "checklist_item": "Update README with feature documentation",
+        "file_exists": false,
+        "symbol_found": false,
+        "test_found": false,
+        "confidence": "inconclusive",
+        "matched_paths": []
+      },
+      {
+        "checklist_item": "Add integration tests",
+        "file_exists": false,
+        "symbol_found": false,
+        "test_found": false,
+        "confidence": "inconclusive",
+        "matched_paths": []
+      }
+    ]
+  }
+}

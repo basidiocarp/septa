@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cortina-audit-handoff-v1.schema.json",
+  "title": "Cortina Audit Handoff Response v1",
+  "description": "Audit response for handoff completeness checks at the cortina-canopy boundary. Producer: cortina/src/handoff_audit.rs (AuditOutput). Consumer: canopy/src/runtime.rs (CortinaAuditResponse). Cortina audits a handoff markdown file, analyzes checklist items for implementation evidence, and returns a decision (proceed or flag for review) with optional reasoning.",
+  "type": "object",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Audit decision: whether the handoff appears sufficiently complete to proceed.",
+      "enum": ["proceed", "flag_review"]
+    },
+    "reason": {
+      "type": ["string", "null"],
+      "description": "Human-readable reason for flagging review, if status is flag_review."
+    },
+    "result": {
+      "type": "object",
+      "description": "Detailed audit result (provided for transparency, not consumed by canopy).",
+      "properties": {
+        "handoff_file": {
+          "type": "string",
+          "description": "Path to the audited handoff file."
+        },
+        "total_items": {
+          "type": "integer",
+          "description": "Total number of unchecked checklist items in the handoff.",
+          "minimum": 0
+        },
+        "likely_implemented": {
+          "type": "integer",
+          "description": "Number of items with explicit implementation evidence.",
+          "minimum": 0
+        },
+        "evidence": {
+          "type": "array",
+          "description": "Per-item audit evidence for each checklist item.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "checklist_item": {
+                "type": "string",
+                "description": "Text of the checklist item being audited."
+              },
+              "file_exists": {
+                "type": "boolean",
+                "description": "Whether referenced files exist in the repository."
+              },
+              "symbol_found": {
+                "type": "boolean",
+                "description": "Whether referenced symbols were found in those files."
+              },
+              "test_found": {
+                "type": "boolean",
+                "description": "Whether associated tests were found."
+              },
+              "confidence": {
+                "type": "string",
+                "description": "Confidence level of the audit for this item.",
+                "enum": ["explicit_match", "heuristic_match", "inconclusive"]
+              },
+              "matched_paths": {
+                "type": "array",
+                "description": "File paths where evidence was found.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

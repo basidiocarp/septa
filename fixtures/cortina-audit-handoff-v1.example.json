@@ -1,0 +1,41 @@
+{
+  "status": "proceed",
+  "reason": null,
+  "result": {
+    "handoff_file": "/path/to/.handoffs/cortina/my-feature.md",
+    "total_items": 3,
+    "likely_implemented": 3,
+    "evidence": [
+      {
+        "checklist_item": "Add new module `src/feature.rs`",
+        "file_exists": true,
+        "symbol_found": true,
+        "test_found": true,
+        "confidence": "explicit_match",
+        "matched_paths": [
+          "src/feature.rs"
+        ]
+      },
+      {
+        "checklist_item": "Update README with feature documentation",
+        "file_exists": true,
+        "symbol_found": true,
+        "test_found": false,
+        "confidence": "heuristic_match",
+        "matched_paths": [
+          "README.md"
+        ]
+      },
+      {
+        "checklist_item": "Add integration tests",
+        "file_exists": true,
+        "symbol_found": true,
+        "test_found": true,
+        "confidence": "explicit_match",
+        "matched_paths": [
+          "tests/integration_test.rs"
+        ]
+      }
+    ]
+  }
+}
