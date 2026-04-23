@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Known cross-tool payloads that lack a septa schema, with rationale. Each entry must be reviewed before promotion to a full schema.",
+  "exemptions": [
+    {
+      "payload": "MemoryProtocolSurface",
+      "producer": "hyphae/crates/hyphae-mcp/src/memory_protocol.rs",
+      "consumers": ["volva/crates/volva-runtime/src/context.rs"],
+      "severity": "medium",
+      "rationale": "Co-versioned in same workspace; low drift risk until repos separate. Shape is stable but not formally documented.",
+      "tracked_in": ".handoffs/septa/contract-governance-enforcement.md",
+      "added": "2026-04-23"
+    },
+    {
+      "payload": "HyphaeSessionContext",
+      "producer": "hyphae/crates/hyphae-mcp/src/",
+      "consumers": ["volva/crates/volva-runtime/src/context.rs"],
+      "severity": "medium",
+      "rationale": "Session context JSON passed from hyphae to volva assemble_prompt. Co-versioned; drift detectable by integration test. Schema backlog item.",
+      "tracked_in": ".handoffs/septa/contract-governance-enforcement.md",
+      "added": "2026-04-23"
+    },
+    {
+      "payload": "ClaudeCodeHookEnvelope",
+      "producer": "external:claude-code-runtime",
+      "consumers": ["cortina/src/adapters/"],
+      "severity": "accepted_risk",
+      "rationale": "Claude Code's hook envelope format is defined by the Claude Code runtime, not this codebase. Cannot be schema-backed without owning the spec. Changes would be detected at runtime, not by validate-all.sh.",
+      "tracked_in": ".handoffs/septa/contract-governance-enforcement.md",
+      "added": "2026-04-23"
+    }
+  ]
+}
