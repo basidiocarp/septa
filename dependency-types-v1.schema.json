@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/schemas/dependency-types-v1",
+  "title": "Dependency Types V1",
+  "description": "A versioned envelope describing a typed dependency edge between entities across ecosystem tools. Tracks edges such as blocking, relating, discovery, superseding, and duplication relationships between tasks, memories, memoirs, workflow steps, and handoffs.",
+  "type": "object",
+  "required": ["schema_version", "edge_id", "edge_type", "from_id", "from_type", "to_id", "to_type"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "dependency-types-v1",
+      "description": "Contract version. Must be 'dependency-types-v1'."
+    },
+    "edge_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this dependency edge. Examples: 'edge-01HWQM3P7X6Y2N4R8T5V0K9J1D', 'dep-task-a-blocks-task-b'."
+    },
+    "edge_type": {
+      "type": "string",
+      "enum": ["blocks", "relates_to", "discovered_from", "supersedes", "duplicates"],
+      "description": "Type of dependency relationship. 'blocks' = from blocks to; 'relates_to' = bidirectional relevance; 'discovered_from' = to was discovered via from; 'supersedes' = from replaces to; 'duplicates' = from and to are the same."
+    },
+    "from_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier of the source entity."
+    },
+    "from_type": {
+      "type": "string",
+      "enum": ["task", "memory", "memoir", "workflow_step", "handoff"],
+      "description": "Type of the source entity."
+    },
+    "to_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier of the target entity."
+    },
+    "to_type": {
+      "type": "string",
+      "enum": ["task", "memory", "memoir", "workflow_step", "handoff"],
+      "description": "Type of the target entity."
+    },
+    "defer_until": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp. If set, this edge is deferred until this moment. Null if not deferred."
+    },
+    "due_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp. When this edge (e.g., blocking relationship) becomes critical. Null if no deadline."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional metadata. May include 'priority', 'reason', 'context', or other producer-specific fields."
+    }
+  }
+}
