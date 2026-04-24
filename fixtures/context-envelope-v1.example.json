@@ -1,0 +1,39 @@
+{
+  "schema_version": "context-envelope-v1",
+  "assembled_at": "2026-04-23T14:30:00Z",
+  "token_budget": {
+    "total": 8000,
+    "used": 1620,
+    "remaining": 6380
+  },
+  "components": [
+    {
+      "type": "memory",
+      "source": "hyphae",
+      "topic": "errors/resolved",
+      "token_count": 420,
+      "content": "Previous session (2026-04-21): fixed canopy dispatch_tool borrow issue by extracting match pattern before early return. Root cause: guard lifetime extended through match arm."
+    },
+    {
+      "type": "symbols",
+      "source": "rhizome",
+      "path": "canopy/src/tools/mod.rs",
+      "token_count": 840,
+      "content": "pub async fn dispatch_tool(store: &impl CanopyStore, agent_id: &str, tool_name: &str, input: serde_json::Value) -> ToolResult { ... }"
+    },
+    {
+      "type": "session",
+      "source": "cortina",
+      "session_id": "sess-2026-04-23-001",
+      "token_count": 200,
+      "content": "Session started 2026-04-23T14:15:00Z. Working in basidiocarp/septa. Last tools: none (session start). User context: implementing context-envelope-v1 contract."
+    },
+    {
+      "type": "diagnostics",
+      "source": "rhizome",
+      "path": "canopy/src/store/traits.rs",
+      "token_count": 160,
+      "content": "No diagnostics."
+    }
+  ]
+}

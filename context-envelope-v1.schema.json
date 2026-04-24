@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/context-envelope-v1.schema.json",
+  "title": "Context Envelope v1",
+  "description": "A versioned envelope for assembled context payloads passed between ecosystem tools. Producer: hyphae, rhizome, cortina, canopy. Consumer: model context assembly, cap operator view.",
+  "type": "object",
+  "required": ["schema_version", "assembled_at", "components"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "context-envelope-v1",
+      "description": "Contract version. Must be 'context-envelope-v1'."
+    },
+    "assembled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the context envelope was assembled."
+    },
+    "token_budget": {
+      "type": "object",
+      "required": ["total", "used", "remaining"],
+      "additionalProperties": false,
+      "description": "Optional token budget tracking for the assembled context.",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total token budget available."
+        },
+        "used": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tokens consumed by components in this envelope."
+        },
+        "remaining": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tokens still available in the budget."
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "source", "token_count", "content"],
+        "additionalProperties": true,
+        "description": "A component of the assembled context.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Component type. Known values: memory, symbols, session, diagnostics, handoff, task. Additional types may be added without breaking consumers."
+          },
+          "source": {
+            "type": "string",
+            "description": "Ecosystem tool that produced this component. Examples: hyphae, rhizome, cortina, canopy."
+          },
+          "token_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Estimated tokens consumed by this component's content."
+          },
+          "content": {
+            "type": "string",
+            "description": "The actual component content."
+          }
+        }
+      },
+      "description": "Array of context components. Each component declares its type, source, token usage, and content."
+    }
+  }
+}
