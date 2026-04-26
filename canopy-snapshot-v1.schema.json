@@ -12,7 +12,7 @@
       "required": [
         "actionable_handoffs", "actionable_tasks", "agents_needing_attention",
         "critical_tasks", "handoffs_needing_attention", "stale_agents",
-        "stale_handoffs", "tasks_needing_attention"
+        "stale_handoffs", "tasks_needing_attention", "needs_verification_count"
       ],
       "properties": {
         "actionable_handoffs":        { "type": "integer", "minimum": 0 },
@@ -22,7 +22,8 @@
         "handoffs_needing_attention": { "type": "integer", "minimum": 0 },
         "stale_agents":               { "type": "integer", "minimum": 0 },
         "stale_handoffs":             { "type": "integer", "minimum": 0 },
-        "tasks_needing_attention":    { "type": "integer", "minimum": 0 }
+        "tasks_needing_attention":    { "type": "integer", "minimum": 0 },
+        "needs_verification_count":   { "type": "integer", "minimum": 0, "description": "Number of tasks that need operator verification" }
       },
       "additionalProperties": false
     },

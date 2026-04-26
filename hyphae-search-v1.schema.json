@@ -2,12 +2,22 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/hyphae-search-v1.schema.json",
   "title": "hyphae-search-v1",
-  "description": "Hyphae emits versioned memory search results for Cap via `hyphae search --json`.",
+  "description": "Hyphae emits versioned memory search results for Cap via `hyphae search --json`. Results include full MemoryPayload structure with timestamps, weights, and metadata.",
   "type": "object",
   "required": ["schema_version", "query", "limit", "total", "results"],
   "properties": {
     "schema_version": { "const": "1.0" },
     "project": { "type": ["string", "null"] },
+    "scoped_identity": {
+      "type": "object",
+      "description": "Identity scope used in the search.",
+      "properties": {
+        "agent_id": { "type": ["string", "null"] },
+        "branch": { "type": ["string", "null"] },
+        "worktree": { "type": ["string", "null"] },
+        "project": { "type": ["string", "null"] }
+      }
+    },
     "query": { "type": "string" },
     "topic": { "type": ["string", "null"] },
     "limit": { "type": "integer", "minimum": 0 },
@@ -16,11 +26,62 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "topic", "summary"],
+        "required": ["id", "topic", "summary", "importance", "weight", "created_at"],
         "properties": {
           "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "last_accessed": { "type": "string", "format": "date-time" },
+          "access_count": { "type": "integer", "minimum": 0 },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
           "topic": { "type": "string" },
-          "summary": { "type": "string" }
+          "summary": { "type": "string" },
+          "raw_excerpt": { "type": ["string", "null"] },
+          "keywords": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low", "ephemeral"]
+          },
+          "source": {
+            "type": "object",
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["type", "host", "session_id"],
+                "properties": {
+                  "type": { "const": "agent_session" },
+                  "host": { "type": "string" },
+                  "session_id": { "type": "string" },
+                  "file_path": { "type": ["string", "null"] }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["type"],
+                "properties": {
+                  "type": { "const": "manual" }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "related_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "project": { "type": ["string", "null"] },
+          "branch": { "type": ["string", "null"] },
+          "worktree": { "type": ["string", "null"] },
+          "agent_id": { "type": ["string", "null"] },
+          "expires_at": { "type": ["string", "null"], "format": "date-time" },
+          "invalidated_at": { "type": ["string", "null"], "format": "date-time" },
+          "invalidation_reason": { "type": ["string", "null"] },
+          "superseded_by": { "type": ["string", "null"] },
+          "has_embedding": { "type": "boolean" }
         },
         "additionalProperties": false
       }

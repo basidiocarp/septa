@@ -8,7 +8,8 @@
     "handoffs_needing_attention": 0,
     "stale_agents": 0,
     "stale_handoffs": 0,
-    "tasks_needing_attention": 1
+    "tasks_needing_attention": 1,
+    "needs_verification_count": 0
   },
   "sla_summary": {
     "breach_severity": "medium",

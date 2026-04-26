@@ -18,7 +18,21 @@
     "highest_risk_queue": null,
     "breach_severity": "high"
   },
-  "allowed_actions": [],
+  "allowed_actions": [
+    {
+      "action_id": "act-001",
+      "kind": "reassign",
+      "target_kind": "task",
+      "level": "needs_attention",
+      "task_id": "01JNQABC0123456789GHFEDCBA",
+      "handoff_id": null,
+      "agent_id": null,
+      "title": "Reassign to reviewer",
+      "summary": "Transfer this task to the review queue",
+      "due_at": null,
+      "expires_at": "2026-04-26T00:00:00Z"
+    }
+  ],
   "evidence": [
     {
       "schema_version": "1.0",

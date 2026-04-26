@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/workflow-status-v1.schema.json",
   "title": "Workflow Status v1",
-  "description": "Runtime status of a dispatched workflow instance. Producer: Hymenium (single orchestration authority). Consumer: Canopy (coordination ledger), Cap (operator UI), operators. Reflects the full workflow lifecycle including gate blocking, repair, and terminal states.",
+  "description": "Runtime status of a dispatched workflow instance. Producer: Hymenium (single orchestration authority). Consumer: Cap (operator UI), operators. Reflects the full workflow lifecycle including gate blocking, repair, and terminal states.",
   "type": "object",
   "required": ["schema_version", "workflow_id", "handoff_path", "template_id", "status", "current_phase", "phases", "created_at", "updated_at"],
   "properties": {

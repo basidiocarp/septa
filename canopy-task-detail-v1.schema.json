@@ -46,7 +46,24 @@
     },
     "allowed_actions": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "object",
+        "required": ["action_id", "kind", "target_kind", "level", "title", "summary"],
+        "properties": {
+          "action_id": { "type": "string" },
+          "kind": { "type": "string" },
+          "target_kind": { "type": "string" },
+          "level": { "type": "string", "enum": ["normal", "needs_attention", "critical"] },
+          "task_id": { "type": ["string", "null"] },
+          "handoff_id": { "type": ["string", "null"] },
+          "agent_id": { "type": ["string", "null"] },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "due_at": { "type": ["string", "null"], "format": "date-time" },
+          "expires_at": { "type": ["string", "null"], "format": "date-time" }
+        },
+        "additionalProperties": false
+      }
     },
     "evidence": {
       "type": "array",

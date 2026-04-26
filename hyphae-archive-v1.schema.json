@@ -46,6 +46,10 @@
           "type": ["string", "null"],
           "description": "Only include records created after this datetime, if set."
         },
+        "until": {
+          "type": ["string", "null"],
+          "description": "Only include records created before this datetime, if set."
+        },
         "importance_minimum": {
           "type": ["string", "null"],
           "enum": ["critical", "high", "medium", "low", "ephemeral", null],
