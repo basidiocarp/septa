@@ -1,12 +1,11 @@
 {
-  "id": "01HZ1234567890ABCDEF012345",
+  "notification_id": "01HZ1234567890ABCDEF012345",
   "event_type": "task_cancelled",
   "task_id": "01HZ0987654321FEDCBA987654",
   "agent_id": "claude-code-session-abc",
   "payload": {
     "reason": "Superseded by higher-priority handoff"
   },
-  "severity": "warning",
   "created_at": "2026-04-16T12:00:00Z",
-  "read_at": null
+  "seen": false
 }

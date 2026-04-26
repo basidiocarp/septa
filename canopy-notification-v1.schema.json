@@ -4,10 +4,10 @@
   "title": "canopy-notification-v1",
   "description": "Notification event emitted by Canopy for task lifecycle changes. Producer: canopy/src/notification.rs. Consumer: cap (dashboard notifications), annulus (operator notifications).",
   "type": "object",
-  "required": ["id", "event_type", "payload", "created_at"],
+  "required": ["notification_id", "event_type", "payload", "created_at", "seen"],
   "additionalProperties": false,
   "properties": {
-    "id": {
+    "notification_id": {
       "type": "string",
       "description": "ULID notification identifier"
     },
@@ -39,20 +39,14 @@
       "description": "Event-specific supplementary data",
       "additionalProperties": true
     },
-    "severity": {
-      "type": "string",
-      "enum": ["info", "warning", "error"],
-      "description": "Severity hint for display surfaces"
-    },
     "created_at": {
       "type": "string",
       "format": "date-time",
       "description": "ISO 8601 timestamp when the notification was created"
     },
-    "read_at": {
-      "type": ["string", "null"],
-      "format": "date-time",
-      "description": "ISO 8601 timestamp when the notification was marked read, or null"
+    "seen": {
+      "type": "boolean",
+      "description": "Whether the notification has been seen/read"
     }
   }
 }
