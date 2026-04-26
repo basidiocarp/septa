@@ -64,6 +64,65 @@
     "error": {
       "type": ["string", "null"],
       "description": "Optional runtime error summary."
+    },
+    "execution_session": {
+      "type": "object",
+      "description": "Execution session context containing session metadata.",
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "description": "Unique session identifier in format volva-{mode}-{uuid}."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["run", "chat", "backend_status"],
+          "description": "Execution mode that initiated this session."
+        },
+        "backend": {
+          "type": "string",
+          "enum": ["official-cli", "anthropic-api"],
+          "description": "Backend kind used in this session."
+        },
+        "workspace": {
+          "type": "object",
+          "description": "Workspace binding information.",
+          "properties": {
+            "workspace_root": {
+              "type": "string",
+              "description": "Root path of the workspace."
+            },
+            "worktree_id": {
+              "type": ["string", "null"],
+              "description": "Optional worktree identifier."
+            }
+          },
+          "required": ["workspace_root"],
+          "additionalProperties": false
+        },
+        "primary_participant": {
+          "type": "object",
+          "description": "Primary execution participant identity.",
+          "properties": {
+            "participant_id": {
+              "type": "string",
+              "description": "Participant identifier."
+            },
+            "host_kind": {
+              "type": "string",
+              "description": "Host kind of the participant."
+            }
+          },
+          "required": ["participant_id", "host_kind"],
+          "additionalProperties": false
+        },
+        "state": {
+          "type": "string",
+          "enum": ["planned", "active", "paused", "resumed", "finished"],
+          "description": "Current state of the execution session."
+        }
+      },
+      "required": ["session_id", "mode", "backend", "workspace", "primary_participant", "state"],
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

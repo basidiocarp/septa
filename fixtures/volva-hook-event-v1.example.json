@@ -8,5 +8,19 @@
   "stdout": null,
   "stderr": null,
   "exit_code": null,
-  "error": null
+  "error": null,
+  "execution_session": {
+    "session_id": "volva-run-550e8400-e29b-41d4-a716-446655440000",
+    "mode": "run",
+    "backend": "official-cli",
+    "workspace": {
+      "workspace_root": "/tmp/volva-example",
+      "worktree_id": null
+    },
+    "primary_participant": {
+      "participant_id": "operator@volva",
+      "host_kind": "volva"
+    },
+    "state": "active"
+  }
 }
