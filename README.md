@@ -51,12 +51,18 @@ Septa is the shared contract layer for the workspace.
 # Inspect a fixture
 jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 
-# Validate a fixture against its schema
-check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
-check-jsonschema --schemafile resolved-status-customization-v1.schema.json fixtures/resolved-status-customization-v1.example.json
-check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
-check-jsonschema --schemafile usage-event-v1.schema.json fixtures/usage-event-v1.example.json
+# Validate all schemas against their fixtures (primary workflow)
+bash validate-all.sh
 ```
+
+> **Note:** `check-jsonschema --schemafile <schema> <fixture>` is **not supported** for schemas
+> that use local `$ref` references (most schemas here). Those schemas resolve `$ref` using their
+> `$id` URI via `https://basidiocarp.dev`, which `check-jsonschema` cannot satisfy without the
+> full registry. Use `bash validate-all.sh` instead — it builds the registry locally.
+>
+> For single-schema debugging only, you can supply `--base-uri file:///absolute/path/to/septa/`
+> to tell `check-jsonschema` where to resolve relative references, but this is path-sensitive and
+> not guaranteed to work for all schema layouts. Treat it as a debug aid, not a validation path.
 
 ---
 
@@ -81,13 +87,14 @@ change shape   ─►    update version     ─►  update dependents
 | Family | Contracts |
 |--------|-----------|
 | Resilience & Degradation | `degradation-tier-v1` |
-| Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `workflow-outcome-v1` |
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `cortina-lifecycle-event-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
+| Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `task-output-v1`, `workflow-outcome-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap, Annulus | `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Hyphae → Cap | `hyphae-activity-v1`, `hyphae-analytics-v1`, `hyphae-context-v1`, `hyphae-health-v1`, `hyphae-lessons-v1`, `hyphae-memory-lookup-v1`, `hyphae-memoir-inspect-v1`, `hyphae-memoir-list-v1`, `hyphae-memoir-search-v1`, `hyphae-memoir-search-all-v1`, `hyphae-memoir-show-v1`, `hyphae-search-v1`, `hyphae-session-list-v1`, `hyphae-session-timeline-v1`, `hyphae-sources-v1`, `hyphae-stats-v1`, `hyphae-topic-memories-v1`, `hyphae-topics-v1` |
 | Hyphae export/import | `hyphae-archive-v1` |
 | Mycelium → Cap | `mycelium-gain-v1`, `mycelium-summary-v1` |
 | Stipe → Cap | `stipe-doctor-v1`, `stipe-init-plan-v1` |
+| Annulus → Cap, scripts | `annulus-statusline-v1` |
 
 ---
 
@@ -145,12 +152,23 @@ septa/
 ## Development
 
 ```bash
+# Run before every schema or fixture change
+bash validate-all.sh
+
+# Inspect a fixture
 jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
-check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.example.json
-check-jsonschema --schemafile resolved-status-customization-v1.schema.json fixtures/resolved-status-customization-v1.example.json
-check-jsonschema --schemafile volva-hook-event-v1.schema.json fixtures/volva-hook-event-v1.example.json
-check-jsonschema --schemafile usage-event-v1.schema.json fixtures/usage-event-v1.example.json
-check-jsonschema --schemafile workflow-participant-runtime-identity-v1.schema.json fixtures/workflow-participant-runtime-identity-v1.example.json
+```
+
+Direct `check-jsonschema --schemafile` invocations are **not supported** for schemas with local
+`$ref` references — they fail because cross-file references resolve through the `$id` URI base
+(`https://basidiocarp.dev`) that only `validate-all.sh` builds locally. If you need to debug a
+single schema, use:
+
+```bash
+# Debug only — path-sensitive, not a reliable validation path
+check-jsonschema --base-uri file:///absolute/path/to/septa/ \
+  --schemafile code-graph-v1.schema.json \
+  fixtures/code-graph-v1.example.json
 ```
 
 ## Fail-Open Hook Execution Contract

@@ -16,9 +16,12 @@ Every payload that crosses a tool boundary must appear in this table.
 | canopy-task-detail | canopy | cap | canopy-task-detail-v1.schema.json | Backed |
 | code-graph | rhizome | hyphae | code-graph-v1.schema.json | Backed |
 | command-output | mycelium | hyphae | command-output-v1.schema.json | Backed |
+| context-envelope | hyphae, rhizome, cortina, canopy | model context assembly, cap | context-envelope-v1.schema.json | Backed |
 | cortina-audit-handoff | cortina | canopy | cortina-audit-handoff-v1.schema.json | Backed |
+| credential | stipe, cortina, operator actions | credential managers, auth bootstrap, deployment tools | credential-v1.schema.json | Backed |
 | cortina-lifecycle-event | cortina | orchestrators, dashboards | cortina-lifecycle-event-v1.schema.json | Backed |
 | degradation-tier | tool-health-monitors | cortina, volva, canopy, agents, dashboards | degradation-tier-v1.schema.json | Backed |
+| dependency-types | canopy, hymenium, hyphae | canopy, cap, agent-handoff | dependency-types-v1.schema.json | Backed |
 | dispatch-request | operator, .handoffs/ | hymenium | dispatch-request-v1.schema.json | Backed |
 | evidence-ref | canopy | operator surfaces, dashboards | evidence-ref-v1.schema.json | Backed |
 | handoff-context | agent-handoff, ecosystem | agent-receiving, canopy, cap | handoff-context-v1.schema.json | Backed |
@@ -49,6 +52,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | session-event | cortina | hyphae | session-event-v1.schema.json | Backed |
 | stipe-doctor | stipe | cap | stipe-doctor-v1.schema.json | Backed |
 | stipe-init-plan | stipe | cap | stipe-init-plan-v1.schema.json | Backed |
+| task-output | canopy | canopy, cap | task-output-v1.schema.json | Backed |
 | task-packet | hymenium | worker-agents | task-packet-v1.schema.json | Backed |
 | tool-relevance-rules | lamella | cortina | tool-relevance-rules-v1.schema.json | Backed |
 | tool-usage-event | cortina | canopy, cap | tool-usage-event-v1.schema.json | Backed |

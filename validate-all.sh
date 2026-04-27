@@ -42,6 +42,27 @@ failed = 0
 skipped = 0
 errors = []
 
+def validate_fixture(schema, schema_path_name, fixture_path):
+    """Validate a single fixture against a schema. Returns True on pass."""
+    global passed, failed, errors
+    with open(fixture_path) as f:
+        fixture = json.load(f)
+    label = f"{schema_path_name} / {fixture_path.name}"
+    try:
+        validator = Draft202012Validator(schema, registry=registry)
+        validator.validate(fixture)
+        print(f"PASS  {label}")
+        passed += 1
+        return True
+    except Exception:
+        print(f"FAIL  {label}")
+        for err in sorted(Draft202012Validator(schema, registry=registry).iter_errors(fixture), key=str):
+            print(f"      {err.json_path}: {err.message[:120]}")
+            break
+        errors.append(label)
+        failed += 1
+        return False
+
 for path in sorted(schema_dir.glob("*.schema.json")):
     name = path.stem.replace(".schema", "")
     fixture_path = fixture_dir / f"{name}.example.json"
@@ -53,22 +74,14 @@ for path in sorted(schema_dir.glob("*.schema.json")):
 
     with open(path) as f:
         schema = json.load(f)
-    with open(fixture_path) as f:
-        fixture = json.load(f)
 
-    try:
-        validator = Draft202012Validator(schema, registry=registry)
-        validator.validate(fixture)
-        print(f"PASS  {path.name}")
-        passed += 1
-    except Exception as e:
-        print(f"FAIL  {path.name}")
-        # Show first error line
-        for err in sorted(Draft202012Validator(schema, registry=registry).iter_errors(fixture), key=str):
-            print(f"      {err.json_path}: {err.message[:120]}")
-            break
-        errors.append(path.name)
-        failed += 1
+    validate_fixture(schema, path.name, fixture_path)
+
+    # Also validate variant fixtures (.full, .degraded, .flagged) if present
+    for variant in ("full", "degraded", "flagged"):
+        variant_path = fixture_dir / f"{name}.{variant}.json"
+        if variant_path.exists():
+            validate_fixture(schema, path.name, variant_path)
 
 print()
 print(f"Results: {passed} passed, {failed} failed, {skipped} skipped")
