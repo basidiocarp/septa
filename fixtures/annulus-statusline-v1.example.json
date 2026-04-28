@@ -67,6 +67,19 @@
         "total_chars": 12,
         "color_tier": "warning"
       }
+    },
+    {
+      "name": "hyphae",
+      "available": true,
+      "value": {
+        "state": "active",
+        "db_bytes": 204800
+      }
+    },
+    {
+      "name": "degradation",
+      "available": false,
+      "reason": "no degradation detected"
     }
   ]
 }

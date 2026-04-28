@@ -37,7 +37,9 @@
             "savings",
             "branch",
             "workspace",
-            "context-bar"
+            "context-bar",
+            "degradation",
+            "hyphae"
           ]
         },
         "available": {
@@ -52,7 +54,9 @@
             { "$ref": "#/$defs/savings-value" },
             { "$ref": "#/$defs/branch-value" },
             { "$ref": "#/$defs/workspace-value" },
-            { "$ref": "#/$defs/context-bar-value" }
+            { "$ref": "#/$defs/context-bar-value" },
+            { "$ref": "#/$defs/degradation-value" },
+            { "$ref": "#/$defs/hyphae-value" }
           ]
         },
         "reason": {
@@ -219,6 +223,59 @@
         }
       },
       "additionalProperties": false
+    },
+    "degradation-value": {
+      "type": "object",
+      "required": ["tier1_count", "tier2_count", "tier3_count", "tools"],
+      "properties": {
+        "tier1_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tier2_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tier3_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "tier", "reason"],
+            "properties": {
+              "name": { "type": "string" },
+              "tier": { "type": "string" },
+              "reason": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "hyphae-value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["state", "db_bytes"],
+          "properties": {
+            "state": { "type": "string", "const": "active" },
+            "db_bytes": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["state"],
+          "properties": {
+            "state": { "type": "string", "const": "stale" }
+          },
+          "additionalProperties": false
+        }
+      ]
     }
   }
 }
