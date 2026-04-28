@@ -149,6 +149,55 @@ septa/
 
 ---
 
+## Producer Contract Testing
+
+Septa ships a reusable validator that producer repos can call from their own test
+suites to prove real output validates against the shared schema registry.
+
+```bash
+# Validate captured producer stdout against a named schema
+python3 septa/scripts/validate-producer-output.py \
+    --septa-dir /path/to/septa \
+    --schema hyphae-activity-v1 \
+    captured-output.json
+```
+
+The script builds the same local `$ref` registry that `validate-all.sh` uses,
+so all cross-file schema references resolve without network access.
+
+**Harness pattern (three-step)**
+
+1. **Produce**: run or stub the real producer and capture JSON stdout.
+2. **Validate**: call `validate-producer-output.py` against the schema. Exit non-zero stops the test.
+3. **Parse**: feed the same JSON through the real consumer parser to confirm the consumer round-trips correctly.
+
+```bash
+# Step 1 — capture (swap with real CLI call in producer test suites)
+hyphae activity --project my-project --limit 5 > /tmp/activity.json
+
+# Step 2 — validate against Septa
+python3 septa/scripts/validate-producer-output.py \
+    --septa-dir "$SEPTA_DIR" --schema hyphae-activity-v1 /tmp/activity.json
+
+# Step 3 — parse (in TypeScript consumer tests, do the equivalent)
+# const payload = JSON.parse(fs.readFileSync('/tmp/activity.json', 'utf8'))
+# expect(parseActivityPayload(payload)).not.toThrow()
+```
+
+**Never use `check-jsonschema --schemafile` for schemas with local `$ref`
+references.** Those schemas resolve `$ref` through the `$id` URI base
+(`https://basidiocarp.dev`) which `check-jsonschema` cannot satisfy without the
+full registry. `validate-producer-output.py` and `validate-all.sh` are the
+correct validation paths.
+
+To run all five priority producer surfaces through the harness in one command:
+
+```bash
+bash septa/scripts/contract-harness-demo.sh
+```
+
+---
+
 ## Development
 
 ```bash
