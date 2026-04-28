@@ -11,6 +11,8 @@ Every payload that crosses a tool boundary must appear in this table.
 | Payload | Producer | Consumers | Schema File | Status |
 |---------|----------|-----------|-------------|--------|
 | annulus-statusline | annulus | cap, scripts, tools | annulus-statusline-v1.schema.json | Backed |
+| capability-registry | stipe | spore, downstream tools | capability-registry-v1.schema.json | Backed |
+| capability-runtime-lease | running tools, service wrappers | spore | capability-runtime-lease-v1.schema.json | Backed |
 | canopy-notification | canopy | cap, annulus | canopy-notification-v1.schema.json | Backed |
 | canopy-snapshot | canopy | cap | canopy-snapshot-v1.schema.json | Backed |
 | canopy-task-detail | canopy | cap | canopy-task-detail-v1.schema.json | Backed |

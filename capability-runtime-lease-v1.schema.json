@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/capability-runtime-lease-v1.schema.json",
+  "title": "capability-runtime-lease-v1",
+  "description": "Ephemeral live endpoint lease for a running capability. Producer: a running tool or service wrapper that wants to advertise its live endpoint. Consumer: Spore (reads leases when resolving a capability id to a preferred live endpoint). A lease is considered stale when expires_at_unix has passed or the pid no longer exists.",
+  "type": "object",
+  "required": ["schema_version", "tool", "capability_id", "transport", "pid", "leased_at_unix"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Ecosystem tool name, e.g. 'hyphae', 'rhizome'."
+    },
+    "capability_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The capability this lease satisfies, e.g. 'memory.store.v1'. One lease per capability; a tool advertising multiple capabilities writes multiple lease files."
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["stdio", "unix-socket", "tcp", "cli"],
+      "description": "Active transport kind for the live endpoint."
+    },
+    "pid": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Process id of the serving process. Spore uses this to validate that the lease is still live."
+    },
+    "leased_at_unix": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix timestamp (seconds) when this lease was written."
+    },
+    "expires_at_unix": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Unix timestamp (seconds) when this lease expires. Null means the lease is open-ended and Spore should only invalidate by pid liveness. Set a finite value for short-lived endpoints."
+    },
+    "endpoint": {
+      "type": ["string", "null"],
+      "description": "For 'unix-socket' transport: absolute socket path. For 'tcp' transport: 'host:port' string. Null or absent for 'stdio' and 'cli' transport."
+    },
+    "command": {
+      "type": ["string", "null"],
+      "description": "For 'cli' or 'stdio' transport: the command or binary path to invoke. Null or absent when a socket endpoint is used."
+    },
+    "version": {
+      "type": ["string", "null"],
+      "description": "Running version of the tool, if available. Used to detect version mismatch between a running service and the installed registry."
+    },
+    "health": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "degraded"],
+          "description": "Self-reported health at lease time. A tool sets 'degraded' if it is running but partially unavailable."
+        },
+        "message": {
+          "type": ["string", "null"],
+          "description": "Optional human-readable detail about the health state."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -95,6 +95,7 @@ change shape   ─►    update version     ─►  update dependents
 | Mycelium → Cap | `mycelium-gain-v1`, `mycelium-summary-v1` |
 | Stipe → Cap | `stipe-doctor-v1`, `stipe-init-plan-v1` |
 | Annulus → Cap, scripts | `annulus-statusline-v1` |
+| Capability Registry | `capability-registry-v1`, `capability-runtime-lease-v1` |
 
 ---
 

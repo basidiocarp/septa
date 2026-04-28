@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/capability-registry-v1.schema.json",
+  "title": "capability-registry-v1",
+  "description": "Installed capability registry for the Basidiocarp ecosystem. Producer: Stipe (written after successful install or update). Consumer: Spore (reads to resolve capability ids to binary or endpoint candidates). Each entry names a managed tool, its version, its capability ids, and the transport kind to use when calling it.",
+  "type": "object",
+  "required": ["schema_version", "written_at_unix", "entries"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "written_at_unix": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix timestamp (seconds) when Stipe last wrote this registry."
+    },
+    "entries": {
+      "type": "array",
+      "description": "Installed capability entries. One entry per managed or detected tool.",
+      "items": { "$ref": "#/$defs/registry_entry" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "registry_entry": {
+      "type": "object",
+      "required": ["tool", "version", "manager", "capability_ids", "contract_ids", "transport"],
+      "properties": {
+        "tool": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Ecosystem tool name, e.g. 'hyphae', 'rhizome', 'hymenium'."
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Installed version string, e.g. '1.2.3'."
+        },
+        "manager": {
+          "type": "string",
+          "enum": ["stipe", "manual", "self"],
+          "description": "Who owns this installation. 'stipe' = managed by Stipe install/update/uninstall. 'manual' = user-installed binary outside Stipe. 'self' = tool manages its own installation."
+        },
+        "capability_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Stable capability identifiers this tool satisfies, e.g. ['memory.store.v1', 'memory.recall.v1']. Used by Spore to resolve 'who can do X?'."
+        },
+        "contract_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Related Septa schema contract ids this tool produces or consumes, e.g. ['command-output-v1', 'code-graph-v1']. For cross-reference only; does not imply the tool implements every contract."
+        },
+        "transport": {
+          "type": "string",
+          "enum": ["stdio", "unix-socket", "tcp", "cli"],
+          "description": "Preferred transport kind for callers. 'cli' = invoke as a subprocess. 'stdio' = MCP over stdin/stdout. 'unix-socket' or 'tcp' = network endpoint."
+        },
+        "binary_path": {
+          "type": ["string", "null"],
+          "description": "Absolute path to the installed binary when transport is 'cli', 'stdio', or a socket-backed daemon. Null when the tool is not a binary (e.g., a package or plugin)."
+        },
+        "health": {
+          "$ref": "#/$defs/health_hint"
+        }
+      },
+      "additionalProperties": false
+    },
+    "health_hint": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "degraded", "missing"],
+          "description": "Last known health state at registration time. 'ok' = binary was present and passed a probe. 'degraded' = present but probe returned a non-zero result. 'missing' = binary path no longer resolves."
+        },
+        "message": {
+          "type": ["string", "null"],
+          "description": "Human-readable detail about the health state. Set when status is 'degraded' or 'missing'."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
