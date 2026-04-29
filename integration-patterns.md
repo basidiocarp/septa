@@ -275,13 +275,20 @@ The following integrations currently use CLI invocation as their wire format. Ea
 | stipe → cap (Health and Setup) | `stipe doctor`, `stipe init` | operator surface | CLI is the intended human interface. Health queries should migrate to socket endpoint for polling-free status. |
 | mycelium → cap (Token Analytics) | `mycelium gain --format json` | operator surface | CLI is the intended human interface. Analytics queries should migrate to socket endpoint. |
 | volva → cortina (Hook Events) | `cortina adapter volva hook-event` | hook-time CLI exception | Volva hooks into cortina at lifecycle events; CLI avoids a circular dependency when the host's hook adapter calls back into the ecosystem. Candidate for hook-time endpoint registry in a later phase. |
-| stipe → stipe (self) | `stipe doctor` | setup-time self-invocation | Post-install self-check: rollback spawns stipe doctor to verify repairs. Acceptable for setup flows; prefer library call (`run_doctor()`) in a future pass. |
 | hymenium → canopy (Dispatch) | `canopy task create`, `canopy task assign` | temporary compatibility | Hymenium dispatches agents through Canopy CLI. C6 (capability endpoint handoff) defines replacement path via capability resolution. Migrate to capability endpoints when available. |
-| hyphae → rhizome (Code Graph Export) | `rhizome symbols <file>` | system-to-system compatibility | Hyphae ingest calls rhizome CLI for AST-level symbol boundaries. Should migrate to rhizome MCP or shared library when available. |
-| mycelium → rhizome (Code Structure) | `rhizome structure <file>` | system-to-system compatibility | Mycelium calls rhizome CLI to get hierarchical code outlines. Should migrate to rhizome MCP or shared library. |
-| volva → canopy (Orchestration Mode) | `canopy --version` (availability check) | temporary compatibility | Volva checks if Canopy is available when running in orchestration mode. Graceful degradation to baseline mode if unavailable. Migration TBD with Canopy. |
 | stipe → cortina (Hook Setup) | `cortina --version` (availability check) | operator surface | Stipe checks cortina availability during hook setup and configuration. Part of normal setup flow. |
 | stipe → hyphae (Backup) | `hyphae --version` (availability check) | operator surface | Stipe checks hyphae availability to determine whether to perform backup during install/upgrade flows. |
 | stipe → annulus (Hook Setup) | `annulus --version` (availability check) | operator surface | Stipe checks annulus availability when registering statusline hooks during setup. |
 
 **Migration Path:** Operator surfaces should eventually expose typed local service endpoints and deprecate CLI invocation in favor of socket or HTTP transport. Hook-time CLI exceptions require careful design to avoid circular dependencies; consider a pre-hook endpoint registry mechanism.
+
+### Recently Migrated
+
+These integrations were CLI-coupled at the time of the C7 audit (2026-04-29) and have since been migrated:
+
+| Integration | Old pattern | Migration | Date |
+|---|---|---|---|
+| stipe → stipe (self) | `stipe doctor` subprocess | Direct library call: `doctor::run()` + `check_health()` (A9) | 2026-04-29 |
+| hyphae → rhizome (Code Graph Export) | `rhizome symbols <file>` CLI | `McpClient::spawn(Tool::Rhizome)` + `call_tool("get_symbols", …)` | 2026-04-29 |
+| mycelium → rhizome (Code Structure) | `rhizome structure <file>` CLI | `McpClient::spawn(Tool::Rhizome)` + `call_tool("get_structure", …)` | 2026-04-29 |
+| volva → canopy (Orchestration Mode) | `canopy --version` subprocess | `spore::discover(Tool::Canopy).is_some()` | 2026-04-29 |
