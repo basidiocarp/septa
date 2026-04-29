@@ -274,5 +274,6 @@ The following integrations currently use CLI invocation as their wire format. Ea
 | canopy → cap (Task Board) | `canopy snapshot`, `canopy task get` | operator surface | CLI is the intended human interface. Should transition to HTTP or socket endpoint for real-time task updates. |
 | stipe → cap (Health and Setup) | `stipe doctor`, `stipe init` | operator surface | CLI is the intended human interface. Health queries should migrate to socket endpoint for polling-free status. |
 | mycelium → cap (Token Analytics) | `mycelium gain --format json` | operator surface | CLI is the intended human interface. Analytics queries should migrate to socket endpoint. |
+| volva → cortina (Hook Events) | `cortina adapter volva hook-event` | hook-time CLI exception | Volva hooks into cortina at lifecycle events; CLI avoids a circular dependency when the host's hook adapter calls back into the ecosystem. Candidate for hook-time endpoint registry in a later phase. |
 
 **Migration Path:** Operator surfaces should eventually expose typed local service endpoints and deprecate CLI invocation in favor of socket or HTTP transport. Hook-time CLI exceptions require careful design to avoid circular dependencies; consider a pre-hook endpoint registry mechanism.
