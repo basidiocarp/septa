@@ -40,7 +40,7 @@ check-jsonschema --schemafile code-graph-v1.schema.json fixtures/code-graph-v1.e
 jq '.project, .nodes, .edges' fixtures/code-graph-v1.example.json
 ```
 
-**Required**: Run `bash validate-all.sh` before closing any schema or fixture change. All 34 schemas must pass.
+**Required**: Run `bash validate-all.sh` before closing any schema or fixture change. All 55 schemas must pass.
 
 ---
 

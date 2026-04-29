@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/canopy-notification-v1.schema.json",
   "title": "canopy-notification-v1",
-  "description": "Notification event emitted by Canopy for task lifecycle changes. Producer: canopy/src/notification.rs. Consumer: cap (dashboard notifications), annulus (operator notifications).",
+  "description": "Notification event emitted by Canopy for task lifecycle changes. Producer: canopy/src/store/notifications.rs. Consumer: cap (dashboard notifications), annulus (operator notifications).",
   "type": "object",
   "required": ["notification_id", "event_type", "payload", "created_at", "seen"],
   "additionalProperties": false,
