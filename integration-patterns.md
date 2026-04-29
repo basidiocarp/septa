@@ -258,3 +258,21 @@ When adding a new cross-tool integration:
 3. Document producer and consumer responsibilities
 4. Add to this file with schema reference
 5. Update both producer and consumer CLAUDE.md files
+
+---
+
+## CLI Coupling Classification
+
+System-to-system integrations should use typed local service endpoints (unix-socket or TCP) via a Septa-typed endpoint descriptor, not CLI invocation. This enables late-binding discovery, version-aware connections, and future transport migration without payload changes.
+
+The following integrations currently use CLI invocation as their wire format. Each is classified by its rationale:
+
+| Integration | Pattern | Classification | Notes |
+|---|---|---|---|
+| cortina → hyphae (Session Lifecycle) | `hyphae session start/end` | hook-time CLI exception | Avoids circular dependency at hook time; MCP would create recursion during hook capture. Candidate for eventual hook-time endpoint registry. |
+| hyphae → cap (Dashboard Data) | `hyphae stats`, `hyphae search`, etc. | operator surface | CLI is the intended human interface. Cap backend spawns hyphae; should transition to HTTP or socket endpoint for better observability and streaming. |
+| canopy → cap (Task Board) | `canopy snapshot`, `canopy task get` | operator surface | CLI is the intended human interface. Should transition to HTTP or socket endpoint for real-time task updates. |
+| stipe → cap (Health and Setup) | `stipe doctor`, `stipe init` | operator surface | CLI is the intended human interface. Health queries should migrate to socket endpoint for polling-free status. |
+| mycelium → cap (Token Analytics) | `mycelium gain --format json` | operator surface | CLI is the intended human interface. Analytics queries should migrate to socket endpoint. |
+
+**Migration Path:** Operator surfaces should eventually expose typed local service endpoints and deprecate CLI invocation in favor of socket or HTTP transport. Hook-time CLI exceptions require careful design to avoid circular dependencies; consider a pre-hook endpoint registry mechanism.

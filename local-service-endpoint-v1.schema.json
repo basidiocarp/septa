@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/local-service-endpoint-v1.schema.json",
+  "title": "local-service-endpoint-v1",
+  "description": "Typed endpoint descriptor for local service communication. Producer: a tool that wants to advertise a local socket or TCP endpoint for system-to-system calls. Consumer: downstream tools that need to locate and connect to a capability-serving endpoint. Unlike capability-runtime-lease-v1 (which is ephemeral and PID-bound), this descriptor is static and suitable for config files, registries, or stored endpoint mappings. Transport is unix-socket, tcp, or http.",
+  "type": "object",
+  "required": ["schema_version", "transport", "endpoint"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["unix-socket", "tcp", "http"],
+      "description": "Transport kind for this endpoint. 'unix-socket': local Unix domain socket at endpoint path. 'tcp': TCP listen on host:port. 'http': HTTP endpoint at http://host:port."
+    },
+    "endpoint": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Endpoint address. For 'unix-socket': absolute socket path (e.g. '/tmp/hyphae.sock'). For 'tcp': 'host:port' string (e.g. '127.0.0.1:9000'). For 'http': full URL (e.g. 'http://127.0.0.1:9000')."
+    },
+    "capability_id": {
+      "type": ["string", "null"],
+      "description": "Optional capability identifier this endpoint serves (e.g. 'memory.store.v1'). Allows a registry to match endpoints to capability requests."
+    },
+    "timeout_ms": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "Optional default call timeout in milliseconds for this endpoint. Consumers should use this as the hint for per-call timeouts unless overridden."
+    },
+    "health_probe": {
+      "type": ["object", "null"],
+      "description": "Optional health probe configuration for this endpoint.",
+      "required": ["method"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Health check method (e.g. 'GET /health', 'POST /healthz'). Format is transport-specific."
+        },
+        "timeout_ms": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "Optional timeout for the health probe in milliseconds. If omitted, uses the endpoint-level timeout_ms."
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "type": ["string", "null"],
+      "description": "Optional version string of the server at this endpoint (e.g. '1.4.2'). Used to detect version mismatch or compatibility issues."
+    }
+  },
+  "additionalProperties": false
+}
