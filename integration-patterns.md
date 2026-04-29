@@ -226,6 +226,20 @@ This contract is intentionally small in v1. It carries resolved status, render c
 
 ---
 
+## annulus → cap (Ecosystem Status)
+
+**Producer:** annulus (operator utilities)  
+**Consumer:** cap (dashboard ecosystem panel)  
+**Purpose:** Expose ecosystem tool availability and degradation state to the dashboard.
+
+**Wire Format:** CLI invocation (cap backend spawns annulus binary):
+- `annulus status --json` — ecosystem status with reports array
+
+**Schema References:**
+- `annulus-status-v1.schema.json` — ecosystem status report
+
+---
+
 ## mycelium → cap (Token Analytics)
 
 **Producer:** mycelium (CLI proxy)

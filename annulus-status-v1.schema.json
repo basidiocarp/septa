@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/annulus-status-v1.schema.json",
+  "title": "annulus-status-v1",
+  "description": "Annulus emits ecosystem status as JSON via `annulus status --json`. Producer: annulus/src/status.rs. Consumer: cap (dashboard ecosystem panel).",
+  "type": "object",
+  "required": ["schema", "version", "reports"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "annulus-status-v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/report"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "report": {
+      "type": "object",
+      "required": ["tool", "available", "tier", "degraded_capabilities"],
+      "properties": {
+        "tool": {
+          "type": "string"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "tier": {
+          "type": "string",
+          "enum": ["tier1", "tier2", "tier3"]
+        },
+        "reason": {
+          "type": "string",
+          "description": "Optional. Producer omits the field entirely when not present (serde skip_serializing_if = is_none). Never emitted as JSON null."
+        },
+        "degraded_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

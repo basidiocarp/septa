@@ -1,0 +1,25 @@
+{
+  "schema": "annulus-status-v1",
+  "version": "1",
+  "reports": [
+    {
+      "tool": "hyphae",
+      "available": true,
+      "tier": "tier1",
+      "degraded_capabilities": []
+    },
+    {
+      "tool": "volva",
+      "available": false,
+      "tier": "tier2",
+      "reason": "backend runtime unavailable",
+      "degraded_capabilities": ["session_orchestration", "execution_hosting"]
+    },
+    {
+      "tool": "mycelium",
+      "available": true,
+      "tier": "tier3",
+      "degraded_capabilities": []
+    }
+  ]
+}
