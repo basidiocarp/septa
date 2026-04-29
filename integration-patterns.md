@@ -51,7 +51,7 @@ Note: Cortina uses CLI invocation, not MCP JSON-RPC, to avoid circular dependenc
 - `hyphae_session_context` — get session state for handoff
 
 **Schema References:**
-- `handoff-context-v1.schema.json` — handoff context structure
+- `handoff-context-v1` — *deferred under F1; schema lives in `septa/draft/`. See "Drafts (Deferred)" section below.*
 
 ---
 
@@ -222,7 +222,7 @@ Note: `hyphae-session-timeline-v1` is a Cap-facing read model. It intentionally 
 This contract is intentionally small in v1. It carries resolved status, render capabilities, customization metadata, and origin information without replacing host-specific repair logic.
 
 **Schema References:**
-- `resolved-status-customization-v1.schema.json` — portable resolved status and customization contract
+- `resolved-status-customization-v1` — *deferred under F1; schema lives in `septa/draft/`. See "Drafts (Deferred)" section below.*
 
 ---
 
@@ -292,7 +292,10 @@ The following integrations currently use CLI invocation as their wire format. Ea
 | hymenium → canopy (Dispatch) | `canopy task create`, `canopy task assign` | temporary compatibility | Hymenium dispatches agents through Canopy CLI. C6 (capability endpoint handoff) defines replacement path via capability resolution. Migrate to capability endpoints when available. |
 | stipe → cortina (Hook Setup) | `cortina --version` (availability check) | operator surface | Stipe checks cortina availability during hook setup and configuration. Part of normal setup flow. |
 | stipe → hyphae (Backup) | `hyphae --version` (availability check) | operator surface | Stipe checks hyphae availability to determine whether to perform backup during install/upgrade flows. |
-| stipe → annulus (Hook Setup) | `annulus --version` (availability check) | operator surface | Stipe checks annulus availability when registering statusline hooks during setup. |
+| stipe → hyphae (Memory Store) | `hyphae memory stats --json`, `hyphae store --topic` | operator surface | Stipe seeds initial project context into hyphae during `stipe init` for first-run project setup (stipe/src/commands/init/seed.rs). |
+| stipe → hyphae (Database Init) | `hyphae stats` | operator surface | Stipe initializes hyphae database by running `hyphae stats` during ecosystem configuration if hyphae was just installed (stipe/src/ecosystem/configure.rs:138). |
+| stipe → lamella (Package Repair) | `lamella <subcommand>` | operator surface | Stipe runs lamella package repair operations (e.g. `lamella install-codex --all --force`) during `stipe package-repair` workflows (stipe/src/commands/package_repair.rs:501). |
+| stipe → annulus (Hook Setup) | `annulus validate-hooks --json` (parses structured output) | operator surface | Stipe runs hook validation and parses structured output during plugin inventory checks. Wire format currently unschemaed; a future handoff can model the contract (cf. F2.8 pattern). |
 
 **Migration Path:** Operator surfaces should eventually expose typed local service endpoints and deprecate CLI invocation in favor of socket or HTTP transport. Hook-time CLI exceptions require careful design to avoid circular dependencies; consider a pre-hook endpoint registry mechanism.
 
@@ -306,3 +309,23 @@ These integrations were CLI-coupled at the time of the C7 audit (2026-04-29) and
 | hyphae → rhizome (Code Graph Export) | `rhizome symbols <file>` CLI | `McpClient::spawn(Tool::Rhizome)` + `call_tool("get_symbols", …)` | 2026-04-29 |
 | mycelium → rhizome (Code Structure) | `rhizome structure <file>` CLI | `McpClient::spawn(Tool::Rhizome)` + `call_tool("get_structure", …)` | 2026-04-29 |
 | volva → canopy (Orchestration Mode) | `canopy --version` subprocess | `spore::discover(Tool::Canopy).is_some()` | 2026-04-29 |
+
+---
+
+## Drafts (Deferred)
+
+These schemas live in `septa/draft/` rather than the active root because they describe wire formats whose producers and consumers are deferred under the [F1 freeze roadmap](/Users/williamnewton/projects/personal/basidiocarp/docs/foundations/core-hardening-freeze-roadmap.md). They are intentional designs preserved for post-freeze implementation, not aspirational sketches. `validate-all.sh` does not pick up files under `draft/` (the validator globs `*.schema.json` non-recursively at the root).
+
+| Schema | Deferred area | Reason |
+|---|---|---|
+| `context-envelope-v1` | Context assembly (volva, canopy) | Centralized context assembly + envelope-level token budgeting; volva and canopy context work blocked behind core loop stability. |
+| `credential-v1` | Credential management (volva, stipe) | Portable credential schema for auth, deployment, and operator-initiated flows; volva auth deferred. |
+| `degradation-tier-v1` | Operational observability | Runtime degradation reporting for ecosystem tools; tied to volva and dashboard work outside F1 reliability scope. |
+| `dependency-types-v1` | Workflow primitives (canopy, hymenium) | Cross-tool dependency graph (blocking, relating, etc.); orchestration primitives frozen. |
+| `handoff-context-v1` | Handoff payloads (canopy, hyphae) | Portable context envelope for agent handoff flows; current handoffs use hyphae query CLI. |
+| `hook-execution-v1` | Hook semantics (lamella, cortina) | Standardize hook timeout / fail-open contract; lamella hook templates frozen. |
+| `local-service-endpoint-v1` | Endpoint registry (C7/C8) | Typed local service endpoint descriptor for system-to-system migration; deferred behind volva native API work. |
+| `resolved-status-customization-v1` | Statusline (lamella, cap) | Portable resolved status customization payload; lamella presets frozen. |
+| `tool-relevance-rules-v1` | Cortina tool routing | Declarative tool-relevance rules; cortina currently hardcodes `DEFAULT_RULES`. Lamella rule packs frozen. |
+
+Triage decisions are documented in detail at [`.handoffs/campaigns/post-execution-boundary-audit-2026-04-29/findings/lane2-orphan-triage-decisions.md`](/Users/williamnewton/projects/personal/basidiocarp/.handoffs/campaigns/post-execution-boundary-audit-2026-04-29/findings/lane2-orphan-triage-decisions.md).
