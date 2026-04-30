@@ -85,6 +85,81 @@
         },
         "additionalProperties": true
       }
+    },
+    "events": {
+      "type": "array",
+      "description": "Task event timeline. Each event has at minimum an event_type; additional shape is producer-defined and may evolve.",
+      "items": {
+        "type": "object",
+        "required": ["event_type"],
+        "properties": {
+          "event_type": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "heartbeats": {
+      "type": "array",
+      "description": "Per-agent heartbeat events for this task. Producer-defined item shape; consumers should treat unknown fields as forward-compatible.",
+      "items": { "type": "object" }
+    },
+    "heartbeat_summary": {
+      "type": "object",
+      "description": "Aggregate heartbeat metrics for the task (count, last_heartbeat, etc.).",
+      "additionalProperties": true
+    },
+    "agent_heartbeat_summaries": {
+      "type": "array",
+      "description": "Per-agent heartbeat summaries.",
+      "items": { "type": "object" }
+    },
+    "ownership": {
+      "type": "object",
+      "description": "Current task ownership / assignment summary.",
+      "additionalProperties": true
+    },
+    "assignments": {
+      "type": "array",
+      "description": "Active and historical task assignments.",
+      "items": { "type": "object" }
+    },
+    "handoffs": {
+      "type": "array",
+      "description": "Handoffs originating from this task.",
+      "items": { "type": "object" }
+    },
+    "handoff_attention": {
+      "type": "array",
+      "description": "Per-handoff attention signals (stale, overdue, etc.).",
+      "items": { "type": "object" }
+    },
+    "operator_actions": {
+      "type": "array",
+      "description": "Operator-facing actions emitted alongside allowed_actions for richer dashboard rendering.",
+      "items": { "type": "object" }
+    },
+    "workflow_context": {
+      "type": ["object", "null"],
+      "description": "Optional workflow / queue context (queue_state, etc.). Null when the task isn't part of a tracked workflow.",
+      "additionalProperties": true
+    },
+    "relationship_summary": {
+      "type": "object",
+      "description": "Aggregate counts derived from relationships (blocker_count, open_follow_up_child_count, etc.).",
+      "additionalProperties": true
+    },
+    "children": {
+      "type": "array",
+      "description": "Direct child tasks of this task.",
+      "items": { "type": "object" }
+    },
+    "children_complete": {
+      "type": "boolean",
+      "description": "True when every child task is in a terminal state."
+    },
+    "parent_id": {
+      "type": ["string", "null"],
+      "description": "Parent task identifier, or null if this is a root task."
     }
   },
   "additionalProperties": false
