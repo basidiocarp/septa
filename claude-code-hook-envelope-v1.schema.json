@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/claude-code-hook-envelope-v1.schema.json",
+  "title": "Claude Code Hook Envelope v1",
+  "description": "Documents the JSON envelope Claude Code sends on stdin to cortina when a hook fires. This is the consumer-side contract: cortina reads these fields, Claude Code is the producer. No schema_version is present because Claude Code does not include one. Producer: Claude Code runtime. Consumer: cortina/src/adapters/claude_code.rs.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "hook_event_name": {
+      "type": "string",
+      "description": "Name of the hook that fired (e.g. PreToolUse, PostToolUse, Stop, UserPromptSubmit, PreCompact)."
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Claude Code session identifier. Present on most hooks."
+    },
+    "cwd": {
+      "type": "string",
+      "description": "Working directory of the agent process at the time the hook fired."
+    },
+    "transcript_path": {
+      "type": "string",
+      "description": "Absolute path to the session transcript JSONL file. Present on Stop and UserPromptSubmit hooks."
+    },
+    "tool_name": {
+      "type": "string",
+      "description": "Name of the tool that was called. Present on PreToolUse and PostToolUse hooks."
+    },
+    "tool_input": {
+      "type": "object",
+      "description": "Tool-specific input arguments. Shape varies by tool_name.",
+      "properties": {
+        "command": { "type": "string", "description": "Shell command (Bash tool)." },
+        "file_path": { "type": "string", "description": "Target file path (Write, Edit, MultiEdit tools)." },
+        "old_string": { "type": "string", "description": "Text to replace (Edit, MultiEdit tools)." },
+        "new_string": { "type": "string", "description": "Replacement text (Edit, MultiEdit tools)." }
+      }
+    },
+    "tool_output": {
+      "type": "object",
+      "description": "Tool-specific output. Present on PostToolUse hooks.",
+      "properties": {
+        "output": { "type": "string", "description": "Captured stdout/stderr (Bash tool)." },
+        "exit_code": { "type": "integer", "description": "Process exit code (Bash tool)." }
+      }
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The user prompt text. Present on UserPromptSubmit hooks."
+    },
+    "trigger": {
+      "type": "string",
+      "description": "Compaction trigger reason (e.g. 'manual', 'auto'). Present on PreCompact hooks."
+    },
+    "custom_instructions": {
+      "type": "string",
+      "description": "Custom system instructions for the compacted session. Present on PreCompact hooks."
+    }
+  }
+}

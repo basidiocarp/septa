@@ -1,0 +1,13 @@
+{
+  "hook_event_name": "PostToolUse",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "cargo test --release"
+  },
+  "tool_output": {
+    "output": "test result: ok. 295 passed; 0 failed",
+    "exit_code": 0
+  }
+}

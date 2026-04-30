@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-protocol-v1.schema.json",
+  "title": "Hyphae Protocol Surface v1",
+  "description": "Contract for the memory-protocol payload emitted by `hyphae protocol` and consumed by volva to assemble the host-context prompt. Producer: hyphae/crates/hyphae-mcp/src/memory_protocol.rs. Consumer: volva/crates/volva-runtime/src/context.rs.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "artifact_type",
+    "scoped_identity",
+    "summary",
+    "recall",
+    "store",
+    "resources"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Protocol contract version. Currently shares the value of SCOPED_IDENTITY_SCHEMA_VERSION in hyphae-core."
+    },
+    "artifact_type": {
+      "const": "memory_protocol",
+      "description": "Discriminator identifying this payload as a memory-protocol surface."
+    },
+    "scoped_identity": {
+      "type": "object",
+      "description": "Session identity context. The object is always present; individual fields are optional and omitted when hyphae was invoked without project or worktree context.",
+      "additionalProperties": false,
+      "properties": {
+        "project": { "type": "string", "description": "Project name." },
+        "project_root": { "type": "string", "description": "Canonical path to repository root." },
+        "worktree_id": { "type": "string", "description": "Git worktree identifier." },
+        "scope": { "type": "string", "description": "Opaque scope key derived from worktree path." },
+        "runtime_session_id": { "type": "string", "description": "Runtime session identifier." }
+      }
+    },
+    "project": {
+      "type": "string",
+      "description": "Project name. Omitted (not null) when hyphae was invoked without a project argument."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable guidance on when to recall and store memory."
+    },
+    "recall": {
+      "type": "object",
+      "description": "Recall guidance. The consumer (volva) uses tools and passive_resource_uri for prompt assembly; when is producer-emitted guidance consumed by the model, not by volva.",
+      "required": ["tools", "passive_resource_uri"],
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Conditions under which to run recall. Emitted by hyphae for model consumption; volva does not parse this field."
+        },
+        "tools": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "MCP tool names to use for recall."
+        },
+        "passive_resource_uri": {
+          "type": "string",
+          "description": "URI of the passive context resource for startup recall."
+        }
+      }
+    },
+    "store": {
+      "type": "object",
+      "description": "Store guidance. The consumer (volva) uses tool and project_topics for prompt assembly; when and shared_topics are producer-emitted guidance consumed by the model, not by volva.",
+      "required": ["tool", "project_topics"],
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Conditions under which to store a memory. Emitted by hyphae for model consumption; volva does not parse this field."
+        },
+        "tool": {
+          "type": "string",
+          "description": "MCP tool name for storing memories."
+        },
+        "project_topics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Project-scoped memory topics."
+        },
+        "shared_topics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Cross-project shared memory topics. Emitted by hyphae for model consumption; volva does not parse this field."
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "description": "MCP resources providing memory surfaces for this host.",
+      "items": {
+        "type": "object",
+        "required": ["uri", "purpose"],
+        "additionalProperties": false,
+        "properties": {
+          "uri": { "type": "string", "description": "MCP resource URI." },
+          "purpose": { "type": "string", "description": "Human-readable description of the resource." }
+        }
+      }
+    }
+  }
+}

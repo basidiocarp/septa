@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "memory_protocol",
+  "scoped_identity": {
+    "project": "canopy",
+    "project_root": "/home/user/projects/basidiocarp/canopy",
+    "worktree_id": "git:abc1234",
+    "scope": "a1b2c3d4",
+    "runtime_session_id": "ses_canopy_20260430"
+  },
+  "project": "canopy",
+  "summary": "Recall selectively at task start, store durable outcomes, and use project-aware Hyphae resources instead of broad memory dumps.",
+  "recall": {
+    "when": [
+      "At task start before broad implementation.",
+      "After a context switch or when local repo context is insufficient."
+    ],
+    "tools": ["hyphae_gather_context", "hyphae_memory_recall"],
+    "passive_resource_uri": "hyphae://context/current"
+  },
+  "store": {
+    "when": [
+      "After a durable architecture or workflow decision.",
+      "After resolving an error worth reusing.",
+      "After project context changes that future sessions should inherit."
+    ],
+    "tool": "hyphae_memory_store",
+    "project_topics": ["context/canopy", "decisions/canopy"],
+    "shared_topics": ["errors/resolved", "preferences"]
+  },
+  "resources": [
+    {
+      "uri": "hyphae://protocol/current",
+      "purpose": "Canonical memory-use protocol for hosts that need a concise Hyphae contract."
+    },
+    {
+      "uri": "hyphae://context/current",
+      "purpose": "Project-scoped passive context bundle for startup recall."
+    },
+    {
+      "uri": "hyphae://artifacts/project-understanding/current",
+      "purpose": "Project understanding bundle exported from the code memoir."
+    }
+  ]
+}
