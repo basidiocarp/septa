@@ -21,8 +21,7 @@
       "properties": {
         "event_type": { "const": "workspace_session_started" },
         "agent_id": { "type": "string" }
-      },
-      "required": ["agent_id"]
+      }
     },
     {
       "description": "A session was cleanly ended for the workspace.",
@@ -31,7 +30,7 @@
         "outcome": { "type": "string", "enum": ["success", "failure", "cancelled"] },
         "duration_ms": { "type": "integer", "minimum": 0 }
       },
-      "required": ["outcome", "duration_ms"]
+      "required": ["outcome"]
     },
     {
       "description": "A new session start was blocked because the workspace already has an active session.",
