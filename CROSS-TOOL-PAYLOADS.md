@@ -10,6 +10,7 @@ Every payload that crosses a tool boundary must appear in this table.
 
 | Payload | Producer | Consumers | Schema File | Status |
 |---------|----------|-----------|-------------|--------|
+| annulus-status | annulus | cap | annulus-status-v1.schema.json | Backed |
 | annulus-statusline | annulus | cap, scripts, tools | annulus-statusline-v1.schema.json | Backed |
 | capability-registry | stipe | spore, downstream tools | capability-registry-v1.schema.json | Backed |
 | capability-runtime-lease | running tools, service wrappers | spore | capability-runtime-lease-v1.schema.json | Backed |
@@ -27,6 +28,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | dispatch-request | operator, .handoffs/ | hymenium | dispatch-request-v1.schema.json | Backed |
 | evidence-ref | canopy | operator surfaces, dashboards | evidence-ref-v1.schema.json | Backed |
 | handoff-context | agent-handoff, ecosystem | agent-receiving, canopy, cap | handoff-context-v1.schema.json | Backed |
+| claude-code-hook-envelope | claude-code-runtime (external) | cortina | claude-code-hook-envelope-v1.schema.json | Backed |
 | hook-execution | hook-runners (cortina, volva, stipe) | stipe, cortina, lamella | hook-execution-v1.schema.json | Backed |
 | host-identifier | baseline | all-tools | host-identifier-v1.schema.json | Backed |
 | hyphae-activity | hyphae | cap | hyphae-activity-v1.schema.json | Backed |
@@ -41,6 +43,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | hyphae-memoir-search | hyphae | cap | hyphae-memoir-search-v1.schema.json | Backed |
 | hyphae-memoir-show | hyphae | cap | hyphae-memoir-show-v1.schema.json | Backed |
 | hyphae-memory-lookup | hyphae | cap | hyphae-memory-lookup-v1.schema.json | Backed |
+| hyphae-protocol | hyphae | volva | hyphae-protocol-v1.schema.json | Backed |
 | hyphae-search | hyphae | cap | hyphae-search-v1.schema.json | Backed |
 | hyphae-session-list | hyphae | cap | hyphae-session-list-v1.schema.json | Backed |
 | hyphae-session-timeline | hyphae | cap | hyphae-session-timeline-v1.schema.json | Backed |
@@ -59,6 +62,10 @@ Every payload that crosses a tool boundary must appear in this table.
 | tool-relevance-rules | lamella | cortina | tool-relevance-rules-v1.schema.json | Backed |
 | tool-usage-event | cortina | canopy, cap | tool-usage-event-v1.schema.json | Backed |
 | usage-event | all-tools | baseline | usage-event-v1.schema.json | Backed |
+| cap-observer-status | cap-server | annulus, operator dashboards | cap-observer-status-v1.schema.json | Backed |
+| cap-stats-memories | cap-server | operator dashboard | cap-stats-memories-v1.schema.json | Backed |
+| cap-stats-savings | cap-server | operator dashboard | cap-stats-savings-v1.schema.json | Backed |
+| cap-stats-sessions | cap-server | operator dashboard | cap-stats-sessions-v1.schema.json | Backed |
 | volva-hook-event | volva | cortina | volva-hook-event-v1.schema.json | Backed |
 | workflow-outcome | hymenium | canopy, cap | workflow-outcome-v1.schema.json | Backed |
 | workflow-participant-runtime-identity | baseline | all-tools | workflow-participant-runtime-identity-v1.schema.json | Backed |
@@ -69,9 +76,7 @@ Every payload that crosses a tool boundary must appear in this table.
 
 | Payload | Producer | Consumers | Status | Rationale |
 |---------|----------|-----------|--------|-----------|
-| MemoryProtocolSurface | hyphae | volva | Exempted | Co-versioned in same workspace; low drift risk. Shape is stable but not formally documented. See `exemptions.json`. |
-| HyphaeSessionContext | hyphae | volva | Exempted | Session context JSON. Co-versioned; drift detectable by integration test. Schema backlog item. See `exemptions.json`. |
-| ClaudeCodeHookEnvelope | claude-code-runtime (external) | cortina | Exempted (external) | Claude Code's hook envelope format owned by Claude Code runtime, not this codebase. Cannot be schema-backed without owning the spec. See `exemptions.json`. |
+| (none) | — | — | — | All previously exempted payloads have been promoted to full schemas (2026-04-30). |
 
 ## Unseamed Payloads
 

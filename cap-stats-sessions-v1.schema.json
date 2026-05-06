@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cap-stats-sessions-v1.schema.json",
+  "title": "cap-stats-sessions-v1",
+  "description": "Session stats summary returned by Cap's /api/stats/sessions endpoint. Producer: cap-server (reads hyphae). Consumer: operator dashboard.",
+  "type": "object",
+  "required": ["total", "average_duration_seconds", "last_session_at"],
+  "properties": {
+    "total": { "type": "integer", "minimum": 0 },
+    "average_duration_seconds": { "type": "number", "minimum": 0 },
+    "last_session_at": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

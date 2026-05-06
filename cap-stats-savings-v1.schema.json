@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cap-stats-savings-v1.schema.json",
+  "title": "cap-stats-savings-v1",
+  "description": "Mycelium token-savings summary returned by Cap's /api/stats/savings endpoint. Producer: cap-server (reads mycelium). Consumer: operator dashboard.",
+  "type": "object",
+  "required": ["total_tokens_saved", "total_input_tokens", "total_commands", "avg_savings_pct"],
+  "properties": {
+    "total_tokens_saved": { "type": "integer", "minimum": 0 },
+    "total_input_tokens": { "type": "integer", "minimum": 0 },
+    "total_commands": { "type": "integer", "minimum": 0 },
+    "avg_savings_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+  },
+  "additionalProperties": false
+}

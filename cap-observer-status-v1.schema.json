@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cap-observer-status-v1.schema.json",
+  "title": "cap-observer-status-v1",
+  "description": "Per-component health snapshot returned by Cap's /api/observer/* endpoints. Producer: cap-server. Consumers: annulus, operator dashboards.",
+  "type": "object",
+  "required": ["is_healthy", "has_errors", "status"],
+  "properties": {
+    "is_healthy": { "type": "boolean" },
+    "has_errors": { "type": "boolean" },
+    "status": { "type": "string", "minLength": 1 },
+    "last_check_ms": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

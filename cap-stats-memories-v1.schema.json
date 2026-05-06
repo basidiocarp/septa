@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cap-stats-memories-v1.schema.json",
+  "title": "cap-stats-memories-v1",
+  "description": "Memory stats summary returned by Cap's /api/stats/memories endpoint. Producer: cap-server (reads hyphae). Consumer: operator dashboard.",
+  "type": "object",
+  "required": ["total", "total_topics", "avg_weight"],
+  "properties": {
+    "total": { "type": "integer", "minimum": 0 },
+    "total_topics": { "type": "integer", "minimum": 0 },
+    "avg_weight": { "type": "number" },
+    "oldest": { "type": ["string", "null"] },
+    "newest": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}
