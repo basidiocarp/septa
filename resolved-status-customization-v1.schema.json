@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/resolved-status-customization-v1.schema.json",
+  "title": "Resolved Status Customization v1",
+  "description": "Host-neutral status and customization bundle. Defines segments, theme, and per-host overrides. Stipe injects this into Claude Code, Codex, and Cursor; cap previews it; lamella packages presets against it; annulus renders from it.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "segments",
+    "theme"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "segments": {
+      "type": "array",
+      "description": "Ordered list of status segments. Consumers render segments in array order.",
+      "items": {
+        "$ref": "#/$defs/segment"
+      }
+    },
+    "theme": {
+      "$ref": "#/$defs/theme"
+    },
+    "host_overrides": {
+      "type": "object",
+      "description": "Optional per-host field overrides. Keys are canonical host names. Values may override any top-level fields for that host.",
+      "properties": {
+        "claude_code": {
+          "$ref": "#/$defs/host_override"
+        },
+        "codex": {
+          "$ref": "#/$defs/host_override"
+        },
+        "cursor": {
+          "$ref": "#/$defs/host_override"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "segment": {
+      "type": "object",
+      "description": "A single status segment. The id must match a known annulus segment name.",
+      "required": [
+        "id",
+        "enabled"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Segment identifier. Matches annulus segment names.",
+          "minLength": 1
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether this segment is rendered."
+        },
+        "config": {
+          "type": "object",
+          "description": "Segment-specific optional configuration (e.g. display format, threshold values). Contents are segment-dependent.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "description": "Color and formatting preferences for the statusline.",
+      "required": [
+        "color_mode",
+        "separator"
+      ],
+      "properties": {
+        "color_mode": {
+          "type": "string",
+          "description": "Color rendering mode.",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ]
+        },
+        "separator": {
+          "type": "string",
+          "description": "String placed between adjacent segments."
+        }
+      },
+      "additionalProperties": false
+    },
+    "host_override": {
+      "type": "object",
+      "description": "Per-host field overrides. Only the fields that differ from the top-level bundle need to be present.",
+      "properties": {
+        "theme": {
+          "$ref": "#/$defs/theme"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/segment"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata about the bundle origin and identity.",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when this bundle was created."
+        },
+        "version": {
+          "type": "string",
+          "description": "Bundle version string."
+        },
+        "preset_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Optional lamella preset name this bundle was built from."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

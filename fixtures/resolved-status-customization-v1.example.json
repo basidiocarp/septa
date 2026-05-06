@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "segments": [
+    { "id": "context", "enabled": true },
+    { "id": "usage", "enabled": true },
+    { "id": "cost", "enabled": true },
+    { "id": "model", "enabled": true },
+    { "id": "savings", "enabled": true },
+    { "id": "degradation", "enabled": false },
+    { "id": "branch", "enabled": true },
+    { "id": "workspace", "enabled": true },
+    { "id": "context-bar", "enabled": true },
+    { "id": "hyphae", "enabled": true }
+  ],
+  "theme": {
+    "color_mode": "auto",
+    "separator": " | "
+  },
+  "metadata": {
+    "created_at": "2026-05-06T12:00:00Z",
+    "version": "1.0.0",
+    "preset_name": null
+  }
+}

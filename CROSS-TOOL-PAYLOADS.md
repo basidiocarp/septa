@@ -53,7 +53,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | hyphae-topics | hyphae | cap | hyphae-topics-v1.schema.json | Backed |
 | mycelium-gain | mycelium | cap | mycelium-gain-v1.schema.json | Backed |
 | mycelium-summary | mycelium | hyphae, cap | mycelium-summary-v1.schema.json | Backed |
-| resolved-status-customization | all-tools | status-aggregators | resolved-status-customization-v1.schema.json | Backed |
+| resolved-status-customization | annulus (config export) | cap, lamella, stipe | resolved-status-customization-v1.schema.json | Backed |
 | session-event | cortina | hyphae | session-event-v1.schema.json | Backed |
 | stipe-doctor | stipe | cap | stipe-doctor-v1.schema.json | Backed |
 | stipe-init-plan | stipe | cap | stipe-init-plan-v1.schema.json | Backed |
@@ -71,6 +71,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | workflow-participant-runtime-identity | baseline | all-tools | workflow-participant-runtime-identity-v1.schema.json | Backed |
 | workflow-status | hymenium | canopy, cap | workflow-status-v1.schema.json | Backed |
 | workflow-template | workflow-designers | canopy, dispatch | workflow-template-v1.schema.json | Backed |
+| workspace-session | volva-runtime | cap, hyphae, canopy | workspace-session-v1.schema.json | Backed |
 
 ## Exempted Payloads
 

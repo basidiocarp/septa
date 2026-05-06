@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/workspace-session-v1.schema.json",
+  "title": "Workspace Session Event v1",
+  "description": "Events emitted by volva when a session binds to, releases, or conflicts on a workspace. Producer: volva-runtime. Consumers: cap, hyphae, canopy.",
+  "type": "object",
+  "required": ["schema_version", "event_type", "workspace_id", "session_id", "timestamp"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "event_type": {
+      "type": "string",
+      "enum": ["workspace_session_started", "workspace_session_ended", "workspace_session_conflict"]
+    },
+    "workspace_id": { "type": "string", "minLength": 1 },
+    "session_id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" }
+  },
+  "oneOf": [
+    {
+      "description": "A new session successfully bound to the workspace.",
+      "properties": {
+        "event_type": { "const": "workspace_session_started" },
+        "agent_id": { "type": "string" }
+      },
+      "required": ["agent_id"]
+    },
+    {
+      "description": "A session was cleanly ended for the workspace.",
+      "properties": {
+        "event_type": { "const": "workspace_session_ended" },
+        "outcome": { "type": "string", "enum": ["success", "failure", "cancelled"] },
+        "duration_ms": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["outcome", "duration_ms"]
+    },
+    {
+      "description": "A new session start was blocked because the workspace already has an active session.",
+      "properties": {
+        "event_type": { "const": "workspace_session_conflict" },
+        "conflicting_session_id": { "type": "string" }
+      },
+      "required": ["conflicting_session_id"]
+    }
+  ]
+}

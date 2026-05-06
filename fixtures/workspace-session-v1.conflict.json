@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "event_type": "workspace_session_conflict",
+  "workspace_id": "/Users/operator/projects/myapp",
+  "session_id": "ses-def456",
+  "conflicting_session_id": "ses-abc123",
+  "timestamp": "2026-05-06T12:10:00Z"
+}

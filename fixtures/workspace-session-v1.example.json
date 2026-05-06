@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "event_type": "workspace_session_started",
+  "workspace_id": "/Users/operator/projects/myapp",
+  "session_id": "ses-abc123",
+  "agent_id": "agent-xyz",
+  "timestamp": "2026-05-06T12:00:00Z"
+}
