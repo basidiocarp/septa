@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "event_type": "review_gate_rejected",
+  "task_id": "task-001",
+  "operator_id": "operator",
+  "timestamp": "2026-05-06T14:20:00Z",
+  "rejection_summary": "Token validation logic is missing and error handling is incomplete across three hunks."
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "event_type": "review_annotation_submitted",
+  "task_id": "task-001",
+  "operator_id": "operator",
+  "timestamp": "2026-05-06T14:00:00Z",
+  "annotation_id": "ann-abc123",
+  "file_path": "src/auth/session.ts",
+  "start_line": 42,
+  "end_line": 44,
+  "action": "revise",
+  "comment": "This should validate the token expiry before returning the session object."
+}

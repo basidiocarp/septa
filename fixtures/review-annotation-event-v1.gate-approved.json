@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "event_type": "review_gate_approved",
+  "task_id": "task-001",
+  "operator_id": "operator",
+  "timestamp": "2026-05-06T14:45:00Z",
+  "approved_at": "2026-05-06T14:45:00Z"
+}

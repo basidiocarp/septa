@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/review-annotation-event-v1.schema.json",
+  "title": "review-annotation-event-v1",
+  "description": "Events emitted by cap when an operator submits inline review feedback or closes a review gate. Producer: cap-server. Consumers: canopy, hyphae.",
+  "type": "object",
+  "required": ["schema_version", "event_type", "task_id", "operator_id", "timestamp"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "event_type": {
+      "type": "string",
+      "enum": ["review_annotation_submitted", "review_gate_approved", "review_gate_rejected"]
+    },
+    "task_id": { "type": "string", "minLength": 1 },
+    "operator_id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" }
+  },
+  "oneOf": [
+    {
+      "description": "An operator submitted an inline annotation on a line range.",
+      "properties": {
+        "event_type": { "const": "review_annotation_submitted" },
+        "annotation_id": { "type": "string" },
+        "file_path": { "type": "string" },
+        "start_line": { "type": "integer", "minimum": 1 },
+        "end_line": { "type": "integer", "minimum": 1 },
+        "action": { "type": "string", "enum": ["approve", "reject", "revise"] },
+        "comment": { "type": "string" }
+      },
+      "required": ["annotation_id", "file_path", "start_line", "end_line", "action", "comment"]
+    },
+    {
+      "description": "All hunks in the review have been approved; the review gate closes.",
+      "properties": {
+        "event_type": { "const": "review_gate_approved" },
+        "approved_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["approved_at"]
+    },
+    {
+      "description": "The operator rejected the review; the task requires rework.",
+      "properties": {
+        "event_type": { "const": "review_gate_rejected" },
+        "rejection_summary": { "type": "string" }
+      },
+      "required": ["rejection_summary"]
+    }
+  ]
+}

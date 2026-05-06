@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/review-annotation-v1.schema.json",
+  "title": "review-annotation-v1",
+  "description": "Inline review annotation: operator comment on a line range in a file diff. Producer: cap-server. Consumers: canopy, hyphae, cap UI.",
+  "type": "object",
+  "required": ["annotation_id", "task_id", "operator_id", "file_path", "start_line", "end_line", "comment", "action", "anchor_hash", "created_at"],
+  "properties": {
+    "annotation_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "session_id": { "type": ["string", "null"] },
+    "operator_id": { "type": "string", "minLength": 1 },
+    "file_path": { "type": "string", "minLength": 1 },
+    "start_line": { "type": "integer", "minimum": 1 },
+    "end_line": { "type": "integer", "minimum": 1 },
+    "comment": { "type": "string" },
+    "action": { "type": "string", "enum": ["approve", "reject", "revise"] },
+    "anchor_hash": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
