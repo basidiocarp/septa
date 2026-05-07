@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/agent-heartbeat-v1.schema.json",
+  "title": "agent-heartbeat-v1",
+  "description": "Agent liveness and status heartbeat emitted periodically by orchestration runtime. Producer: canopy (heartbeat writer). Consumer: annulus (liveness view), cap (agent status dashboard).",
+  "type": "object",
+  "required": ["schema_version", "agent_id", "written_at", "status", "consecutive_failures", "total_turns"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version identifier."
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique agent or orchestrator identifier (e.g., 'impl/spore/otel-foundation/1', 'audit/cortina/socket-migration/2')."
+    },
+    "written_at": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds when heartbeat was written."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["running", "waiting", "idle", "error"],
+      "description": "Current agent status. running = actively executing work, waiting = blocked or paused, idle = ready but no work assigned, error = recovery mode after failure."
+    },
+    "current_task": {
+      "type": ["string", "null"],
+      "description": "Short description of active task or null if no task is active."
+    },
+    "active_handoff": {
+      "type": ["string", "null"],
+      "description": "Handoff slug (e.g., 'implement-feature-x') if executing a specific handoff, or null."
+    },
+    "consecutive_failures": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of consecutive failures. Resets to 0 on any success; increments on any tool or step error."
+    },
+    "total_turns": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Lifetime turn count for this agent instance."
+    },
+    "pid": {
+      "type": ["integer", "null"],
+      "description": "Process ID of the running agent, or null if not applicable."
+    },
+    "session_id": {
+      "type": ["string", "null"],
+      "description": "Hyphae session ID if this agent has an active session, or null."
+    }
+  }
+}

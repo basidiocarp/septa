@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "planner/canopy/migration-review/1",
+  "written_at": 1715038100,
+  "status": "waiting",
+  "current_task": "Waiting for code review feedback",
+  "active_handoff": "canopy-migration-review",
+  "consecutive_failures": 0,
+  "total_turns": 15,
+  "pid": 56789,
+  "session_id": "sess_mno345pqr678"
+}

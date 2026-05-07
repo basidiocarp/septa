@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "audit/cortina/socket-migration/1",
+  "written_at": 1715038200,
+  "status": "idle",
+  "current_task": null,
+  "active_handoff": null,
+  "consecutive_failures": 0,
+  "total_turns": 12,
+  "pid": null,
+  "session_id": null
+}

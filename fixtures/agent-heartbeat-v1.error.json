@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "impl/hymenium/workflow-dispatch/2",
+  "written_at": 1715038150,
+  "status": "error",
+  "current_task": "Executing task graph for deployment pipeline",
+  "active_handoff": "hymenium-workflow-dispatch",
+  "consecutive_failures": 3,
+  "total_turns": 28,
+  "pid": 45678,
+  "session_id": "sess_xyz789uvw012"
+}
