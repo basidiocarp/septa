@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "signal": "halt_turn",
+  "reason": "Hook script requested turn halt via exit code 49",
+  "exit_code": 49
+}

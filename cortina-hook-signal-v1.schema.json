@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cortina-hook-signal-v1.schema.json",
+  "title": "Cortina Hook Signal v1",
+  "description": "The resolved signal that cortina emits after processing a hook event. Producer: cortina hook handlers. Consumer: Claude Code (via exit code), Annulus (via JSON body), and Cap (via JSON logging).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "signal", "exit_code"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version identifier."
+    },
+    "signal": {
+      "type": "string",
+      "enum": ["allow", "block_tool", "halt_turn"],
+      "description": "The resolved signal. allow=proceed (exit 0), block_tool=deny this tool call (exit 2), halt_turn=stop the entire agent turn (exit 49)."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Human-readable explanation for the signal. Optional but recommended."
+    },
+    "exit_code": {
+      "type": "integer",
+      "enum": [0, 2, 49],
+      "description": "The process exit code cortina uses to communicate the signal to Claude Code. 0=allow, 2=block_tool, 49=halt_turn."
+    }
+  }
+}

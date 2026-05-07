@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "graph_id": "ecosystem-release-wave1",
+  "nodes": [
+    {
+      "id": "schema-first",
+      "handoff_slug": "septa-heartbeat-schema",
+      "owning_repo": "septa",
+      "allowed_tools": [],
+      "wave": 1
+    },
+    {
+      "id": "cortina-signals",
+      "handoff_slug": "hook-turn-halt-exit-code",
+      "owning_repo": "cortina",
+      "allowed_tools": [],
+      "wave": 2
+    },
+    {
+      "id": "canopy-dag",
+      "handoff_slug": "dag-topology-handoff-graph",
+      "owning_repo": "canopy",
+      "allowed_tools": [],
+      "wave": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "schema-first",
+      "to": "cortina-signals",
+      "relationship": "depends_on"
+    },
+    {
+      "from": "schema-first",
+      "to": "canopy-dag",
+      "relationship": "depends_on"
+    }
+  ],
+  "entry_points": ["schema-first"]
+}

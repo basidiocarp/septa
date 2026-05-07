@@ -88,9 +88,10 @@ change shape   ─►    update version     ─►  update dependents
 |--------|-----------|
 | Resilience & Degradation | `degradation-tier-v1` |
 | Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `task-output-v1`, `workflow-outcome-v1` |
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-hook-signal-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap, Annulus | `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Canopy → Annulus | `agent-heartbeat-v1` |
+| Canopy DAG | `handoff-graph-v1` |
 | Hyphae → Cap | `hyphae-activity-v1`, `hyphae-analytics-v1`, `hyphae-context-v1`, `hyphae-health-v1`, `hyphae-lessons-v1`, `hyphae-memory-lookup-v1`, `hyphae-memoir-inspect-v1`, `hyphae-memoir-list-v1`, `hyphae-memoir-search-v1`, `hyphae-memoir-search-all-v1`, `hyphae-memoir-show-v1`, `hyphae-search-v1`, `hyphae-session-list-v1`, `hyphae-session-timeline-v1`, `hyphae-sources-v1`, `hyphae-stats-v1`, `hyphae-topic-memories-v1`, `hyphae-topics-v1` |
 | Hyphae export/import | `hyphae-archive-v1` |
 | Mycelium → Cap | `mycelium-gain-v1`, `mycelium-summary-v1` |

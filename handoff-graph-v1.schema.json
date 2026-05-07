@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/handoff-graph-v1.schema.json",
+  "title": "Handoff Graph v1",
+  "description": "A DAG of handoffs for multi-agent work. Nodes are handoff items; edges declare dependencies. Producer: operator or orchestration tools. Consumer: canopy graph validate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "graph_id", "nodes", "edges", "entry_points"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "graph_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this handoff graph."
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "handoff_slug", "owning_repo"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "handoff_slug": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owning_repo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "allowed_tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "wave": {
+            "type": ["integer", "null"],
+            "minimum": 0,
+            "description": "Wave number for parallel execution grouping. Null if not assigned."
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "relationship"],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationship": {
+            "type": "string",
+            "enum": ["depends_on", "produces", "reviews"]
+          }
+        }
+      }
+    },
+    "entry_points": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Node IDs with no incoming depends_on edges."
+    }
+  }
+}
