@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memoir-link-v1",
+  "title": "hyphae-memoir-link-v1",
+  "description": "A memoir concept link with temporal validity fields.",
+  "type": "object",
+  "required": ["schema_version", "id", "source_id", "target_id", "relation", "weight", "link_count", "created_at", "valid_from"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "id": { "type": "string" },
+    "source_id": { "type": "string" },
+    "target_id": { "type": "string" },
+    "relation": { "type": "string" },
+    "weight": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+    "link_count": { "type": "integer", "minimum": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "valid_from": { "type": "string", "format": "date-time" },
+    "valid_to": { "type": ["string", "null"], "format": "date-time" }
+  }
+}
