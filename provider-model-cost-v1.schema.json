@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/provider-model-cost-v1.schema.json",
+  "title": "Provider Model Cost Registry v1",
+  "description": "Registry of AI model pricing and capability metadata. Consumed by annulus and cap for cost estimation and display. Producer: operator or ecosystem maintainer. Consumer: annulus statusline, cap dashboard.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "models"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "models": {
+      "type": "array",
+      "description": "List of model pricing and capability entries.",
+      "items": {
+        "$ref": "#/$defs/ModelEntry"
+      }
+    }
+  },
+  "$defs": {
+    "ModelEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model_id",
+        "display_name",
+        "cost_per_1m_input_tokens",
+        "cost_per_1m_output_tokens",
+        "cost_per_1m_cached_input_tokens",
+        "context_window",
+        "default_max_output_tokens",
+        "supports_tool_use",
+        "supports_vision",
+        "as_of_date"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Provider name, e.g. anthropic, openai, google."
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Model identifier used in API calls, e.g. claude-sonnet-4-6."
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable model name for display in dashboards."
+        },
+        "cost_per_1m_input_tokens": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD cost per 1 million input tokens."
+        },
+        "cost_per_1m_output_tokens": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD cost per 1 million output tokens."
+        },
+        "cost_per_1m_cached_input_tokens": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "USD cost per 1 million cached (prompt cache hit) input tokens. Null if cache pricing is not available for this model."
+        },
+        "context_window": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of tokens in the full context window (input + output)."
+        },
+        "default_max_output_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Default maximum output token limit for this model."
+        },
+        "supports_tool_use": {
+          "type": "boolean",
+          "description": "Whether the model supports tool/function calling."
+        },
+        "supports_vision": {
+          "type": "boolean",
+          "description": "Whether the model accepts image inputs."
+        },
+        "as_of_date": {
+          "type": "string",
+          "format": "date",
+          "description": "ISO 8601 date (YYYY-MM-DD) of last pricing verification. Consumers should re-verify when this date is stale."
+        }
+      }
+    }
+  }
+}
