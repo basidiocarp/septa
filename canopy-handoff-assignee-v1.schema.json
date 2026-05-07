@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-handoff-assignee-v1",
+  "title": "canopy-handoff-assignee-v1",
+  "description": "Assignee metadata on a canopy handoff record.",
+  "type": "object",
+  "required": ["schema_version", "handoff_id", "assignee_type"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "handoff_id": { "type": "string" },
+    "assignee_type": { "type": "string", "enum": ["human", "agent", "subagent", "unassigned"] },
+    "assignee_id": { "type": ["string", "null"] }
+  }
+}
