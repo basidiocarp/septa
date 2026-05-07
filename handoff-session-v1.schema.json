@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/handoff-session-v1",
+  "title": "HandoffSession",
+  "description": "Session state for multi-agent coordination within a handoff",
+  "type": "object",
+  "required": ["schema_version", "id", "created_by", "handoff_slug", "request", "messages", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version for this payload"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique session identifier"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Agent or user who started the session"
+    },
+    "handoff_slug": {
+      "type": "string",
+      "description": "Canopy handoff this session is associated with"
+    },
+    "request": {
+      "type": "string",
+      "description": "Initial task description"
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sender", "content", "cursor_position", "timestamp"],
+        "additionalProperties": false,
+        "properties": {
+          "sender": {
+            "type": "string",
+            "description": "Agent or user who sent this message"
+          },
+          "content": {
+            "type": "string",
+            "description": "Message text"
+          },
+          "cursor_position": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Index of this message in the session"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the message was sent (RFC 3339)"
+          }
+        }
+      },
+      "description": "Ordered list of messages in this session"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "closed"],
+      "description": "Session status"
+    }
+  }
+}
