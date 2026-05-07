@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "01JNQWF0000000000000000042",
+  "phase_id": "implement",
+  "message": "Implementation scope exceeds the original handoff. Please review and confirm whether to proceed or adjust the handoff definition.",
+  "breakout": false,
+  "timestamp": "2026-05-07T18:00:00Z"
+}
