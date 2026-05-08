@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "block_type": "decision",
+  "name": "Use ULID for concept IDs",
+  "memoir_id": "mem_01j9abc123"
+}

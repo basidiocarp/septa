@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memoir-block-type-v1.schema.json",
+  "title": "Hyphae Memoir Block Type",
+  "description": "Vocabulary for typed memoir concept nodes in Hyphae",
+  "type": "object",
+  "required": ["schema_version", "block_type", "name", "memoir_id"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "block_type": {
+      "type": "string",
+      "enum": ["persona", "context", "project", "error", "decision", "preference", "custom"],
+      "description": "Role label classifying the concept's function in the memoir"
+    },
+    "name": { "type": "string" },
+    "memoir_id": { "type": "string" }
+  }
+}

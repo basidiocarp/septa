@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/session-envelope-v1.schema.json",
+  "title": "Session Envelope v1",
+  "description": "Optional threading envelope for multi-turn cross-tool calls. Tools may accept this as an optional parameter; callers pass it through unchanged when present.",
+  "type": "object",
+  "required": ["schema_version", "session_id"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "session_id": {
+      "type": "string",
+      "description": "Stable identifier for the session"
+    },
+    "cursor": {
+      "type": ["string", "null"],
+      "description": "Opaque continuation token for multi-turn tool calls; null on first call"
+    },
+    "turn": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Monotonic turn counter within the session; null if not tracked"
+    }
+  }
+}

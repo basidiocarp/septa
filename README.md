@@ -88,7 +88,7 @@ change shape   ─►    update version     ─►  update dependents
 |--------|-----------|
 | Resilience & Degradation | `degradation-tier-v1` |
 | Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `task-output-v1`, `workflow-outcome-v1` |
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-hook-signal-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
+| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-fact-extracted-v1`, `cortina-hook-signal-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-envelope-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap, Annulus | `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Canopy → Annulus | `agent-heartbeat-v1` |
 | Canopy DAG | `handoff-graph-v1` |
@@ -108,6 +108,21 @@ Two schemas are currently in draft status at `septa/draft/` and have not yet bee
 - `hook-execution-v1` — codifies the fail-open invariant for hook execution (see section below)
 
 These schemas appear in prose documentation below but are not included in the contract inventory table above.
+
+---
+
+## Shared Envelope Patterns
+
+The `session-envelope-v1` schema defines an optional threading envelope for multi-turn cross-tool calls. Tools may optionally accept this as a parameter; callers should pass it through unchanged when present.
+
+**Fields:**
+- `session_id` (required): Stable identifier for the session, enabling correlation of multi-turn operations.
+- `cursor` (optional): Opaque continuation token for resuming paginated or multi-step tool calls; null on first call.
+- `turn` (optional): Monotonic turn counter within the session; useful for logging and ordering; null if not tracked.
+
+**Producer guidance:** Tools that support multi-turn workflows should accept `session-envelope-v1` as an optional parameter and propagate it in their responses or events.
+
+**Consumer guidance:** When calling tools that support envelopes, pass the envelope through unchanged to maintain threading context across multiple invocations.
 
 ---
 
