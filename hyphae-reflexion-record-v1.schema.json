@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-reflexion-record-v1",
+  "title": "ReflexionRecord",
+  "description": "Structured error-learning record for Hyphae reflexion storage",
+  "type": "object",
+  "required": ["schema_version", "id", "error_type", "root_cause", "fix_applied", "abstract_pattern", "confidence"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "id": { "type": "string", "description": "Unique identifier for the reflexion record" },
+    "error_type": {
+      "type": "string",
+      "enum": ["build_error", "type_error", "test_failure", "runtime_panic", "other"],
+      "description": "Classification of the error"
+    },
+    "root_cause": {
+      "type": "string",
+      "description": "Root cause analysis of the error"
+    },
+    "fix_applied": {
+      "type": "string",
+      "description": "Description of the fix applied"
+    },
+    "abstract_pattern": {
+      "type": "string",
+      "description": "Generalized pattern for avoiding similar errors in the future"
+    },
+    "project": {
+      "type": ["string", "null"],
+      "description": "Project where the error occurred, or null for cross-project patterns"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Confidence level in the pattern's generalizability"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the record was created"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "id": "refl_01bjqy4p21mf0gm4wk82ch6eqb",
+  "error_type": "build_error",
+  "root_cause": "Missing lifetime parameter in generic struct definition",
+  "fix_applied": "Added lifetime parameter 'a to struct and updated all references",
+  "abstract_pattern": "When creating generic structs that hold references, always explicitly declare and propagate lifetime parameters to avoid compiler errors",
+  "project": "hyphae",
+  "confidence": "high",
+  "created_at": "2026-05-07T14:30:00Z"
+}

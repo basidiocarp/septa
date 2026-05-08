@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-handoff-disposition-v1",
+  "title": "HandoffDisposition",
+  "description": "Disposition record for a completed Canopy handoff",
+  "type": "object",
+  "required": ["schema_version", "handoff_id", "disposition"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "handoff_id": { "type": "string" },
+    "disposition": { "type": "string", "enum": ["keep", "discard", "crash"] },
+    "disposition_reason": { "type": ["string", "null"] }
+  }
+}
