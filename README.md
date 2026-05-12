@@ -102,12 +102,11 @@ change shape   ─►    update version     ─►  update dependents
 
 ### Draft Schemas
 
-Two schemas are currently in draft status at `septa/draft/` and have not yet been promoted to the main contract inventory:
+One schema is currently in draft status at `septa/draft/` and has not yet been promoted to the main contract inventory:
 
 - `local-service-endpoint-v1` — defines transport and identity semantics for local service endpoints
-- `hook-execution-v1` — codifies the fail-open invariant for hook execution (see section below)
 
-These schemas appear in prose documentation below but are not included in the contract inventory table above.
+This schema appears in prose documentation below but is not included in the contract inventory table above.
 
 ---
 
@@ -263,7 +262,7 @@ The `hook-execution-v1` contract codifies the fail-open invariant for all hook r
 **Producers:** cortina hook runner, volva hook adapters, lamella hook templates.
 **Consumers:** stipe doctor (validates timeout bounds at install time), cortina (enforces fail-open at runtime).
 
-Schema: [`septa/draft/hook-execution-v1.schema.json`](draft/hook-execution-v1.schema.json) (draft, pending promotion)
+Schema: [`septa/hook-execution-v1.schema.json`](hook-execution-v1.schema.json)
 Fixture: [`fixtures/hook-execution-v1.example.json`](fixtures/hook-execution-v1.example.json)
 
 

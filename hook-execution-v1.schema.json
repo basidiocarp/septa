@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hook-execution-v1.schema.json",
+  "title": "Hook Execution Contract v1",
+  "description": "Execution semantics contract for all hook runners in the ecosystem. Codifies the fail-open invariant: hooks must never block host commands on timeout, non-zero exit, or crash. Producer: any hook runner (cortina, volva, stipe). Consumer: stipe doctor, cortina hook runner, lamella hook templates.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "hook_id",
+    "timeout_ms",
+    "on_timeout",
+    "on_error",
+    "exit_code_semantics",
+    "stderr_disposition"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "hook_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for this hook entry. Used for logging, doctor output, and deduplication."
+    },
+    "timeout_ms": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 30000,
+      "default": 10000,
+      "description": "Maximum allowed wall-clock time in milliseconds before the hook process is killed. Must be between 1 and 30000. Default is 10000. Values above 30000 are rejected by stipe doctor because they risk hanging user commands."
+    },
+    "on_timeout": {
+      "const": "proceed",
+      "description": "Required behavior when the hook exceeds timeout_ms. Must always be 'proceed': kill the hook process, emit a warning log, and allow the host command to continue. Blocking on timeout is never permitted."
+    },
+    "on_error": {
+      "const": "proceed",
+      "description": "Required behavior when the hook exits with a non-zero exit code or is killed by a signal. Must always be 'proceed': log a warning and allow the host command to continue. Blocking on non-zero exit is never permitted."
+    },
+    "exit_code_semantics": {
+      "type": "object",
+      "required": ["zero", "non_zero"],
+      "properties": {
+        "zero": {
+          "type": "string",
+          "const": "ok",
+          "description": "Exit code 0 means the hook ran successfully."
+        },
+        "non_zero": {
+          "type": "string",
+          "const": "advisory_failure",
+          "description": "Any non-zero exit code is an advisory failure. It is logged as a warning but never causes the host command to fail."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Defines the semantic meaning of hook exit codes. Non-zero exit codes are always advisory and never blocking."
+    },
+    "stderr_disposition": {
+      "type": "string",
+      "enum": ["log", "suppress"],
+      "description": "Controls how hook stderr output is handled. 'log' captures stderr and emits it as a warning. 'suppress' discards stderr silently. In either case stderr is never forwarded to the user as an error."
+    }
+  },
+  "additionalProperties": false
+}
