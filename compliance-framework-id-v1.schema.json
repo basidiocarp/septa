@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/compliance-framework-id-v1.schema.json",
+  "title": "Compliance Framework ID v1",
+  "description": "Stable identifiers for security and AI compliance frameworks. Maps framework names to standardized ID prefixes and known item IDs.",
+  "type": "object",
+  "required": ["frameworks"],
+  "additionalProperties": false,
+  "$defs": {
+    "ComplianceItem": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "ComplianceFramework": {
+      "type": "object",
+      "required": ["standard", "id_prefix", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "standard": { "type": "string" },
+        "id_prefix": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ComplianceItem" }
+        }
+      }
+    }
+  },
+  "properties": {
+    "frameworks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ComplianceFramework" },
+      "minItems": 5,
+      "maxItems": 5
+    }
+  }
+}

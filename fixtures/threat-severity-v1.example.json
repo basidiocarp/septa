@@ -1,0 +1,24 @@
+{
+  "levels": [
+    {
+      "level": "critical",
+      "description": "Immediate, high-confidence data loss or full system compromise possible with no user interaction required"
+    },
+    {
+      "level": "high",
+      "description": "Significant breach of confidentiality, integrity, or availability; requires user interaction or specific conditions"
+    },
+    {
+      "level": "medium",
+      "description": "Limited impact; attacker-controlled outcome depends on configuration or requires multiple steps"
+    },
+    {
+      "level": "low",
+      "description": "Marginal impact; difficult to exploit or requires significant attacker access already"
+    },
+    {
+      "level": "informational",
+      "description": "No immediate exploit; design-level concern or defense-in-depth gap"
+    }
+  ]
+}

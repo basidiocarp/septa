@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "kind": "commit",
+  "content": "[main 6fe26e8] feat: add HaltTurn signal and halt_turn field for exit-49 hook protocol",
+  "source_command": "git commit -m 'feat: add HaltTurn signal'",
+  "confidence": 0.9
+}

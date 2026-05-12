@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/threat-severity-v1.schema.json",
+  "title": "Threat Severity v1",
+  "description": "5-level severity vocabulary for threat classification. Used by security teams and orchestrators to assess and prioritize threat response.",
+  "type": "object",
+  "required": ["levels"],
+  "additionalProperties": false,
+  "$defs": {
+    "SeverityLevel": {
+      "type": "object",
+      "required": ["level", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low", "informational"]
+        },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  "properties": {
+    "levels": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SeverityLevel" },
+      "minItems": 5,
+      "maxItems": 5
+    }
+  }
+}

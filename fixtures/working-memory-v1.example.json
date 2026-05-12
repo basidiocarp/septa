@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "session_id": "sess_01hyphae0001",
+  "session_title": {
+    "op": "UPDATE",
+    "content": "Implement hotness scoring for hyphae recall ranking"
+  },
+  "current_state": {
+    "op": "UPDATE",
+    "content": "Implementation complete. access_count increment and hotness blend merged into memory_store.rs recall path. All tests passing."
+  },
+  "task_and_goals": {
+    "op": "UPDATE",
+    "content": "- [x] Add access_count increment on recall\n- [x] Implement sigmoid/decay blend formula\n- [x] Add HYPHAE_HOTNESS_ALPHA and HYPHAE_HOTNESS_HALF_LIFE_DAYS config vars\n- [ ] Cap visualization for hotness distribution (deferred)"
+  },
+  "key_facts_and_decisions": {
+    "op": "APPEND",
+    "content": "- alpha=0.15, half_life_days=7.0 chosen as defaults; configurable via env\n- Blend is additive: final = similarity*(1-alpha) + hotness*alpha\n- access_count already exists in memories table (no migration needed)"
+  },
+  "files_and_context": {
+    "op": "UPDATE",
+    "content": "- hyphae/crates/hyphae-store/src/store/memory_store.rs — recall scoring path\n- hyphae/crates/hyphae-core/src/memory.rs — Memory struct\n- hyphae/crates/hyphae-store/src/schema.rs — confirmed access_count column exists"
+  },
+  "errors_and_corrections": {
+    "op": "APPEND",
+    "content": "- cargo test failed initially: missing import for `f32::ln`. Fixed by using `(1.0_f32 + x).ln()` — log1p not available as a method in stable Rust without explicit cast."
+  },
+  "open_issues": {
+    "op": "UPDATE",
+    "content": "- Cap dashboard hotness chart is deferred to a separate handoff\n- Multi-process access_count increment is not atomic (acceptable for single-host hyphae)"
+  }
+}

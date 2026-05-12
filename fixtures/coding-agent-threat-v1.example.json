@@ -1,0 +1,69 @@
+{
+  "threats": [
+    {
+      "id": "repo-prompt-injection",
+      "display_name": "Repo-Level Prompt Injection",
+      "description": "Malicious instructions embedded in repository content (README, source comments, commit messages) that override the agent's task instructions."
+    },
+    {
+      "id": "terminal-output-injection",
+      "display_name": "Terminal Output Injection",
+      "description": "Attacker-controlled content in compiler, linter, or test runner output that hijacks agent behavior."
+    },
+    {
+      "id": "secret-env-exfiltration",
+      "display_name": "Secret Environment Variable Exfiltration",
+      "description": "Agent reads environment variables containing secrets (API keys, tokens, credentials) and leaks them through output, logs, or network calls."
+    },
+    {
+      "id": "secret-file-read",
+      "display_name": "Secret File Read",
+      "description": "Agent reads credential files (.env, SSH keys, shell history, cloud config) outside the intended task scope."
+    },
+    {
+      "id": "sandbox-read-escape",
+      "display_name": "Sandbox Read Boundary Escape",
+      "description": "Agent reads files outside the declared project boundary, including system files or other users' home directories."
+    },
+    {
+      "id": "sandbox-write-escape",
+      "display_name": "Sandbox Write Boundary Escape",
+      "description": "Agent writes, modifies, or deletes files outside the declared project boundary."
+    },
+    {
+      "id": "network-egress-bypass",
+      "display_name": "Network Egress Bypass",
+      "description": "Agent makes outbound network requests to attacker-controlled endpoints to exfiltrate data or receive instructions."
+    },
+    {
+      "id": "procfs-credential-read",
+      "display_name": "Procfs Credential Read",
+      "description": "Agent reads process memory or /proc filesystem entries to extract credentials from running processes."
+    },
+    {
+      "id": "delayed-ci-exfiltration",
+      "display_name": "Delayed CI Exfiltration",
+      "description": "Agent plants code in CI configuration, workflow files, or automation scripts to exfiltrate secrets in a future pipeline run."
+    },
+    {
+      "id": "generated-vulnerability",
+      "display_name": "Generated Vulnerability",
+      "description": "Agent introduces security vulnerabilities into generated code — hardcoded secrets, SQL injection sinks, insecure deserialization."
+    },
+    {
+      "id": "automation-poisoning",
+      "display_name": "Automation Poisoning",
+      "description": "Agent modifies persistent automation artifacts (git hooks, IDE configs, shell profiles) to maintain unauthorized behavior after the session ends."
+    },
+    {
+      "id": "steganographic-exfiltration",
+      "display_name": "Steganographic Exfiltration",
+      "description": "Agent encodes sensitive data into generated artifacts (whitespace, comments, image metadata) that appear benign but carry exfiltrated content."
+    },
+    {
+      "id": "verifier-sabotage",
+      "display_name": "Verifier Sabotage",
+      "description": "Agent weakens or disables verification — removing tests, softening assertions, bypassing CI gates — to prevent detection of other malicious actions."
+    }
+  ]
+}

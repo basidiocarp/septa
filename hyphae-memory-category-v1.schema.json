@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hyphae-memory-category-v1.schema.json",
+  "title": "Hyphae Memory Category v1",
+  "description": "8-category memory taxonomy for hyphae. Defines stable category IDs, descriptions, and merge semantics. Producers use these IDs as topic prefixes; cap and cortina use them for structured rendering and tagging.",
+  "type": "object",
+  "required": ["categories"],
+  "additionalProperties": false,
+  "$defs": {
+    "MemoryCategory": {
+      "type": "object",
+      "required": ["id", "description", "merge_semantics", "example_topics"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": ["profile", "preferences", "entities", "events", "cases", "patterns", "tools", "skills"],
+          "description": "Stable category identifier."
+        },
+        "description": {
+          "type": "string",
+          "description": "What memories in this category represent."
+        },
+        "merge_semantics": {
+          "type": "string",
+          "enum": ["replace", "append", "accumulate"],
+          "description": "How updates in this category are merged. replace = full replacement, append = add to existing content, accumulate = always add new entry."
+        },
+        "example_topics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Representative hyphae topic strings that map to this category."
+        }
+      }
+    }
+  },
+  "properties": {
+    "categories": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/MemoryCategory" },
+      "minItems": 8,
+      "maxItems": 8,
+      "description": "The complete 8-category taxonomy."
+    }
+  }
+}

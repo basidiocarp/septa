@@ -1,0 +1,52 @@
+{
+  "categories": [
+    {
+      "id": "profile",
+      "description": "Long-term identity context: name, role, project affiliations, and persistent facts about the user or agent.",
+      "merge_semantics": "replace",
+      "example_topics": ["profile", "profile/user", "profile/agent"]
+    },
+    {
+      "id": "preferences",
+      "description": "Tool, editor, language, and workflow preferences. Replaced when the preference changes.",
+      "merge_semantics": "replace",
+      "example_topics": ["preferences", "preferences/editor", "preferences/style"]
+    },
+    {
+      "id": "entities",
+      "description": "Named entities encountered across sessions: repositories, people, organizations, and projects.",
+      "merge_semantics": "accumulate",
+      "example_topics": ["entities", "entities/repo", "entities/person", "entities/org"]
+    },
+    {
+      "id": "events",
+      "description": "Notable session events and milestones in chronological order.",
+      "merge_semantics": "accumulate",
+      "example_topics": ["events", "events/release", "events/incident"]
+    },
+    {
+      "id": "cases",
+      "description": "Problem/solution pairs. Each entry documents a problem that arose and how it was resolved. Maps to the errors/resolved topic family.",
+      "merge_semantics": "accumulate",
+      "example_topics": ["errors/resolved", "cases", "cases/debugging"]
+    },
+    {
+      "id": "patterns",
+      "description": "Recurring design and coding patterns. Updated by replacing the synthesis with a refined version as new examples accumulate.",
+      "merge_semantics": "replace",
+      "example_topics": ["patterns", "patterns/rust", "patterns/architecture", "decisions/basidiocarp"]
+    },
+    {
+      "id": "tools",
+      "description": "Installed tools, their versions, and configuration facts. Replaced when a tool changes.",
+      "merge_semantics": "replace",
+      "example_topics": ["tools", "tools/cargo", "tools/npm", "context/toolchain"]
+    },
+    {
+      "id": "skills",
+      "description": "Reusable procedures and techniques learned across sessions. New skills accumulate over time.",
+      "merge_semantics": "accumulate",
+      "example_topics": ["skills", "skills/debugging", "skills/refactoring", "learned"]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cortina-fact-extracted-v1.schema.json",
+  "title": "Cortina Fact Extracted v1",
+  "description": "A structured fact extracted from tool output by cortina's Layer 0 rule-based extractor. Zero LLM — all extraction is string matching. Producer: cortina post-tool-use handler. Consumer: hyphae memory store.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "content", "confidence"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "kind": {
+      "type": "string",
+      "enum": ["error", "commit", "config_change", "preference"],
+      "description": "Category of the extracted fact."
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The extracted content, truncated to 500 characters."
+    },
+    "source_command": {
+      "type": ["string", "null"],
+      "description": "The command that produced the output, if applicable."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Extraction confidence: 0.0 (very low) to 1.0 (certain)."
+    }
+  }
+}

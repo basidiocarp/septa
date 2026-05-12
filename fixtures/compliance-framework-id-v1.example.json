@@ -1,0 +1,64 @@
+{
+  "frameworks": [
+    {
+      "standard": "OWASP LLM Top 10",
+      "id_prefix": "owasp:llm",
+      "items": [
+        { "id": "owasp:llm:01", "name": "Prompt Injection" },
+        { "id": "owasp:llm:02", "name": "Insecure Output Handling" },
+        { "id": "owasp:llm:03", "name": "Training Data Poisoning" },
+        { "id": "owasp:llm:04", "name": "Model Denial of Service" },
+        { "id": "owasp:llm:05", "name": "Supply Chain Vulnerabilities" },
+        { "id": "owasp:llm:06", "name": "Sensitive Information Disclosure" },
+        { "id": "owasp:llm:07", "name": "Insecure Plugin Design" },
+        { "id": "owasp:llm:08", "name": "Model Theft" },
+        { "id": "owasp:llm:09", "name": "Unauthorized Model Access" },
+        { "id": "owasp:llm:10", "name": "Model Poisoning" }
+      ]
+    },
+    {
+      "standard": "OWASP Agentic Top 10",
+      "id_prefix": "owasp:agentic",
+      "items": [
+        { "id": "owasp:agentic:asi01", "name": "Goal and Task Hijacking" },
+        { "id": "owasp:agentic:asi02", "name": "Excessive Agency and Tool Misuse" },
+        { "id": "owasp:agentic:asi03", "name": "Identity Spoofing and Impersonation" },
+        { "id": "owasp:agentic:asi04", "name": "Supply Chain and Plugin Poisoning" },
+        { "id": "owasp:agentic:asi05", "name": "Insecure Code and Command Execution" },
+        { "id": "owasp:agentic:asi06", "name": "Memory Poisoning and Context Manipulation" },
+        { "id": "owasp:agentic:asi07", "name": "Insecure Inter-Agent Communication" },
+        { "id": "owasp:agentic:asi08", "name": "Cascading Hallucination and Trust Failure" },
+        { "id": "owasp:agentic:asi09", "name": "Resource and Cost Exploitation" },
+        { "id": "owasp:agentic:asi10", "name": "Rogue Agent Behavior" }
+      ]
+    },
+    {
+      "standard": "MITRE ATLAS",
+      "id_prefix": "mitre:atlas",
+      "items": [
+        { "id": "mitre:atlas:reconnaissance", "name": "Reconnaissance" },
+        { "id": "mitre:atlas:initial-access", "name": "Initial Access" },
+        { "id": "mitre:atlas:execution", "name": "Execution" },
+        { "id": "mitre:atlas:exfiltration", "name": "Exfiltration" }
+      ]
+    },
+    {
+      "standard": "NIST AI RMF",
+      "id_prefix": "nist:ai:measure",
+      "items": [
+        { "id": "nist:ai:measure:2.5", "name": "Measurement 2.5" },
+        { "id": "nist:ai:measure:2.6", "name": "Measurement 2.6" },
+        { "id": "nist:ai:measure:2.7", "name": "Measurement 2.7" }
+      ]
+    },
+    {
+      "standard": "EU AI Act",
+      "id_prefix": "eu:ai-act",
+      "items": [
+        { "id": "eu:ai-act:art5", "name": "Article 5" },
+        { "id": "eu:ai-act:art9", "name": "Article 9" },
+        { "id": "eu:ai-act:art15", "name": "Article 15" }
+      ]
+    }
+  ]
+}

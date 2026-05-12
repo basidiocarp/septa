@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/working-memory-v1.schema.json",
+  "title": "Working Memory v1",
+  "description": "Structured session document emitted by hyphae session end and cortina SessionEnd hooks. Seven fixed sections with per-section merge semantics for incremental updates.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "session_title",
+    "current_state",
+    "task_and_goals",
+    "key_facts_and_decisions",
+    "files_and_context",
+    "errors_and_corrections",
+    "open_issues"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "SectionEntry": {
+      "type": "object",
+      "required": ["op", "content"],
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "type": "string",
+          "enum": ["KEEP", "UPDATE", "APPEND"],
+          "description": "Merge operation for incremental updates."
+        },
+        "content": {
+          "type": "string",
+          "description": "Section content as Markdown prose or bullet list."
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1",
+      "description": "Schema version sentinel."
+    },
+    "session_id": {
+      "type": "string",
+      "description": "ID of the hyphae session this document describes."
+    },
+    "session_title": { "$ref": "#/$defs/SectionEntry" },
+    "current_state": { "$ref": "#/$defs/SectionEntry" },
+    "task_and_goals": { "$ref": "#/$defs/SectionEntry" },
+    "key_facts_and_decisions": { "$ref": "#/$defs/SectionEntry" },
+    "files_and_context": { "$ref": "#/$defs/SectionEntry" },
+    "errors_and_corrections": { "$ref": "#/$defs/SectionEntry" },
+    "open_issues": { "$ref": "#/$defs/SectionEntry" }
+  }
+}

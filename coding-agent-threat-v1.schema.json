@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/coding-agent-threat-v1.schema.json",
+  "title": "Coding Agent Threat v1",
+  "description": "13-entry threat taxonomy for autonomous coding agents. Each entry has a stable ID, display name, and description. Septa owns the vocabulary; canopy handoffs and hymenium phase definitions reference entries by stable ID.",
+  "type": "object",
+  "required": ["threats"],
+  "additionalProperties": false,
+  "$defs": {
+    "CodingAgentThreat": {
+      "type": "object",
+      "required": ["id", "display_name", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "repo-prompt-injection",
+            "terminal-output-injection",
+            "secret-env-exfiltration",
+            "secret-file-read",
+            "sandbox-read-escape",
+            "sandbox-write-escape",
+            "network-egress-bypass",
+            "procfs-credential-read",
+            "delayed-ci-exfiltration",
+            "generated-vulnerability",
+            "automation-poisoning",
+            "steganographic-exfiltration",
+            "verifier-sabotage"
+          ]
+        },
+        "display_name": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  "properties": {
+    "threats": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/CodingAgentThreat" },
+      "minItems": 13,
+      "maxItems": 13
+    }
+  }
+}
