@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "canopy-task-branch-v1",
+  "title": "Canopy Task Branch Fields",
+  "description": "Optional branch tracking fields on a canopy task",
+  "type": "object",
+  "properties": {
+    "branch_of": {
+      "type": ["string", "null"],
+      "description": "Parent task ID if this task is a branch exploration"
+    },
+    "branch_at": {
+      "type": ["string", "null"],
+      "description": "Checkpoint label or step description where the branch diverged"
+    },
+    "branch_outcome": {
+      "type": ["string", "null"],
+      "enum": ["merged", "discarded", null],
+      "description": "Outcome of this branch after parallel exploration"
+    }
+  }
+}
