@@ -15,6 +15,7 @@
     "backend": "official-cli",
     "workspace": {
       "workspace_root": "/tmp/volva-example",
+      "workspace_id": "/tmp/volva-example",
       "worktree_id": null
     },
     "primary_participant": {

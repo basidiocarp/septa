@@ -91,12 +91,16 @@
               "type": "string",
               "description": "Root path of the workspace."
             },
+            "workspace_id": {
+              "type": "string",
+              "description": "Absolute path string produced by canonicalizing workspace_root; falls back to workspace_root if canonicalization fails."
+            },
             "worktree_id": {
               "type": ["string", "null"],
               "description": "Optional worktree identifier."
             }
           },
-          "required": ["workspace_root"],
+          "required": ["workspace_root", "workspace_id"],
           "additionalProperties": false
         },
         "primary_participant": {
