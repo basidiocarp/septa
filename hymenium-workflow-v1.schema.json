@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/hymenium-workflow-v1.schema.json",
+  "title": "hymenium-workflow-v1",
+  "description": "YAML DAG workflow definition for hymenium. Producer: workflow authors (lamella ships built-in templates). Consumer: hymenium run command, cap workflow builder, septa contract layer.",
+  "type": "object",
+  "required": ["schema_version", "workflow_id", "name", "description", "nodes", "edges"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version."
+    },
+    "workflow_id": {
+      "type": "string",
+      "description": "Stable identifier for this workflow (e.g. 'review-pr'). Used by hymenium run and cap to reference the workflow.",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable workflow name."
+    },
+    "description": {
+      "type": "string",
+      "description": "What this workflow does and when to use it."
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "DAG nodes. Each node has a unique id and a kind that determines its execution behavior.",
+      "items": {
+        "$ref": "#/$defs/DagNode"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Directed edges defining execution order. A node with no incoming edges runs first.",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Source node id."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target node id."
+          }
+        }
+      }
+    },
+    "env": {
+      "type": "object",
+      "description": "Optional key/value pairs available to all nodes as $KEY. Values may be overridden at invocation time via --env KEY=VALUE.",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "TriggerRule": {
+      "type": "string",
+      "enum": ["all_success", "one_success"],
+      "description": "Controls when a node with multiple incoming edges becomes ready. 'all_success': all predecessors must succeed (default). 'one_success': fires as soon as any predecessor succeeds; fault-tolerant fan-in for parallel reviewer branches."
+    },
+    "ContextMode": {
+      "type": "string",
+      "enum": ["inherit", "fresh"],
+      "description": "Whether the node inherits model context from prior turns ('inherit', default) or starts with a clean slate ('fresh'). Use 'fresh' for synthesis nodes that should reason only from collected outputs."
+    },
+    "NodeHookEntry": {
+      "type": "object",
+      "required": ["matcher"],
+      "additionalProperties": false,
+      "properties": {
+        "matcher": {
+          "type": "string",
+          "description": "Pipe-separated tool name pattern applied to tool_name. E.g. 'Write|Edit', 'Bash', '*' for all tools."
+        },
+        "additional_context": {
+          "type": "string",
+          "description": "Text appended to the model's next turn when the matcher fires."
+        },
+        "system_message": {
+          "type": "string",
+          "description": "Immediate steering message injected as a system turn when the matcher fires."
+        },
+        "deny": {
+          "type": "boolean",
+          "description": "If true, block the matched tool use and return an error. Default false.",
+          "default": false
+        }
+      }
+    },
+    "NodeHooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pre_tool_use": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/NodeHookEntry" }
+        },
+        "post_tool_use": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/NodeHookEntry" }
+        }
+      }
+    },
+    "DagNode": {
+      "oneOf": [
+        { "$ref": "#/$defs/PromptNode" },
+        { "$ref": "#/$defs/BashNode" },
+        { "$ref": "#/$defs/LoopNode" },
+        { "$ref": "#/$defs/CommandNode" },
+        { "$ref": "#/$defs/ApprovalNode" }
+      ]
+    },
+    "PromptNode": {
+      "type": "object",
+      "required": ["kind", "id", "prompt"],
+      "additionalProperties": false,
+      "properties": {
+        "kind":         { "const": "prompt" },
+        "id":           { "type": "string", "description": "Unique node identifier within the workflow." },
+        "prompt":       { "type": "string", "description": "Prompt text. May reference $node_id.output and $ENV_KEY." },
+        "model":        { "type": "string", "description": "Optional model override (e.g. 'opus', 'sonnet', 'haiku')." },
+        "context":      { "$ref": "#/$defs/ContextMode" },
+        "trigger_rule": { "$ref": "#/$defs/TriggerRule" },
+        "allowed_tools": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "If non-empty, restrict the node to only these tool names."
+        },
+        "denied_tools": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tool names explicitly blocked for the duration of this node."
+        },
+        "hooks": { "$ref": "#/$defs/NodeHooks" }
+      }
+    },
+    "BashNode": {
+      "type": "object",
+      "required": ["kind", "id", "command"],
+      "additionalProperties": false,
+      "properties": {
+        "kind":         { "const": "bash" },
+        "id":           { "type": "string" },
+        "command":      { "type": "string", "description": "Shell command to run. May reference $node_id.output and $ENV_KEY." },
+        "trigger_rule": { "$ref": "#/$defs/TriggerRule" }
+      }
+    },
+    "LoopNode": {
+      "type": "object",
+      "required": ["kind", "id", "prompt", "until"],
+      "additionalProperties": false,
+      "properties": {
+        "kind":           { "const": "loop" },
+        "id":             { "type": "string" },
+        "prompt":         { "type": "string", "description": "Prompt repeated each iteration." },
+        "until":          { "type": "string", "description": "Exit condition checked after each iteration (e.g. 'exit_code == 0', 'no_errors')." },
+        "max_iterations": { "type": "integer", "minimum": 1, "default": 5 },
+        "trigger_rule":   { "$ref": "#/$defs/TriggerRule" },
+        "context":        { "$ref": "#/$defs/ContextMode" },
+        "hooks":          { "$ref": "#/$defs/NodeHooks" }
+      }
+    },
+    "CommandNode": {
+      "type": "object",
+      "required": ["kind", "id", "skill"],
+      "additionalProperties": false,
+      "properties": {
+        "kind":         { "const": "command" },
+        "id":           { "type": "string" },
+        "skill":        { "type": "string", "description": "Lamella skill name to invoke (resolved via PATH or lamella skill-script path)." },
+        "args":         { "type": "array", "items": { "type": "string" }, "description": "Optional arguments passed to the skill." },
+        "trigger_rule": { "$ref": "#/$defs/TriggerRule" }
+      }
+    },
+    "ApprovalNode": {
+      "type": "object",
+      "required": ["kind", "id", "prompt"],
+      "additionalProperties": false,
+      "properties": {
+        "kind":         { "const": "approval" },
+        "id":           { "type": "string" },
+        "prompt":       { "type": "string", "description": "Message shown to the operator when requesting approval." },
+        "trigger_rule": { "$ref": "#/$defs/TriggerRule" }
+      }
+    }
+  }
+}

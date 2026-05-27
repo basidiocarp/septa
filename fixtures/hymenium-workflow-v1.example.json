@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "review-pr",
+  "name": "Parallel PR Review",
+  "description": "Runs code review, error handler review, and test coverage review in parallel, then synthesizes findings into a prioritized action list. Use after completing a feature branch before creating a PR.",
+  "nodes": [
+    {
+      "kind": "command",
+      "id": "review-code",
+      "skill": "code-reviewer",
+      "trigger_rule": "all_success"
+    },
+    {
+      "kind": "command",
+      "id": "review-errors",
+      "skill": "silent-failure-hunter",
+      "trigger_rule": "all_success"
+    },
+    {
+      "kind": "command",
+      "id": "review-tests",
+      "skill": "test-coverage-reviewer",
+      "trigger_rule": "all_success"
+    },
+    {
+      "kind": "prompt",
+      "id": "synthesize",
+      "prompt": "Synthesize findings from $review-code.output, $review-errors.output, $review-tests.output into a prioritized list: 1) Blockers, 2) Concerns, 3) Nits.",
+      "context": "fresh",
+      "trigger_rule": "one_success"
+    }
+  ],
+  "edges": [
+    { "from": "review-code",   "to": "synthesize" },
+    { "from": "review-errors", "to": "synthesize" },
+    { "from": "review-tests",  "to": "synthesize" }
+  ]
+}
