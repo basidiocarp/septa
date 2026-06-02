@@ -21,11 +21,23 @@ except Exception as e:
 workspace_root = os.path.dirname(septa_dir)
 checked = 0
 missing = 0
+skipped = 0
 
 for entry in data.get('exemptions', []):
     producer = entry.get('producer', '')
     if producer.startswith('external:'):
         print(f"  SKIP  {producer} (external)")
+        skipped += 1
+        continue
+
+    # Producer paths point into sibling repos (e.g. hyphae/..., volva/...).
+    # A standalone septa checkout (CI) has no siblings, so the path is
+    # unverifiable here — skip it. Only a missing file *inside a repo that IS
+    # checked out* is a genuine dangling exemption worth failing on.
+    repo = producer.split('/', 1)[0]
+    if not os.path.isdir(os.path.join(workspace_root, repo)):
+        print(f"  SKIP  {producer} (repo '{repo}' not in this checkout)")
+        skipped += 1
         continue
 
     checked += 1
@@ -41,5 +53,5 @@ if missing > 0:
     print(f"ERROR: {missing} producer path(s) do not exist")
     sys.exit(1)
 else:
-    print(f"All {checked} non-external producers exist")
+    print(f"All {checked} resolvable producers exist ({skipped} skipped: external or repo not in checkout)")
     sys.exit(0)
