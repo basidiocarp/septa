@@ -3,6 +3,7 @@
 Every payload that crosses a tool boundary must appear in this table.
 
 - **Backed**: has a septa schema in this directory — validated by `validate-all.sh`
+- **Draft**: schema designed but deferred under the F1 freeze — lives in `draft/`, not validated by `validate-all.sh`
 - **Exempted**: registered in `exemptions.json` with rationale — reviewed but deferred
 - **UNSEAMED**: not registered — indicates a gap that needs resolution
 
@@ -20,15 +21,10 @@ Every payload that crosses a tool boundary must appear in this table.
 | code-graph | rhizome | hyphae | code-graph-v1.schema.json | Backed |
 | cap-code-graph | rhizome (export) | cap (graph view) | cap-code-graph-v1.schema.json | Backed |
 | command-output | mycelium | hyphae | command-output-v1.schema.json | Backed |
-| context-envelope | hyphae, rhizome, cortina, canopy | model context assembly, cap | context-envelope-v1.schema.json | Backed |
 | cortina-audit-handoff | cortina | canopy | cortina-audit-handoff-v1.schema.json | Backed |
-| credential | stipe, cortina, operator actions | credential managers, auth bootstrap, deployment tools | credential-v1.schema.json | Backed |
 | cortina-lifecycle-event | cortina | orchestrators, dashboards | cortina-lifecycle-event-v1.schema.json | Backed |
-| degradation-tier | tool-health-monitors | cortina, volva, canopy, agents, dashboards | degradation-tier-v1.schema.json | Backed |
-| dependency-types | canopy, hymenium, hyphae | canopy, cap, agent-handoff | dependency-types-v1.schema.json | Backed |
 | dispatch-request | operator, .handoffs/ | hymenium | dispatch-request-v1.schema.json | Backed |
 | evidence-ref | canopy | operator surfaces, dashboards | evidence-ref-v1.schema.json | Backed |
-| handoff-context | agent-handoff, ecosystem | agent-receiving, canopy, cap | handoff-context-v1.schema.json | Backed |
 | claude-code-hook-envelope | claude-code-runtime (external) | cortina | claude-code-hook-envelope-v1.schema.json | Backed |
 | hook-execution | hook-runners (cortina, volva, stipe) | stipe, cortina, lamella | hook-execution-v1.schema.json | Backed |
 | host-identifier | baseline | all-tools | host-identifier-v1.schema.json | Backed |
@@ -53,15 +49,12 @@ Every payload that crosses a tool boundary must appear in this table.
 | hyphae-topic-memories | hyphae | cap | hyphae-topic-memories-v1.schema.json | Backed |
 | hyphae-topics | hyphae | cap | hyphae-topics-v1.schema.json | Backed |
 | mycelium-gain | mycelium | cap | mycelium-gain-v1.schema.json | Backed |
-| mycelium-summary | mycelium | hyphae, cap | mycelium-summary-v1.schema.json | Backed |
 | resolved-status-customization | annulus (config export) | cap, lamella, stipe | resolved-status-customization-v1.schema.json | Backed |
 | session-event | cortina | hyphae | session-event-v1.schema.json | Backed |
 | session-message-class | hyphae, canopy (message classifiers) | cap, session readers | session-message-class-v1.schema.json | Backed |
 | stipe-doctor | stipe | cap | stipe-doctor-v1.schema.json | Backed |
 | stipe-init-plan | stipe | cap | stipe-init-plan-v1.schema.json | Backed |
-| task-output | canopy | canopy, cap | task-output-v1.schema.json | Backed |
 | task-packet | hymenium | worker-agents | task-packet-v1.schema.json | Backed |
-| tool-relevance-rules | lamella | cortina | tool-relevance-rules-v1.schema.json | Backed |
 | tool-usage-event | cortina | canopy, cap | tool-usage-event-v1.schema.json | Backed |
 | usage-event | all-tools | baseline | usage-event-v1.schema.json | Backed |
 | cap-observer-status | cap-server | annulus, operator dashboards | cap-observer-status-v1.schema.json | Backed |
@@ -96,6 +89,19 @@ Every payload that crosses a tool boundary must appear in this table.
 | session-envelope | any tool (threading envelope) | all-tools | session-envelope-v1.schema.json | Backed |
 | threat-severity | septa (vocabulary) | security tooling, orchestrators, cap | threat-severity-v1.schema.json | Backed |
 | working-memory | hyphae (session end), cortina (SessionEnd) | hyphae, cap | working-memory-v1.schema.json | Backed |
+
+## Draft / Deferred Payloads
+
+Schemas designed but deferred under the F1 freeze roadmap. They live in `draft/` and are **not** validated by `validate-all.sh` (the validator globs `*.schema.json` non-recursively at the root). They are intentional designs preserved for post-freeze implementation, not gaps. To promote one, move the file from `draft/` to the repo root, add a fixture, and move its row up to the Schema-Backed table. See the "Drafts (Deferred)" section in `integration-patterns.md`.
+
+| Payload | Producer | Consumers | Schema File | Status |
+|---------|----------|-----------|-------------|--------|
+| context-envelope | hyphae, rhizome, cortina, canopy | model context assembly, cap | draft/context-envelope-v1.schema.json | Draft |
+| credential | stipe, cortina, operator actions | credential managers, auth bootstrap, deployment tools | draft/credential-v1.schema.json | Draft |
+| degradation-tier | tool-health-monitors | cortina, volva, canopy, agents, dashboards | draft/degradation-tier-v1.schema.json | Draft |
+| dependency-types | canopy, hymenium, hyphae | canopy, cap, agent-handoff | draft/dependency-types-v1.schema.json | Draft |
+| handoff-context | agent-handoff, ecosystem | agent-receiving, canopy, cap | draft/handoff-context-v1.schema.json | Draft |
+| tool-relevance-rules | lamella | cortina | draft/tool-relevance-rules-v1.schema.json | Draft |
 
 ## Exempted Payloads
 
