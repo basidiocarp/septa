@@ -41,7 +41,32 @@
       "description": "Tool-specific output. Present on PostToolUse hooks.",
       "properties": {
         "output": { "type": "string", "description": "Captured stdout/stderr (Bash tool)." },
-        "exit_code": { "type": "integer", "description": "Process exit code (Bash tool)." }
+        "exit_code": { "type": "integer", "description": "Process exit code (Bash tool)." },
+        "payload_format_version": {
+          "type": "string",
+          "description": "Documents whether the envelope came from Claude Code 2.x or the legacy shape. Legacy payloads omit this field."
+        },
+        "content": {
+          "description": "Polymorphic tool response content. Either a plain string (legacy) or an array of typed response blocks (Claude Code 2.x).",
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "Plain string content (legacy shape)."
+            },
+            {
+              "type": "array",
+              "description": "Structured array of typed response blocks (Claude Code 2.x shape).",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string", "description": "Block type identifier (e.g. 'tool_result', 'text')." },
+                  "text": { "type": "string", "description": "Text content of the response block." }
+                },
+                "required": ["type", "text"]
+              }
+            }
+          ]
+        }
       }
     },
     "prompt": {

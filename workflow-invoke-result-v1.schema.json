@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/workflow-invoke-result-v1.schema.json",
+  "title": "Workflow Invoke Result v1",
+  "description": "The typed result returned by hymenium's invoke()/run() surface after a single dispatch or resume call completes or suspends. Covers the transient single-invoke result — it does not replace handoff-to-user-v1 (single checkpoint event) or workflow-outcome-v1 (terminal states), which are separate contracts.",
+  "type": "object",
+  "required": ["schema_version", "workflow_id", "status", "output", "interrupts"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract version. Always '1.0' for this schema."
+    },
+    "workflow_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique identifier for the workflow instance, assigned as a ULID."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "interrupted", "failed"],
+      "description": "Terminal status of this invoke call. 'completed' means the workflow ran to a final node; 'interrupted' means execution paused at one or more interrupt points; 'failed' means an unrecoverable error occurred."
+    },
+    "output": {
+      "type": ["object", "null"],
+      "description": "The final node output value when status is 'completed'. Null when status is 'interrupted' or 'failed'."
+    },
+    "interrupts": {
+      "type": "array",
+      "description": "Interrupt checkpoints raised during this invoke call. Non-empty when status is 'interrupted'; empty when status is 'completed' or 'failed'.",
+      "items": {
+        "type": "object",
+        "required": ["node_id", "resume_value", "message", "breakout", "raised_at"],
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "description": "Identifier of the workflow node that raised this interrupt."
+          },
+          "resume_value": {
+            "description": "The value to supply when resuming from this interrupt. Unconstrained — producers may emit any JSON value."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation of the interrupt, suitable for display to an operator or user."
+          },
+          "breakout": {
+            "type": "boolean",
+            "description": "When true, this interrupt signals that execution should not automatically resume — it requires an explicit operator decision before the workflow continues."
+          },
+          "raised_at": {
+            "type": "string",
+            "description": "ISO 8601 timestamp at which the interrupt was raised."
+          }
+        }
+      }
+    }
+  }
+}

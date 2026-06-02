@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/content-bundle-v1.schema.json",
+  "title": "Content Bundle v1",
+  "description": "A versioned content bundle emitted by lamella or a compatible packaging tool. Discriminated by bundle_type across three target platforms: Codex, Copilot, and Kiro. Each variant is self-contained; consumers match on bundle_type before reading platform-specific fields.",
+  "oneOf": [
+    { "$ref": "#/$defs/CodexBundle" },
+    { "$ref": "#/$defs/CopilotBundle" },
+    { "$ref": "#/$defs/KiroBundle" }
+  ],
+  "$defs": {
+    "CodexBundle": {
+      "title": "Codex Bundle",
+      "description": "A content bundle targeting the Codex platform.",
+      "type": "object",
+      "required": ["schema_version", "bundle_type", "bundle_id", "format_version", "manifest"],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0",
+          "description": "Contract version. Always '1.0' for this schema."
+        },
+        "bundle_type": {
+          "type": "string",
+          "const": "codex",
+          "description": "Discriminator identifying this as a Codex bundle."
+        },
+        "bundle_id": {
+          "type": "string",
+          "description": "Unique identifier for this bundle. Assigned by the producer."
+        },
+        "format_version": {
+          "type": "string",
+          "description": "Semantic version of the bundle format (e.g. '1.2.0')."
+        },
+        "manifest": {
+          "type": "object",
+          "description": "Bundle manifest describing the package contents.",
+          "required": ["name", "description", "content_root"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Human-readable bundle name."
+            },
+            "description": {
+              "type": "string",
+              "description": "Short description of what the bundle provides."
+            },
+            "content_root": {
+              "type": "string",
+              "description": "Relative path to the root directory of packaged content."
+            }
+          },
+          "additionalProperties": true
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional tags for categorization or filtering."
+        },
+        "min_tool_version": {
+          "type": "string",
+          "description": "Minimum tool version required to consume this bundle (semver)."
+        },
+        "published_at": {
+          "type": "string",
+          "description": "ISO 8601 timestamp of when this bundle was published."
+        }
+      }
+    },
+    "CopilotBundle": {
+      "title": "Copilot Bundle",
+      "description": "A content bundle targeting the Copilot platform.",
+      "type": "object",
+      "required": ["schema_version", "bundle_type", "bundle_id", "format_version", "manifest"],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0",
+          "description": "Contract version. Always '1.0' for this schema."
+        },
+        "bundle_type": {
+          "type": "string",
+          "const": "copilot",
+          "description": "Discriminator identifying this as a Copilot bundle."
+        },
+        "bundle_id": {
+          "type": "string",
+          "description": "Unique identifier for this bundle. Assigned by the producer."
+        },
+        "format_version": {
+          "type": "string",
+          "description": "Semantic version of the bundle format (e.g. '1.2.0')."
+        },
+        "manifest": {
+          "type": "object",
+          "description": "Bundle manifest describing the package contents.",
+          "required": ["name", "description", "content_root"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Human-readable bundle name."
+            },
+            "description": {
+              "type": "string",
+              "description": "Short description of what the bundle provides."
+            },
+            "content_root": {
+              "type": "string",
+              "description": "Relative path to the root directory of packaged content."
+            }
+          },
+          "additionalProperties": true
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional tags for categorization or filtering."
+        },
+        "min_tool_version": {
+          "type": "string",
+          "description": "Minimum tool version required to consume this bundle (semver)."
+        },
+        "published_at": {
+          "type": "string",
+          "description": "ISO 8601 timestamp of when this bundle was published."
+        }
+      }
+    },
+    "KiroBundle": {
+      "title": "Kiro Bundle",
+      "description": "A content bundle targeting the Kiro platform.",
+      "type": "object",
+      "required": ["schema_version", "bundle_type", "bundle_id", "format_version", "manifest"],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1.0",
+          "description": "Contract version. Always '1.0' for this schema."
+        },
+        "bundle_type": {
+          "type": "string",
+          "const": "kiro",
+          "description": "Discriminator identifying this as a Kiro bundle."
+        },
+        "bundle_id": {
+          "type": "string",
+          "description": "Unique identifier for this bundle. Assigned by the producer."
+        },
+        "format_version": {
+          "type": "string",
+          "description": "Semantic version of the bundle format (e.g. '1.2.0')."
+        },
+        "manifest": {
+          "type": "object",
+          "description": "Bundle manifest describing the package contents.",
+          "required": ["name", "description", "content_root"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Human-readable bundle name."
+            },
+            "description": {
+              "type": "string",
+              "description": "Short description of what the bundle provides."
+            },
+            "content_root": {
+              "type": "string",
+              "description": "Relative path to the root directory of packaged content."
+            }
+          },
+          "additionalProperties": true
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional tags for categorization or filtering."
+        },
+        "min_tool_version": {
+          "type": "string",
+          "description": "Minimum tool version required to consume this bundle (semver)."
+        },
+        "published_at": {
+          "type": "string",
+          "description": "ISO 8601 timestamp of when this bundle was published."
+        }
+      }
+    }
+  }
+}

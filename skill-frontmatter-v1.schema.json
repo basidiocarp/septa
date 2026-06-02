@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/skill-frontmatter-v1.schema.json",
+  "title": "Skill Frontmatter v1",
+  "description": "YAML frontmatter block for a lamella skill file. Declares identity, tooling constraints, licensing, and optional agentskills.io interop metadata. Produced by skill authors; consumed by the lamella validator and any compatible skill registry.",
+  "type": "object",
+  "required": ["name", "description"],
+  "additionalProperties": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 64,
+      "description": "Kebab-case identifier for the skill. Must be unique within the owning skill set. Used as the canonical key in registry lookups and install references."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Human-readable description of what the skill does. Shown in marketplace listings, skill pickers, and operator dashboards."
+    },
+    "compatibility": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Free-text compatibility statement for agentskills.io interop. Describes the agent environment this skill targets. Not validated semantically; consumers should treat unknown values gracefully."
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier or short license name under which this skill is distributed. Examples: 'MIT', 'Apache-2.0', 'Proprietary'."
+    },
+    "allowed-tools": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "A single tool name permitted for use by this skill."
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "List of tool names permitted for use by this skill."
+        }
+      ],
+      "description": "Tool allowlist for this skill. Restricts which tools an agent may invoke when running the skill. Accepts a single string or an array of non-empty strings."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Arbitrary string key-value pairs for producer-defined or registry-specific metadata. All values must be strings. Consumers should tolerate unknown keys."
+    }
+  }
+}

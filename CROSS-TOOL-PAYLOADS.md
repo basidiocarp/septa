@@ -91,6 +91,10 @@ Every payload that crosses a tool boundary must appear in this table.
 | session-envelope | any tool (threading envelope) | all-tools | session-envelope-v1.schema.json | Backed |
 | threat-severity | septa (vocabulary) | security tooling, orchestrators, cap | threat-severity-v1.schema.json | Backed |
 | working-memory | hyphae (session end), cortina (SessionEnd) | hyphae, cap | working-memory-v1.schema.json | Backed |
+| content-bundle | lamella (bundle publish) | stipe, canopy, cap | content-bundle-v1.schema.json | Backed |
+| schema-registry-entry | operator, tool author | canopy, rhizome, cap | schema-registry-entry-v1.schema.json | Backed |
+| skill-frontmatter | lamella (emits SKILL.md) | lamella validator, stipe | skill-frontmatter-v1.schema.json | Backed |
+| workflow-invoke-result | hymenium (invoke/run) | cap, canopy | workflow-invoke-result-v1.schema.json | Backed |
 
 ## Draft / Deferred Payloads
 

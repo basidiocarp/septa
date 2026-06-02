@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "01HZQK8P3VXMNT4GJWRBD5Y6FC",
+  "status": "interrupted",
+  "output": null,
+  "interrupts": [
+    {
+      "node_id": "await-human-approval",
+      "resume_value": null,
+      "message": "Workflow is waiting for operator approval before deploying to production.",
+      "breakout": true,
+      "raised_at": "2026-06-02T14:23:07Z"
+    }
+  ]
+}

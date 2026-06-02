@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "canopy-agent-lease-v1",
+  "display_name": "Canopy Agent Lease v1",
+  "description": "Represents an exclusive work lease issued by canopy to a single agent for a bounded task. Prevents duplicate agents from claiming the same work unit.",
+  "json_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Canopy Agent Lease",
+    "type": "object",
+    "required": ["lease_id", "agent_id", "task_id", "issued_at", "expires_at"],
+    "additionalProperties": false,
+    "properties": {
+      "lease_id": {
+        "type": "string",
+        "description": "Unique identifier for this lease instance."
+      },
+      "agent_id": {
+        "type": "string",
+        "description": "Identifier of the agent holding this lease."
+      },
+      "task_id": {
+        "type": "string",
+        "description": "Identifier of the task this lease covers."
+      },
+      "issued_at": {
+        "type": "integer",
+        "description": "Unix timestamp (seconds) when the lease was issued."
+      },
+      "expires_at": {
+        "type": "integer",
+        "description": "Unix timestamp (seconds) when the lease expires and may be reclaimed."
+      }
+    }
+  },
+  "producer": "canopy",
+  "consumers": ["hymenium", "volva"],
+  "registered_at": 1748822400,
+  "deprecated": false,
+  "superseded_by": null
+}

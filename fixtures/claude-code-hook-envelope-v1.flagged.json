@@ -1,0 +1,13 @@
+{
+  "hook_event_name": "PostToolUse",
+  "session_id": "ses_legacy789",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "cargo build"
+  },
+  "tool_output": {
+    "output": "   Compiling cortina v0.1.0\n    Finished dev [unoptimized + debuginfo] target(s) in 3.42s",
+    "exit_code": 0
+  }
+}

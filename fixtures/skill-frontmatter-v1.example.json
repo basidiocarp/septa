@@ -1,0 +1,5 @@
+{
+  "name": "systematic-debugging",
+  "description": "Guides the agent through a structured root-cause analysis workflow: reproduce, isolate, hypothesize, verify, and fix. Prevents reactive patch loops by enforcing evidence-first discipline.",
+  "compatibility": "Designed for Claude Code (or similar products)"
+}

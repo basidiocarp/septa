@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/schema-registry-entry-v1.schema.json",
+  "title": "Schema Registry Entry v1",
+  "description": "A single runtime-registered contract entry written to the canopy or rhizome runtime registry when a new contract type is registered without a code deploy. This contract governs the registration EVENT — persistence, deduplication, and query are owned by the consuming runtime.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "contract_id",
+    "display_name",
+    "description",
+    "json_schema",
+    "producer",
+    "consumers",
+    "registered_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract version. Always '1.0' for this schema."
+    },
+    "contract_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-v[0-9]+$",
+      "description": "Unique identifier for this contract type. Must follow slug naming: lowercase alphanumeric and hyphens, ending with a version suffix (e.g. 'canopy-agent-lease-v1'). The pattern also enforces non-empty and non-whitespace."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable name for this contract type. Suitable for display in registry UIs and operator surfaces."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what this contract represents and how it is used. May include producer intent and consumer expectations."
+    },
+    "json_schema": {
+      "type": "object",
+      "description": "The inline JSON Schema that defines the payload shape for this contract. Treated as an opaque object — not further validated at this layer."
+    },
+    "producer": {
+      "type": "string",
+      "description": "Free-form identifier for the system or component that emits this contract type. Examples: 'canopy', 'rhizome', 'hymenium'."
+    },
+    "consumers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of free-form identifiers for systems or components that consume this contract type."
+    },
+    "registered_at": {
+      "type": "integer",
+      "description": "Unix timestamp (seconds) when this contract type was registered. Set by the registering caller at registration time."
+    },
+    "deprecated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this contract type is deprecated. Consumers should prefer the superseding contract when true."
+    },
+    "superseded_by": {
+      "type": ["string", "null"],
+      "description": "The contract_id of the replacement contract type, if this entry is deprecated and superseded. Null if there is no direct replacement."
+    }
+  }
+}

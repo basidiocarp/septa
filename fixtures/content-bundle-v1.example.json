@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "bundle_type": "codex",
+  "bundle_id": "01HZ9KQXM3V2P4RW8TNYJCB5F7",
+  "format_version": "1.0.0",
+  "manifest": {
+    "name": "basidiocarp-lamella-skills",
+    "description": "Lamella skills, hooks, rules, and subagent templates for the basidiocarp ecosystem, packaged for Codex.",
+    "content_root": "lamella-skills/"
+  },
+  "tags": ["lamella", "skills", "hooks", "basidiocarp"],
+  "min_tool_version": "0.11.0",
+  "published_at": "2026-06-01T00:00:00Z"
+}
