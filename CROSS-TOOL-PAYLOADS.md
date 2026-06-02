@@ -74,6 +74,28 @@ Every payload that crosses a tool boundary must appear in this table.
 | workflow-status | hymenium | canopy, cap | workflow-status-v1.schema.json | Backed |
 | workflow-template | workflow-designers | canopy, dispatch | workflow-template-v1.schema.json | Backed |
 | workspace-session | volva-runtime | cap, hyphae, canopy | workspace-session-v1.schema.json | Backed |
+| agent-heartbeat | canopy | annulus, cap | agent-heartbeat-v1.schema.json | Backed |
+| canopy-handoff-assignee | canopy | cap | canopy-handoff-assignee-v1.schema.json | Backed |
+| canopy-handoff-disposition | canopy | cap | canopy-handoff-disposition-v1.schema.json | Backed |
+| canopy-task-branch | canopy | cap | canopy-task-branch-v1.schema.json | Backed |
+| coding-agent-threat | septa (vocabulary) | canopy, hymenium | coding-agent-threat-v1.schema.json | Backed |
+| compliance-framework-id | septa (vocabulary) | security tooling, cap | compliance-framework-id-v1.schema.json | Backed |
+| cortina-fact-extracted | cortina | hyphae | cortina-fact-extracted-v1.schema.json | Backed |
+| cortina-hook-signal | cortina | claude-code, annulus, cap | cortina-hook-signal-v1.schema.json | Backed |
+| handoff-graph | operator, orchestration tools | canopy | handoff-graph-v1.schema.json | Backed |
+| handoff-session | canopy | canopy, cap | handoff-session-v1.schema.json | Backed |
+| handoff-to-user | hymenium | operator, cap | handoff-to-user-v1.schema.json | Backed |
+| hymenium-workflow | workflow authors (lamella) | hymenium, cap | hymenium-workflow-v1.schema.json | Backed |
+| hyphae-memoir-block-type | hyphae | hyphae, cap | hyphae-memoir-block-type-v1.schema.json | Backed |
+| hyphae-memoir-link | hyphae | cap | hyphae-memoir-link-v1.schema.json | Backed |
+| hyphae-memory-category | septa (vocabulary) | hyphae, cortina, cap | hyphae-memory-category-v1.schema.json | Backed |
+| hyphae-reflexion-record | cortina, agents | hyphae | hyphae-reflexion-record-v1.schema.json | Backed |
+| provider-model-cost | operator, ecosystem maintainer | annulus, cap | provider-model-cost-v1.schema.json | Backed |
+| review-annotation | cap-server | canopy, hyphae, cap | review-annotation-v1.schema.json | Backed |
+| review-annotation-event | cap-server | canopy, hyphae | review-annotation-event-v1.schema.json | Backed |
+| session-envelope | any tool (threading envelope) | all-tools | session-envelope-v1.schema.json | Backed |
+| threat-severity | septa (vocabulary) | security tooling, orchestrators, cap | threat-severity-v1.schema.json | Backed |
+| working-memory | hyphae (session end), cortina (SessionEnd) | hyphae, cap | working-memory-v1.schema.json | Backed |
 
 ## Exempted Payloads
 

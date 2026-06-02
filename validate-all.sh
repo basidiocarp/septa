@@ -7,7 +7,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-python3 - "$SCRIPT_DIR" <<'PYEOF'
+VALIDATE_RC=0
+python3 - "$SCRIPT_DIR" <<'PYEOF' || VALIDATE_RC=$?
 import json, sys, os
 from pathlib import Path
 
@@ -93,3 +94,13 @@ if errors:
         print(f"  - {e}")
     sys.exit(1)
 PYEOF
+
+# Enforce the cross-tool payload registry: every *.schema.json must be listed
+# in CROSS-TOOL-PAYLOADS.md (or an unregistered schema slips in unnoticed).
+echo ""
+REGISTRY_RC=0
+bash "$SCRIPT_DIR/scripts/check-cross-tool-payloads.sh" || REGISTRY_RC=$?
+
+if [ "$VALIDATE_RC" -ne 0 ] || [ "$REGISTRY_RC" -ne 0 ]; then
+  exit 1
+fi
