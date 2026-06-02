@@ -18,6 +18,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | canopy-snapshot | canopy | cap | canopy-snapshot-v1.schema.json | Backed |
 | canopy-task-detail | canopy | cap | canopy-task-detail-v1.schema.json | Backed |
 | code-graph | rhizome | hyphae | code-graph-v1.schema.json | Backed |
+| cap-code-graph | rhizome (export) | cap (graph view) | cap-code-graph-v1.schema.json | Backed |
 | command-output | mycelium | hyphae | command-output-v1.schema.json | Backed |
 | context-envelope | hyphae, rhizome, cortina, canopy | model context assembly, cap | context-envelope-v1.schema.json | Backed |
 | cortina-audit-handoff | cortina | canopy | cortina-audit-handoff-v1.schema.json | Backed |
@@ -55,6 +56,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | mycelium-summary | mycelium | hyphae, cap | mycelium-summary-v1.schema.json | Backed |
 | resolved-status-customization | annulus (config export) | cap, lamella, stipe | resolved-status-customization-v1.schema.json | Backed |
 | session-event | cortina | hyphae | session-event-v1.schema.json | Backed |
+| session-message-class | hyphae, canopy (message classifiers) | cap, session readers | session-message-class-v1.schema.json | Backed |
 | stipe-doctor | stipe | cap | stipe-doctor-v1.schema.json | Backed |
 | stipe-init-plan | stipe | cap | stipe-init-plan-v1.schema.json | Backed |
 | task-output | canopy | canopy, cap | task-output-v1.schema.json | Backed |

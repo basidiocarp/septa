@@ -1,0 +1,10 @@
+{
+  "hook_event_name": "PostToolUseFailure",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "cargo test --release"
+  },
+  "tool_error": "error: could not compile `cortina` due to 2 previous errors"
+}

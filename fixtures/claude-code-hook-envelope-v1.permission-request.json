@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PermissionRequest",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "permission_tool_name": "Bash",
+  "permission_decision": "allow"
+}

@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "SubagentStart",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "subagent_id": "subagent_xyz789",
+  "subagent_task": "Run the test suite in the cortina subproject and report results."
+}

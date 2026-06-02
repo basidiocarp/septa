@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/session-message-class-v1.schema.json",
+  "title": "Session Message Class v1",
+  "description": "Shared primitive for classifying a session message by role. Used by hyphae, canopy, and cap to distinguish user, assistant, tool, and meta messages without embedding tool-specific fields. Enum is open-for-extension: consumers should handle unknown values gracefully.",
+  "type": "object",
+  "required": ["schema_version", "message_id", "message_class"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract version. Always '1.0' for this schema."
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the classified message, assigned by the producer so consumers can correlate the classification back to its source."
+    },
+    "message_class": {
+      "type": "string",
+      "enum": ["user", "assistant", "meta", "system", "tool_result"],
+      "description": "Classification of the message. 'meta' covers injected context (memory surfaces, session headers, protocol preambles). New values may be added in later schema versions; consumers must tolerate unknown values."
+    },
+    "meta_reason": {
+      "type": ["string", "null"],
+      "description": "Optional annotation explaining why a message was classified 'meta'. Examples: 'session_context_injection', 'memory_protocol_surface'. Null or absent when message_class is not 'meta'."
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "auth::verify_token",
+      "name": "verify_token",
+      "labels": ["type:function", "domain:auth"],
+      "description": "Verifies a JWT token and returns the decoded claims. Returns an error if the token is expired or has an invalid signature.",
+      "metadata": {
+        "file_path": "src/auth.rs",
+        "line_start": 42,
+        "line_end": 68,
+        "language": "rust"
+      },
+      "confidence_level": 0.95,
+      "flag": false,
+      "shape": "circle",
+      "color": "#4a90d9"
+    },
+    {
+      "id": "auth::TokenClaims",
+      "name": "TokenClaims",
+      "labels": ["type:struct", "domain:auth"],
+      "description": "Decoded claims extracted from a verified JWT token.",
+      "metadata": {
+        "file_path": "src/auth.rs",
+        "line_start": 12,
+        "line_end": 22,
+        "language": "rust"
+      },
+      "confidence_level": 1.0,
+      "flag": false,
+      "shape": "rect",
+      "color": "#7ab648"
+    },
+    {
+      "id": "session::create_session",
+      "name": "create_session",
+      "labels": ["type:function", "domain:session"],
+      "description": "Creates a new user session after successful token verification. Flagged pending review of session expiry logic.",
+      "metadata": {
+        "file_path": "src/session.rs",
+        "line_start": 5,
+        "line_end": 31,
+        "language": "rust"
+      },
+      "confidence_level": 0.6,
+      "flag": true,
+      "shape": "diamond",
+      "color": "#e07b39",
+      "border_color": "#c0392b"
+    }
+  ],
+  "edges": [
+    {
+      "source": "session::create_session",
+      "target": "auth::verify_token",
+      "relation": "calls",
+      "weight": 0.3,
+      "confidence_level": 0.95,
+      "label": "calls to verify"
+    },
+    {
+      "source": "auth::verify_token",
+      "target": "auth::TokenClaims",
+      "relation": "uses",
+      "weight": 0.8,
+      "confidence_level": 1.0
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "message_id": "msg_01ABCDef23ghIJKL",
+  "message_class": "meta",
+  "meta_reason": "session_context_injection"
+}

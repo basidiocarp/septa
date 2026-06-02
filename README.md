@@ -88,7 +88,7 @@ change shape   ─►    update version     ─►  update dependents
 |--------|-----------|
 | Resilience & Degradation | `degradation-tier-v1` |
 | Workflow / Orchestration | `dispatch-request-v1`, `workflow-status-v1`, `workflow-template-v1`, `workflow-participant-runtime-identity-v1`, `task-packet-v1`, `task-output-v1`, `workflow-outcome-v1` |
-| Cross-tool payloads | `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-fact-extracted-v1`, `cortina-hook-signal-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-envelope-v1`, `session-event-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
+| Cross-tool payloads | `cap-code-graph-v1`, `claude-code-hook-envelope-v1`, `code-graph-v1`, `command-output-v1`, `context-envelope-v1`, `cortina-audit-handoff-v1`, `cortina-fact-extracted-v1`, `cortina-hook-signal-v1`, `cortina-lifecycle-event-v1`, `credential-v1`, `dependency-types-v1`, `evidence-ref-v1`, `handoff-context-v1`, `hook-execution-v1`, `host-identifier-v1`, `resolved-status-customization-v1`, `session-envelope-v1`, `session-event-v1`, `session-message-class-v1`, `tool-relevance-rules-v1`, `tool-usage-event-v1`, `usage-event-v1`, `volva-hook-event-v1` |
 | Canopy → Cap, Annulus | `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1` |
 | Canopy → Annulus | `agent-heartbeat-v1` |
 | Canopy DAG | `handoff-graph-v1` |

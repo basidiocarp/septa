@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/cap-code-graph-v1.schema.json",
+  "title": "Cap Code Graph v1",
+  "description": "Typed node/edge payload binding rhizome exports to cap's architecture graph view. Extends the code-graph-v1 vocabulary with visual and confidence fields required for interactive graph rendering. Producer: rhizome export. Consumer: cap visualization layer.",
+  "type": "object",
+  "required": ["nodes", "edges"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "description": "Graph nodes representing code symbols. Each node carries identity, classification, source location, and visual/confidence metadata for cap rendering.",
+      "items": {
+        "$ref": "#/$defs/GraphNode"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Graph edges representing typed relationships between code symbols, with weight and confidence for cap visualization.",
+      "items": {
+        "$ref": "#/$defs/GraphEdge"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "GraphNode": {
+      "type": "object",
+      "required": ["id"],
+      "description": "A single code symbol node in the cap architecture graph.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable unique identifier for the node within this graph payload. code-graph-v1 keys nodes by 'name', which is not guaranteed globally unique for cap's rendering keys, so a rhizome producer synthesizes 'id' (e.g. a path-qualified symbol like 'auth::verify_token')."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable symbol name. Displayed as the node label in cap."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Classification labels consistent with code-graph-v1 (e.g., 'type:function', 'domain:auth'). Used by cap to drive filter and grouping controls."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the symbol. Shown in cap node detail panels."
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "file_path": { "type": "string" },
+            "line_start": { "type": "integer", "minimum": 1 },
+            "line_end": { "type": "integer", "minimum": 1 },
+            "language": { "type": "string" }
+          },
+          "additionalProperties": true,
+          "description": "Source location and language metadata. Mirrors the metadata shape in code-graph-v1."
+        },
+        "confidence_level": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Analysis confidence for this node (0.0 = uncertain, 1.0 = fully verified). Used by cap to vary node opacity or border style."
+        },
+        "flag": {
+          "type": "boolean",
+          "description": "When true, cap highlights this node as requiring attention (e.g., flagged for review, anomaly detected)."
+        },
+        "shape": {
+          "type": "string",
+          "description": "Requested rendering shape for this node in cap's graph layout (e.g., 'circle', 'diamond', 'rect'). Cap may fall back to a default shape when the value is unrecognized."
+        },
+        "color": {
+          "type": "string",
+          "description": "Optional CSS color string (hex, rgb, or named color) for node fill in cap. When absent, cap applies its theme default."
+        },
+        "border_color": {
+          "type": "string",
+          "description": "Optional CSS color string for node border/stroke in cap."
+        }
+      },
+      "additionalProperties": false
+    },
+    "GraphEdge": {
+      "type": "object",
+      "required": ["source", "target", "relation"],
+      "description": "A typed relationship between two GraphNode ids in the cap architecture graph.",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Id of the source node. Must reference a node id present in the nodes array."
+        },
+        "target": {
+          "type": "string",
+          "description": "Id of the target node. Must reference a node id present in the nodes array."
+        },
+        "relation": {
+          "type": "string",
+          "enum": ["contains", "imports", "implements", "calls", "uses", "extends", "references", "depends_on", "tests"],
+          "description": "Typed relationship between symbols. The relation vocabulary is identical to code-graph-v1 so the edge type needs no translation; note that node identity is promoted to an explicit 'id' (see GraphNode.id), so node mapping is not a pure passthrough."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Edge importance (0.0 = negligible, 1.0 = critical). Used by cap to vary edge thickness or visibility. Default weights align with code-graph-v1: contains=1.0, imports=0.5, implements=0.8, calls=0.3."
+        },
+        "confidence_level": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Analysis confidence for this edge (0.0 = uncertain, 1.0 = fully verified). Used by cap to vary edge opacity or dash style."
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional text label rendered on the edge in cap. When absent, cap may render the relation value."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

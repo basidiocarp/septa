@@ -8,7 +8,7 @@
   "properties": {
     "hook_event_name": {
       "type": "string",
-      "description": "Name of the hook that fired (e.g. PreToolUse, PostToolUse, Stop, UserPromptSubmit, PreCompact)."
+      "description": "Name of the hook that fired. Known values: PreToolUse, PostToolUse, PostToolUseFailure, Stop, UserPromptSubmit, PreCompact, PermissionRequest, Notification, SubagentStart. No enum constraint is applied because Claude Code is the producer and may add new event types."
     },
     "session_id": {
       "type": "string",
@@ -55,6 +55,34 @@
     "custom_instructions": {
       "type": "string",
       "description": "Custom system instructions for the compacted session. Present on PreCompact hooks."
+    },
+    "tool_error": {
+      "type": "string",
+      "description": "Error message from the failed tool. Present on PostToolUseFailure hooks."
+    },
+    "permission_decision": {
+      "type": "string",
+      "description": "The permission decision made for the request. Known values: allow, deny, ask. No enum constraint is applied because Claude Code is the producer and may add new decision types. Present on PermissionRequest hooks."
+    },
+    "permission_tool_name": {
+      "type": "string",
+      "description": "Name of the tool the permission request applies to. Present on PermissionRequest hooks."
+    },
+    "notification_title": {
+      "type": "string",
+      "description": "Title of the notification. Present on Notification hooks."
+    },
+    "notification_message": {
+      "type": "string",
+      "description": "Body text of the notification. Present on Notification hooks."
+    },
+    "subagent_id": {
+      "type": "string",
+      "description": "Identifier for the subagent that is starting. Present on SubagentStart hooks."
+    },
+    "subagent_task": {
+      "type": "string",
+      "description": "Description of the task assigned to the subagent. Present on SubagentStart hooks."
     }
   }
 }

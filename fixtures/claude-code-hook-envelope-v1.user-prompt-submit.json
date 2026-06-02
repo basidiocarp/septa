@@ -1,0 +1,6 @@
+{
+  "hook_event_name": "UserPromptSubmit",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "prompt": "Run the tests and show me the results."
+}

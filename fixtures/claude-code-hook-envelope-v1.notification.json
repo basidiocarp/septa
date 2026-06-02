@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "Notification",
+  "session_id": "ses_abc123",
+  "cwd": "/home/user/projects/basidiocarp/cortina",
+  "notification_title": "Build complete",
+  "notification_message": "cargo build finished with 0 errors and 0 warnings."
+}
