@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/doc-review-finding-v1.schema.json",
+  "title": "Document Review Finding v1",
+  "description": "A single finding from a document review pass (canopy plan-review, lamella-skills doc-review). Captures factual errors, missing content, or inconsistencies in documentation, specifications, or design documents.",
+  "type": "object",
+  "required": ["schema_version", "finding_id", "finding_type", "severity", "title", "description", "deferred_questions"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract version. Always '1.0' for this schema."
+    },
+    "finding_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique identifier for this finding, assigned by the producer as a ULID. Enables correlation and tracking across document review cycles."
+    },
+    "finding_type": {
+      "type": "string",
+      "enum": ["error", "omission"],
+      "description": "Type of finding. 'error' = factually wrong or contradictory statement in the document; 'omission' = required content or specification is missing. Closed enum for exhaustive consumer branching."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "informational"],
+      "description": "Severity level of this finding. Closed enum for exhaustive consumer matching. Matches threat-severity-v1 vocabulary."
+    },
+    "title": {
+      "type": "string",
+      "description": "Short human-readable title of the finding. Suitable for display in summaries or lists."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed explanation of the issue: what is wrong or missing, why it matters, and what should be there instead. May contain markdown formatting."
+    },
+    "section": {
+      "type": ["string", "null"],
+      "description": "Name or path of the document section where the finding applies. Examples: '## Architecture', 'Design Decisions / Section 3.2'. Null for document-level findings or when not applicable."
+    },
+    "file_path": {
+      "type": ["string", "null"],
+      "description": "Path to the document file containing the finding, relative to repository root. Null for findings that span multiple documents or files."
+    },
+    "line": {
+      "type": ["integer", "null"],
+      "description": "Line number within the document where the finding applies. Null if not applicable or file_path is null."
+    },
+    "suggested_resolution": {
+      "type": ["string", "null"],
+      "description": "If available, suggested text or content to add, remove, or modify to resolve the finding. May include prose guidance, example text, or references. Null if no suggestion is provided."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["confirmed", "likely", "speculative"],
+      "description": "Confidence level that this finding is valid. 'confirmed' = verified or obvious; 'likely' = high probability; 'speculative' = hypothesis requiring human review."
+    },
+    "deferred_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0,
+      "description": "List of questions that must be answered before this finding can be fully resolved. Examples: 'What is the actual API signature?', 'Which version are we documenting?'. Empty array if none. Always an array, never null — consumers iterate safely."
+    }
+  }
+}

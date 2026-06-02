@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "finding_id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "severity": "high",
+  "category": "security",
+  "title": "SQL injection vulnerability in query builder",
+  "description": "User input is concatenated directly into SQL query string without parameterization. This allows an attacker to inject arbitrary SQL. Replace string concatenation with parameterized queries.",
+  "confidence": "likely",
+  "tier": "merge",
+  "file_path": "src/database/query.ts",
+  "line_start": 42,
+  "line_end": 48,
+  "autofix_class": "trivial",
+  "suggested_fix": "Replace `query = \"SELECT * FROM users WHERE id = \" + userId` with parameterized approach: `query.param('id', userId)`",
+  "related_finding_ids": []
+}

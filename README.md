@@ -99,6 +99,7 @@ change shape   ─►    update version     ─►  update dependents
 | Annulus → Cap, scripts | `annulus-statusline-v1` |
 | Provider / Model | `provider-model-cost-v1` |
 | Capability Registry | `capability-registry-v1`, `capability-runtime-lease-v1` |
+| Review | `review-annotation-v1`, `review-annotation-event-v1`, `review-finding-v1`, `doc-review-finding-v1` |
 
 ### Draft Schemas
 

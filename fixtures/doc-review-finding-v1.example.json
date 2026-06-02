@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "finding_id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "finding_type": "omission",
+  "severity": "high",
+  "title": "Missing API authentication specification",
+  "description": "The API reference document describes request/response structures but does not document authentication requirements or token format. Consumers cannot implement the API correctly without this information.",
+  "section": "## API Reference / Authentication",
+  "file_path": "docs/api-reference.md",
+  "line": 156,
+  "suggested_resolution": "Add a new section describing: (1) supported auth schemes (Bearer, API key, OAuth2), (2) token format and validity period, (3) example Authorization header, (4) error responses for missing or invalid credentials.",
+  "confidence": "confirmed",
+  "deferred_questions": [
+    "Do we support multiple auth schemes or only Bearer tokens?"
+  ]
+}

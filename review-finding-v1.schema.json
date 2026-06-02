@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/review-finding-v1.schema.json",
+  "title": "Review Finding v1",
+  "description": "A single code-review finding emitted by an automated reviewer (lamella-skills code-review or canopy plan-review phase). Captures issues, security concerns, or style violations discovered during structured code review.",
+  "type": "object",
+  "required": ["schema_version", "finding_id", "severity", "category", "title", "description", "confidence", "tier"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract version. Always '1.0' for this schema."
+    },
+    "finding_id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique identifier for this finding, assigned by the producer as a ULID. Enables correlation and deduplication across review runs."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "informational"],
+      "description": "Severity level of this finding. Closed enum for exhaustive consumer matching. Matches threat-severity-v1 vocabulary."
+    },
+    "category": {
+      "type": "string",
+      "description": "Classification category of the finding. Examples: 'correctness', 'security', 'style', 'performance', 'maintainability'. Producers may define project-specific categories; consumers should tolerate unknown values gracefully."
+    },
+    "title": {
+      "type": "string",
+      "description": "Short human-readable title of the finding. Suitable for display in lists or summaries."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed explanation of the issue, including context, rationale, and impact. May contain markdown formatting."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["confirmed", "likely", "speculative"],
+      "description": "Confidence level that this finding is valid. 'confirmed' = verified or obvious; 'likely' = high probability; 'speculative' = hypothesis requiring human review."
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["merge", "detail"],
+      "description": "Classification of whether this finding blocks the review gate. 'merge' = blocking issue that must be resolved; 'detail' = informational, does not block approval."
+    },
+    "file_path": {
+      "type": ["string", "null"],
+      "description": "Path to the file containing the issue, relative to repository root. Null for findings that span multiple files or have no specific file location."
+    },
+    "line_start": {
+      "type": ["integer", "null"],
+      "description": "Starting line number of the code section containing the issue. Null if not applicable or file_path is null."
+    },
+    "line_end": {
+      "type": ["integer", "null"],
+      "description": "Ending line number of the code section containing the issue. Null if not applicable or file_path is null."
+    },
+    "autofix_class": {
+      "type": "string",
+      "enum": ["none", "trivial", "moderate", "invasive"],
+      "description": "Classifies whether and how easily an autofix could resolve this finding. 'none' = no automated fix available; 'trivial' = simple substitution/format fix; 'moderate' = requires minor logic changes; 'invasive' = requires significant refactoring."
+    },
+    "suggested_fix": {
+      "type": ["string", "null"],
+      "description": "If available, a suggested code change or explanation of how to resolve the issue. May include code snippets or prose guidance. Null if no fix is suggested."
+    },
+    "related_finding_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$" },
+      "description": "List of other finding IDs that are related to this finding (e.g., similar issues in the same codebase, or a root cause with multiple symptoms). Empty array if none."
+    }
+  }
+}

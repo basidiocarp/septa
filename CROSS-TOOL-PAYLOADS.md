@@ -86,6 +86,8 @@ Every payload that crosses a tool boundary must appear in this table.
 | provider-model-cost | operator, ecosystem maintainer | annulus, cap | provider-model-cost-v1.schema.json | Backed |
 | review-annotation | cap-server | canopy, hyphae, cap | review-annotation-v1.schema.json | Backed |
 | review-annotation-event | cap-server | canopy, hyphae | review-annotation-event-v1.schema.json | Backed |
+| review-finding | lamella-skills, canopy | canopy, cap | review-finding-v1.schema.json | Backed |
+| doc-review-finding | canopy, lamella-skills | canopy, cap | doc-review-finding-v1.schema.json | Backed |
 | session-envelope | any tool (threading envelope) | all-tools | session-envelope-v1.schema.json | Backed |
 | threat-severity | septa (vocabulary) | security tooling, orchestrators, cap | threat-severity-v1.schema.json | Backed |
 | working-memory | hyphae (session end), cortina (SessionEnd) | hyphae, cap | working-memory-v1.schema.json | Backed |
