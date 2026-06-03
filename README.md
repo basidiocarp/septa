@@ -45,6 +45,33 @@ Septa is the shared contract layer for the workspace.
 
 ---
 
+## Cross-Tool Contract Surface
+
+This matrix makes the cross-tool contract surface visible in one place: which tool plays which payload role, the capability IDs it advertises, and the primary Septa contracts it touches. It is the by-tool companion to the by-family [Contract Inventory](#contract-inventory) below.
+
+- **Payload role** — `producer` emits payloads, `consumer` reads them, `both` does each, `infra` provides transport rather than a payload boundary.
+- **Key capability IDs** — drawn from `fixtures/capability-registry-v1.example.json`; listed only where a tool currently registers them.
+- **Primary Septa contracts** — the contracts the tool produces or consumes, per the Contract Inventory below.
+
+| Tool | Payload role | Key capability IDs | Primary Septa contracts |
+|------|--------------|--------------------|-------------------------|
+| **mycelium** | producer | `command.filter.v1` | `command-output-v1`, `mycelium-gain-v1`, `mycelium-summary-v1` |
+| **hyphae** | both | `memory.store.v1`, `memory.recall.v1`, `memoir.import.v1` | produces `hyphae-*` read models (e.g. `hyphae-activity-v1`, `hyphae-memory-lookup-v1`, `hyphae-archive-v1`); consumes `code-graph-v1` |
+| **rhizome** | producer | `code.graph.v1`, `code.symbols.v1` | `code-graph-v1` |
+| **cap** | consumer | — | consumes Canopy / Hyphae / Mycelium / Stipe / Annulus read models; produces `cap-code-graph-v1` |
+| **spore** | infra | — | none — provides transport, discovery, and config primitives consumed by every tool |
+| **annulus** | both | — | produces `annulus-statusline-v1`; consumes `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1`, `agent-heartbeat-v1` |
+| **canopy** | both | — | produces `canopy-notification-v1`, `canopy-snapshot-v1`, `canopy-task-detail-v1`, `agent-heartbeat-v1`, `handoff-graph-v1`; consumes `workflow-status-v1`, `workflow-outcome-v1`, `task-packet-v1` |
+| **cortina** | both | — | produces `cortina-lifecycle-event-v1`, `cortina-hook-signal-v1`, `cortina-fact-extracted-v1`, `cortina-audit-handoff-v1`; consumes `claude-code-hook-envelope-v1`, `hook-execution-v1` |
+| **hymenium** | both | `workflow.dispatch.v1` | produces `workflow-status-v1`, `workflow-outcome-v1`, `workflow-invoke-result-v1`, `task-packet-v1`, `task-output-v1`; consumes `dispatch-request-v1` |
+| **volva** | producer | — | `volva-hook-event-v1` |
+| **lamella** | producer | — | `skill-frontmatter-v1`, `content-bundle-v1` |
+| **stipe** | producer | — | `stipe-doctor-v1`, `stipe-init-plan-v1`; manages `capability-registry-v1` |
+
+> Capability IDs are advertised through `capability-registry-v1` as tools register with the manager (`stipe`); the column is populated where the example registry records them and grows as more tools publish capabilities.
+
+---
+
 ## Quick Start
 
 ```bash
