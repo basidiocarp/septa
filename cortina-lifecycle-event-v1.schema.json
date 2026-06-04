@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/cortina-lifecycle-event-v1.schema.json",
   "title": "Cortina Lifecycle Event v1",
-  "description": "Normalized lifecycle event vocabulary emitted by Cortina for transferable host, tool, compaction, and council lifecycle semantics. Producer: cortina/src/events/normalized_lifecycle.rs. Consumers: downstream orchestrators and dashboards that need a host-agnostic lifecycle shape.",
+  "description": "Normalized lifecycle event vocabulary emitted by Cortina for transferable host, tool, session, compaction, council, and message lifecycle semantics. Producer: cortina/src/events/normalized_lifecycle.rs. Consumers: downstream orchestrators and dashboards that need a host-agnostic lifecycle shape. v1.1 adds the 'message' category for host MessageDisplay events.",
   "type": "object",
   "required": [
     "schema_version",
@@ -14,10 +14,10 @@
     "fail_open"
   ],
   "properties": {
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "const": "1.1" },
     "category": {
       "type": "string",
-      "enum": ["host", "tool", "session", "compaction", "council"]
+      "enum": ["host", "tool", "session", "compaction", "council", "message"]
     },
     "status": {
       "type": "string",

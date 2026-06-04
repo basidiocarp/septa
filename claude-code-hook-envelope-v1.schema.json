@@ -8,7 +8,7 @@
   "properties": {
     "hook_event_name": {
       "type": "string",
-      "description": "Name of the hook that fired. Known values: PreToolUse, PostToolUse, PostToolUseFailure, Stop, UserPromptSubmit, PreCompact, PermissionRequest, Notification, SubagentStart. No enum constraint is applied because Claude Code is the producer and may add new event types."
+      "description": "Name of the hook that fired. Known values: PreToolUse, PostToolUse, PostToolUseFailure, Stop, UserPromptSubmit, PreCompact, PermissionRequest, Notification, SubagentStart, MessageDisplay. No enum constraint is applied because Claude Code is the producer and may add new event types."
     },
     "session_id": {
       "type": "string",
@@ -72,6 +72,10 @@
     "prompt": {
       "type": "string",
       "description": "The user prompt text. Present on UserPromptSubmit hooks."
+    },
+    "message_text": {
+      "type": "string",
+      "description": "The assistant message text surfaced to the operator. Present on MessageDisplay hooks."
     },
     "trigger": {
       "type": "string",

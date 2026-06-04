@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.0",
-  "category": "council",
+  "schema_version": "1.1",
+  "category": "message",
   "status": "captured",
   "host": "claude_code",
-  "event_name": "user_prompt_submit",
-  "summary": "council lifecycle captured from prompt",
+  "event_name": "message_display",
+  "summary": "assistant message surfaced to operator",
   "fail_open": true,
   "session_id": "ses_example",
   "cwd": "/tmp/demo",
@@ -13,7 +13,7 @@
   "tool_name": null,
   "trigger": null,
   "metadata": {
-    "prompt_excerpt": "/council review unresolved failures",
+    "message_excerpt": "Build is green; opening the PR now.",
     "transcript_path": "/tmp/demo/transcript.jsonl"
   }
 }
