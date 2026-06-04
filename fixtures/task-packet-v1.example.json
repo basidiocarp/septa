@@ -27,5 +27,14 @@
     "Handoff spec is ambiguous or contradicts itself",
     "Required dependency task is not yet complete",
     "Three consecutive test failures after repair attempts"
-  ]
+  ],
+  "response_format": {
+    "type": "object",
+    "required": ["files_changed", "tests_passed"],
+    "properties": {
+      "files_changed": { "type": "array", "items": { "type": "string" } },
+      "tests_passed": { "type": "boolean" }
+    }
+  },
+  "request_heartbeat": false
 }

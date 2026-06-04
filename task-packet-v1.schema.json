@@ -83,6 +83,13 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Conditions under which the Worker must stop and escalate rather than retry (e.g., 'spec ambiguity', 'dependency missing')."
+    },
+    "response_format": {
+      "description": "Optional per-phase structured-output declaration the Worker's output should conform to (e.g., a JSON Schema object or format hint). Producer: Hymenium, populated from Phase config at dispatch. Consumer: Worker / Output Verifier. Any JSON value; omit when the phase has no structured-output requirement."
+    },
+    "request_heartbeat": {
+      "type": "boolean",
+      "description": "Optional flag carried through to the Worker runtime (origin: letta). When true, signals the Worker may chain tool calls within a turn. Hymenium does not interpret this field; it is opaque carry-through. Defaults to false when omitted."
     }
   },
   "additionalProperties": false
