@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "task_id": "task-7f3a9c21",
+  "agent_id": "impl/canopy/explicit-completion-signal/1",
+  "status": "needs_review",
+  "should_continue": true,
+  "next_action": {
+    "follow_up_task_id": "task-9b2e4d10",
+    "directive": "Dispatch the Hymenium consumer wave once the contract lands."
+  },
+  "summary": "Implemented should_continue arg on canopy_task_complete and the completion-signal contract; handing back for review and the Hymenium consumer wave."
+}

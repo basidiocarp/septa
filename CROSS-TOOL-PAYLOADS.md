@@ -17,6 +17,7 @@ Every payload that crosses a tool boundary must appear in this table.
 | capability-runtime-lease | running tools, service wrappers | spore | capability-runtime-lease-v1.schema.json | Backed |
 | canopy-notification | canopy | cap, annulus | canopy-notification-v1.schema.json | Backed |
 | canopy-snapshot | canopy | cap | canopy-snapshot-v1.schema.json | Backed |
+| canopy-task-completion-signal | canopy | hymenium | canopy-task-completion-signal-v1.schema.json | Backed |
 | canopy-task-detail | canopy | cap | canopy-task-detail-v1.schema.json | Backed |
 | code-graph | rhizome | hyphae | code-graph-v1.schema.json | Backed |
 | cap-code-graph | rhizome (export) | cap (graph view) | cap-code-graph-v1.schema.json | Backed |

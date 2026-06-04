@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://basidiocarp.dev/septa/canopy-task-completion-signal-v1.schema.json",
+  "title": "canopy-task-completion-signal-v1",
+  "description": "Canopy emits an explicit completion signal when an agent closes a task via `canopy_task_complete`. The `should_continue` flag is the agent's stated intent about whether follow-on dispatch should proceed; `status` reports the agent's assessment of the outcome, and `next_action` optionally tells the orchestrator what to dispatch next. `status` here is the signal's reported outcome and is distinct from the stored canopy TaskStatus, which this signal does not change. Producer: canopy/src/tools/task.rs (tool_task_complete). Consumer: hymenium (dispatch loop — reads should_continue and next_action to decide whether and how to continue the workflow). This signal rides alongside the existing task-detail response and does not change TaskStatus or the stored Task shape.",
+  "type": "object",
+  "required": ["schema_version", "task_id", "agent_id", "status", "summary"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "task_id": {
+      "type": "string",
+      "description": "Identifier of the task that was completed."
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Identifier of the agent that emitted the completion signal. Mirrors the agent_id passed to tool_task_complete; lets the orchestrator decide the next assignee."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "failed", "blocked", "needs_review"],
+      "description": "Agent's reported outcome. `completed` closed normally; `failed` could not finish and is handing back; `blocked` is stalled on an external dependency; `needs_review` is finished pending verification. This is the signal's assessment, not the stored canopy TaskStatus."
+    },
+    "should_continue": {
+      "type": "boolean",
+      "description": "Agent's explicit intent: true asks the orchestrator to continue dispatching follow-on work, false signals a clean stop. Optional; an absent value is treated as false (stop)."
+    },
+    "next_action": {
+      "type": ["object", "null"],
+      "description": "Optional hint describing the follow-on work when should_continue is true. Absent or null means the orchestrator decides. Ignored when should_continue is false.",
+      "properties": {
+        "follow_up_task_id": {
+          "type": ["string", "null"],
+          "description": "Existing task the orchestrator should dispatch next, if the agent named one."
+        },
+        "directive": {
+          "type": "string",
+          "description": "Free-text continuation instruction for the orchestrator."
+        }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "string",
+      "description": "Closure summary recorded by the agent. Mirrors the completion_summary evidence stored on the task."
+    }
+  },
+  "additionalProperties": false
+}
