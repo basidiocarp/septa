@@ -3,7 +3,9 @@
   "task": {
     "task_id": "01JNQABC0123456789GHFEDCBA",
     "title": "Review contract drift",
-    "status": "open"
+    "status": "open",
+    "has_code_diff": false,
+    "has_verification_passed": false
   },
   "attention": {
     "task_id": "01JNQABC0123456789GHFEDCBA",

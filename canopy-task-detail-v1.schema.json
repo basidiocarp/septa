@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://basidiocarp.dev/septa/canopy-task-detail-v1.schema.json",
   "title": "canopy-task-detail-v1",
-  "description": "Canopy emits a versioned task detail payload via `canopy task get <id> --format json`. Producer: canopy/src/api.rs (task detail endpoint). Consumers: cap (task detail view) and hymenium (dispatch loop reads completion_signal.should_continue / next_action over its existing poll).",
+  "description": "Canopy emits a versioned task detail payload over the unix socket `canopy_task` JSON-RPC method (canopy/src/socket_server.rs), with CLI `canopy api task --task-id <id>` as fallback. Producer: canopy/src/api.rs::task_detail -> TaskDetailWire. Consumers: cap (task detail view) and hymenium (dispatch loop reads completion_signal.should_continue / next_action and task.has_code_diff / task.has_verification_passed for phase-gate evaluation, over the socket).",
   "type": "object",
   "required": ["schema_version", "task", "attention", "sla_summary", "allowed_actions", "evidence"],
   "properties": {
@@ -17,7 +17,9 @@
         "description": { "type": ["string", "null"] },
         "agent_id":    { "type": ["string", "null"] },
         "created_at":  { "type": ["string", "null"] },
-        "updated_at":  { "type": ["string", "null"] }
+        "updated_at":  { "type": ["string", "null"] },
+        "has_code_diff":           { "type": "boolean", "description": "True when the task has a code/diff evidence record. Derived by canopy; consumed by hymenium's phase gate. Absent on older payloads (treat as false)." },
+        "has_verification_passed": { "type": "boolean", "description": "True when the task's verification evidence has passed. Derived by canopy; consumed by hymenium's phase gate. Absent on older payloads (treat as false)." }
       },
       "additionalProperties": true
     },
