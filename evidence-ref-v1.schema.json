@@ -32,9 +32,11 @@
         "rhizome_impact",
         "rhizome_export",
         "manual_note",
-        "script_verification"
+        "script_verification",
+        "review_annotation",
+        "code_diff"
       ],
-      "description": "Which ecosystem tool owns the referenced data."
+      "description": "Which ecosystem tool owns the referenced data. `code_diff` is a first-class, agent-emitted reference to a committed code change (commit hash or diff ref); canopy derives `has_code_diff` on canopy-task-detail-v1 from its presence. `review_annotation` is an internal review-cycle reference."
     },
     "source_ref": {
       "type": "string",
