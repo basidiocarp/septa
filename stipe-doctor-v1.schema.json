@@ -27,6 +27,7 @@
           "name":    { "type": "string" },
           "passed":  { "type": "boolean" },
           "message": { "type": ["string", "null"] },
+          "suppressed": { "type": "boolean" },
           "repair_actions": {
             "type": "array",
             "items": { "$ref": "#/$defs/repair_action" }

@@ -1,12 +1,18 @@
 {
   "schema_version": "1.0",
-  "healthy": false,
-  "summary": "1 checks need attention.",
+  "healthy": true,
+  "summary": "All checks passing (1 suppressed).",
   "checks": [
     {
       "name": "hyphae database",
+      "passed": true,
+      "message": "Hyphae database found"
+    },
+    {
+      "name": "rhizome MCP startup",
       "passed": false,
-      "message": "Hyphae database not found",
+      "suppressed": true,
+      "message": "rhizome not installed; suppressed by operator",
       "repair_actions": [
         {
           "action_key": "init",
